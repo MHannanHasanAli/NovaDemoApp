@@ -1,0 +1,119 @@
+﻿﻿@model ImperialNova.ViewModels.CategoryActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit Category
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Create Category
+                </h2>
+
+            }
+
+            <form id="actionForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="hidden" value="@Model._Id" name="_Id" />
+                            <label for="name">Name:</label>
+                            <input value="@Model._CName" type="text" class="form-control" name="_CName" id="_CName" placeholder="Enter name" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Description:</label>
+                            <input value="@Model._Description" type="text" class="form-control" name="_Description" id="_Description" placeholder="Enter name" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div style="background-color:white;" class="card-footer">
+            @if (Model._Id != 0)
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <a href="@Url.Action("Index","Category")" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        </div>
+    </div>
+}
+
+<script>
+
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Category")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Category")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#PhotoUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#Photo").val(response.DocURL);
+                    $("#PhotoImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

@@ -1,0 +1,72 @@
+﻿@model ImperialNova.ViewModels.InventoryListingViewModel
+@{
+    ViewBag.Title = "StockHistory";
+}
+
+<h2 class="card-title">Stock History</h2>
+<div class="col-lg-12 grid-margin stretch-card">
+
+
+
+    @if (Model.inventories != null)
+    {
+        <div class="card">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Product
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+                                <th>
+                                    Retail
+                                </th>
+                                <th>
+                                    Quantity In
+                                </th>
+                                <th>
+                                    Quanity Out
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th>
+                                    Store
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.inventories.Where(x=>x.JustAdded == false))
+                            {
+                                <tr>
+                                    <td>@item._Name</td>
+                                    <td>@item._Size</td>
+                                    <td>@item._Color</td>
+                                    <td>£@item._RetailPrice</td>
+                                    <td>@item._QuantityIn</td>
+                                    <td>@item._QuantityOut</td>
+                                    <td>@item._Quantity</td>
+                                    <td>@item._Store</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    }
+    else
+    {
+
+        <div class="alert alert-warning col-md-12" role="alert">
+            Sorry! No records exist.
+        </div>
+    }
+</div>

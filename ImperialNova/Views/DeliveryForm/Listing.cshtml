@@ -1,0 +1,111 @@
+﻿@model ImperialNova.ViewModels.DeliveryFormViewModel
+
+@{
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Delivery Forms </h2>
+
+
+                <form>
+
+                    <div class="input-group">
+
+                        <input type="text" class="form-control" name="SearchTerm" id="SearchTerm" />
+                        <button value="@Model.SearchTerm" class="btn btn-primary" type="submit"><i class="fa fa-search mr-1"></i>Search</button>
+                        <a href="@Url.Action("Listing","DeliveryForm")" class="btn btn-dark" ><i class="fa fa-search mr-1"></i>Reset</a>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        @if (Model.forms != null)
+        {
+            <div class="card">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Sales Person
+                                </th>
+                                <th>
+                                    Customer
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    Country
+                                </th>
+                                <th>
+                                    Total Amount
+                                </th>
+                                <th>
+                                    Paid Amount
+                                </th>
+                                <th>
+                                    Balance Amount
+                                </th>
+                                <th>
+                                    View
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.forms)
+                            {
+                                <tr>
+                                    <td>@item._SlaesPerson</td>
+                                    <td>@item._CustomerName</td>
+                                    <td>@item._Address</td>
+                                    <td>@item._Country</td>
+                                    <td>@item._TotalAmount</td>
+                                    <td>@item._AmountPaid</td>
+                                    <td>@item._AmountInBalance</td>
+                                    <td><a class="btn btn-success btn-sm btn-rounded" href="@Url.Action("Invoice", "DeliveryForm", new {id=item._id })">VIEW</a>
+                                    <button data-href="@Url.Action("Delete", "DeliveryForm", new { ID = item._id })" type="button" class="data-btn btn btn-sm btn-rounded btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button></td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+
+            <div class="alert alert-warning col-md-12" role="alert">
+                Sorry! No records exist.
+            </div>
+        }
+    </div>
+</div>
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
+</script>

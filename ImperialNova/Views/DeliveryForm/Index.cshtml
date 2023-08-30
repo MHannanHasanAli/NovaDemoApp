@@ -1,0 +1,706 @@
+﻿@model ImperialNova.ViewModels.DeliveryFormViewModel
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Content/template/vendors/mdi/css/materialdesignicons.min.css" />
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+</head>
+<style>
+    #signature-pad {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    #clear-button {
+        width: 50%;
+        transform: rotate(-90deg);
+        transform-origin: left center;
+        margin-left: 15px;
+        margin-top: 150px;
+    }
+
+    #_Country:hover {
+        border: 1px solid lightgreen; /* Border color */
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Box shadow (light green) */
+    }
+
+    .form-control, .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--single .select2-search__field, .typeahead, .tt-query, .tt-hint {
+        height: 35px;
+        border: 1px solid lightgray;
+        font-weight: 400;
+        border-radius:3px;  
+        font-size: 0.75rem;
+    }
+    body {
+        background-color: #F8F9FA;
+    }
+    .vertical-line {
+        width: 5px;
+        height: 40px;
+        background-color: #ccc;
+    }
+
+
+</style>
+<div class="container">
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="vertical-line"></div>
+            <h3 style="margin-top: -35px; margin-left: 15px;" class="card-title">
+                <b>Delivery Information</b>
+            </h3>
+            <p>
+                - General Form <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-sm btn-success">Logout</a>
+            </p>
+        </div>
+        <div class="col-md-6">
+            <img style=" float: right; width: 300px; " src="~/Content/crmTemplate/logo.png" />
+        </div>
+    </div>
+    <br />
+    <form id="deliveryForm">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="_SlaesPerson">Sales Person:</label>
+                    <input type="text" class="form-control" id="_SlaesPerson" name="_SlaesPerson">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="_Date">Date:</label>
+                    <input value="@DateTime.Now" type="date" class="form-control" id="_Date" name="_Date">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="_OrderNumber">Order Number:</label>
+                    <input disabled type="text" class="form-control" value="@Model.OrderNumber" id="_OrderNumber" name="_OrderNumber">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="_CustomerName">Customer Name:</label>
+                    <input type="text" class="form-control" id="_CustomerName" name="_CustomerName">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="_Address">Address:</label>
+                    <input type="text" class="form-control" id="_Address" name="_Address">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="_Country">Country:</label>
+                    <select class="form-control" id="_Country" name="_Country">
+                        <option value="">Select a country</option>
+                        <option value="--">Not Specified</option>
+                        <option value="AF">Afghanistan</option>
+                        <option value="AL">Albania</option>
+                        <option value="DZ">Algeria</option>
+                        <option value="AS">American Samoa</option>
+                        <option value="AD">Andorra</option>
+                        <option value="AO">Angola</option>
+                        <option value="AI">Anguilla</option>
+                        <option value="AQ">Antarctica</option>
+                        <option value="AG">Antigua and Barbuda</option>
+                        <option value="AR">Argentina</option>
+                        <option value="AM">Armenia</option>
+                        <option value="AW">Aruba</option>
+                        <option value="AU">Australia</option>
+                        <option value="AT">Austria</option>
+                        <option value="AZ">Azerbaijan</option>
+                        <option value="BS">Bahamas</option>
+                        <option value="BH">Bahrain</option>
+                        <option value="BD">Bangladesh</option>
+                        <option value="BB">Barbados</option>
+                        <option value="BY">Belarus</option>
+                        <option value="BE">Belgium</option>
+                        <option value="BZ">Belize</option>
+                        <option value="BJ">Benin</option>
+                        <option value="BM">Bermuda</option>
+                        <option value="BT">Bhutan</option>
+                        <option value="BO">Bolivia</option>
+                        <option value="BA">Bosnia and Herzegowina</option>
+                        <option value="BW">Botswana</option>
+                        <option value="BV">Bouvet Island</option>
+                        <option value="BR">Brazil</option>
+                        <option value="IO">British Indian Ocean Territory</option>
+                        <option value="BN">Brunei Darussalam</option>
+                        <option value="BG">Bulgaria</option>
+                        <option value="BF">Burkina Faso</option>
+                        <option value="BI">Burundi</option>
+                        <option value="KH">Cambodia</option>
+                        <option value="CM">Cameroon</option>
+                        <option value="CA">Canada</option>
+                        <option value="CV">Cape Verde</option>
+                        <option value="KY">Cayman Islands</option>
+                        <option value="CF">Central African Republic</option>
+                        <option value="TD">Chad</option>
+                        <option value="CL">Chile</option>
+                        <option value="CN">China</option>
+                        <option value="CX">Christmas Island</option>
+                        <option value="CC">Cocos (Keeling) Islands</option>
+                        <option value="CO">Colombia</option>
+                        <option value="KM">Comoros</option>
+                        <option value="CG">Congo</option>
+                        <option value="CD">Congo, the Democratic Republic of the</option>
+                        <option value="CK">Cook Islands</option>
+                        <option value="CR">Costa Rica</option>
+                        <option value="CI">Cote d'Ivoire</option>
+                        <option value="HR">Croatia (Hrvatska)</option>
+                        <option value="CU">Cuba</option>
+                        <option value="CY">Cyprus</option>
+                        <option value="CZ">Czech Republic</option>
+                        <option value="DK">Denmark</option>
+                        <option value="DJ">Djibouti</option>
+                        <option value="DM">Dominica</option>
+                        <option value="DO">Dominican Republic</option>
+                        <option value="TP">East Timor</option>
+                        <option value="EC">Ecuador</option>
+                        <option value="EG">Egypt</option>
+                        <option value="SV">El Salvador</option>
+                        <option value="GQ">Equatorial Guinea</option>
+                        <option value="ER">Eritrea</option>
+                        <option value="EE">Estonia</option>
+                        <option value="ET">Ethiopia</option>
+                        <option value="FK">Falkland Islands (Malvinas)</option>
+                        <option value="FO">Faroe Islands</option>
+                        <option value="FJ">Fiji</option>
+                        <option value="FI">Finland</option>
+                        <option value="FR">France</option>
+                        <option value="FX">France, Metropolitan</option>
+                        <option value="GF">French Guiana</option>
+                        <option value="PF">French Polynesia</option>
+                        <option value="TF">French Southern Territories</option>
+                        <option value="GA">Gabon</option>
+                        <option value="GM">Gambia</option>
+                        <option value="GE">Georgia</option>
+                        <option value="DE">Germany</option>
+                        <option value="GH">Ghana</option>
+                        <option value="GI">Gibraltar</option>
+                        <option value="GR">Greece</option>
+                        <option value="GL">Greenland</option>
+                        <option value="GD">Grenada</option>
+                        <option value="GP">Guadeloupe</option>
+                        <option value="GU">Guam</option>
+                        <option value="GT">Guatemala</option>
+                        <option value="GN">Guinea</option>
+                        <option value="GW">Guinea-Bissau</option>
+                        <option value="GY">Guyana</option>
+                        <option value="HT">Haiti</option>
+                        <option value="HM">Heard and Mc Donald Islands</option>
+                        <option value="VA">Holy See (Vatican City State)</option>
+                        <option value="HN">Honduras</option>
+                        <option value="HK">Hong Kong</option>
+                        <option value="HU">Hungary</option>
+                        <option value="IS">Iceland</option>
+                        <option value="IN">India</option>
+                        <option value="ID">Indonesia</option>
+                        <option value="IR">Iran (Islamic Republic of)</option>
+                        <option value="IQ">Iraq</option>
+                        <option value="IE">Ireland</option>
+                        <option value="IL">Israel</option>
+                        <option value="IT">Italy</option>
+                        <option value="JM">Jamaica</option>
+                        <option value="JP">Japan</option>
+                        <option value="JO">Jordan</option>
+                        <option value="KZ">Kazakhstan</option>
+                        <option value="KE">Kenya</option>
+                        <option value="KI">Kiribati</option>
+                        <option value="KP">Korea, Democratic People's Republic of</option>
+                        <option value="KR">Korea, Republic of</option>
+                        <option value="KW">Kuwait</option>
+                        <option value="KG">Kyrgyzstan</option>
+                        <option value="LA">Lao People's Democratic Republic</option>
+                        <option value="LV">Latvia</option>
+                        <option value="LB">Lebanon</option>
+                        <option value="LS">Lesotho</option>
+                        <option value="LR">Liberia</option>
+                        <option value="LY">Libyan Arab Jamahiriya</option>
+                        <option value="LI">Liechtenstein</option>
+                        <option value="LT">Lithuania</option>
+                        <option value="LU">Luxembourg</option>
+                        <option value="MO">Macau</option>
+                        <option value="MK">Macedonia, The Former Yugoslav Republic of</option>
+                        <option value="MG">Madagascar</option>
+                        <option value="MW">Malawi</option>
+                        <option value="MY">Malaysia</option>
+                        <option value="MV">Maldives</option>
+                        <option value="ML">Mali</option>
+                        <option value="MT">Malta</option>
+                        <option value="MH">Marshall Islands</option>
+                        <option value="MQ">Martinique</option>
+                        <option value="MR">Mauritania</option>
+                        <option value="MU">Mauritius</option>
+                        <option value="YT">Mayotte</option>
+                        <option value="MX">Mexico</option>
+                        <option value="FM">Micronesia, Federated States of</option>
+                        <option value="MD">Moldova, Republic of</option>
+                        <option value="MC">Monaco</option>
+                        <option value="MN">Mongolia</option>
+                        <option value="MS">Montserrat</option>
+                        <option value="MA">Morocco</option>
+                        <option value="MZ">Mozambique</option>
+                        <option value="MM">Myanmar</option>
+                        <option value="NA">Namibia</option>
+                        <option value="NR">Nauru</option>
+                        <option value="NP">Nepal</option>
+                        <option value="NL">Netherlands</option>
+                        <option value="AN">Netherlands Antilles</option>
+                        <option value="NC">New Caledonia</option>
+                        <option value="NZ">New Zealand</option>
+                        <option value="NI">Nicaragua</option>
+                        <option value="NE">Niger</option>
+                        <option value="NG">Nigeria</option>
+                        <option value="NU">Niue</option>
+                        <option value="NF">Norfolk Island</option>
+                        <option value="MP">Northern Mariana Islands</option>
+                        <option value="NO">Norway</option>
+                        <option value="OM">Oman</option>
+                        <option value="PK">Pakistan</option>
+                        <option value="PW">Palau</option>
+                        <option value="PA">Panama</option>
+                        <option value="PG">Papua New Guinea</option>
+                        <option value="PY">Paraguay</option>
+                        <option value="PE">Peru</option>
+                        <option value="PH">Philippines</option>
+                        <option value="PN">Pitcairn</option>
+                        <option value="PL">Poland</option>
+                        <option value="PT">Portugal</option>
+                        <option value="PR">Puerto Rico</option>
+                        <option value="QA">Qatar</option>
+                        <option value="RE">Reunion</option>
+                        <option value="RO">Romania</option>
+                        <option value="RU">Russian Federation</option>
+                        <option value="RW">Rwanda</option>
+                        <option value="KN">Saint Kitts and Nevis</option>
+                        <option value="LC">Saint LUCIA</option>
+                        <option value="VC">Saint Vincent and the Grenadines</option>
+                        <option value="WS">Samoa</option>
+                        <option value="SM">San Marino</option>
+                        <option value="ST">Sao Tome and Principe</option>
+                        <option value="SA">Saudi Arabia</option>
+                        <option value="SN">Senegal</option>
+                        <option value="SC">Seychelles</option>
+                        <option value="SL">Sierra Leone</option>
+                        <option value="SG">Singapore</option>
+                        <option value="SK">Slovakia (Slovak Republic)</option>
+                        <option value="SI">Slovenia</option>
+                        <option value="SB">Solomon Islands</option>
+                        <option value="SO">Somalia</option>
+                        <option value="ZA">South Africa</option>
+                        <option value="GS">South Georgia and the South Sandwich Islands</option>
+                        <option value="ES">Spain</option>
+                        <option value="LK">Sri Lanka</option>
+                        <option value="SH">St. Helena</option>
+                        <option value="PM">St. Pierre and Miquelon</option>
+                        <option value="SD">Sudan</option>
+                        <option value="SR">Suriname</option>
+                        <option value="SJ">Svalbard and Jan Mayen Islands</option>
+                        <option value="SZ">Swaziland</option>
+                        <option value="SE">Sweden</option>
+                        <option value="CH">Switzerland</option>
+                        <option value="SY">Syrian Arab Republic</option>
+                        <option value="TW">Taiwan, Province of China</option>
+                        <option value="TJ">Tajikistan</option>
+                        <option value="TZ">Tanzania, United Republic of</option>
+                        <option value="TH">Thailand</option>
+                        <option value="TG">Togo</option>
+                        <option value="TK">Tokelau</option>
+                        <option value="TO">Tonga</option>
+                        <option value="TT">Trinidad and Tobago</option>
+                        <option value="TN">Tunisia</option>
+                        <option value="TR">Turkey</option>
+                        <option value="TM">Turkmenistan</option>
+                        <option value="TC">Turks and Caicos Islands</option>
+                        <option value="TV">Tuvalu</option>
+                        <option value="UG">Uganda</option>
+                        <option value="UA">Ukraine</option>
+                        <option value="AE">United Arab Emirates</option>
+                        <option value="GB" selected="selected">United Kingdom</option>
+                        <option value="US">United States</option>
+                        <option value="UM">United States Minor Outlying Islands</option>
+                        <option value="UY">Uruguay</option>
+                        <option value="UZ">Uzbekistan</option>
+                        <option value="VU">Vanuatu</option>
+                        <option value="VE">Venezuela</option>
+                        <option value="VN">Viet Nam</option>
+                        <option value="VG">Virgin Islands (British)</option>
+                        <option value="VI">Virgin Islands (U.S.)</option>
+                        <option value="WF">Wallis and Futuna Islands</option>
+                        <option value="EH">Western Sahara</option>
+                        <option value="YE">Yemen</option>
+                        <option value="YU">Yugoslavia</option>
+                        <option value="ZM">Zambia</option>
+                        <option value="ZW">Zimbabwe</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_ContactNo">Telephone Number:</label>
+                    <input type="tel" class="form-control" id="_ContactNo" name="_ContactNo">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_Email">Email:</label>
+                    <input type="email" class="form-control" id="_Email" name="_Email">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="_Note">Special Note:</label>
+                    <textarea class="form-control" id="_Note" name="_Note"></textarea>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div id="productsContainer">
+            <div class="form-group product-row">
+                <div class="input-group mb-3 ng-scope">
+                    <span style="height:35px;" class="input-group-text ng-binding"> a) </span>
+                    <input autocomplete="off" type="number" min="1" placeholder="Quantity" pattern="[0-9]+([\.,][0-9]+)?" class="form-control" aria-label="Quantity">
+                    <span style="height:35px;" class="input-group-text"> X </span>
+                    <input type="text" class="form-control w-50 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" placeholder="Product Name" aria-label="Product Name" aria-describedby="button-addon2" required="">
+                    <button type="button" class="btn btn-sm btn-danger remove-product">Remove</button>
+                </div>
+
+            </div>
+        </div>
+        <button type="button" class="btn btn-sm  btn-success" id="addProduct">Add Product</button>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_RequestedDate">Requested Delivery On:</label>
+                    <input type="text" class="form-control" placeholder="ASAP / Date" id="_RequestedDate" name="_RequestedDate">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_TotalAmount">Total Amount:</label>
+                    <div class="input-group mb-3 ng-scope">
+                        <span style="height:35px;" class="input-group-text">£ </span>
+                        <input type="number" class="form-control" placeholder="0.00" id="_TotalAmount" name="_TotalAmount">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-12" for="_PayMethod">Paid Through:</label>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group mb-3 ng-scope">
+                        <label class="input-group-text" style="height: 35px;">
+                            <input id="_CashPaidCB" type="checkbox" class="form-check" style="margin-top: 10px;">&nbsp; Cash
+                        </label>
+                        <span class="input-group-text" style="height: 35px;">£</span>
+                        <input type="number" class="form-control" placeholder="0.00" id="_CashPaid" name="_CashPaid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group mb-3 ng-scope">
+                        <label class="input-group-text" style="height: 35px;">
+                            <input id="_CardPaidCB" type="checkbox" class="form-check" style="margin-top: 10px;">&nbsp; Card
+                        </label>
+                        <span class="input-group-text" style="height: 35px;">£</span>
+                        <input type="number" class="form-control" placeholder="0.00" id="_CardPaid" name="_CardPaid">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group mb-3 ng-scope">
+                        <label class="input-group-text" style="height: 35px;">
+                            <input id="_FinancePaidCB" type="checkbox" class="form-check" style="margin-top: 10px;">&nbsp; Finance
+                        </label>
+                        <span class="input-group-text" style="height: 35px;">£</span>
+                        <input type="number" class="form-control" placeholder="0.00" id="_FinancePaid" name="_FinancePaid">
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <div style="display:none" id="FinanceRow" class="row">
+            <div class="col-md-12">
+                <div class="input-group mb-3 ng-scope">
+                    <span class="input-group-text" style="height: 35px;">Finance Company</span>
+                    <input type="text" class="form-control" placeholder="Enter Company Name" id="_FinanceCompany" name="_FinanceCompany">
+                </div>
+            </div>
+        </div>
+      
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_AmountPaid">Amount Paid:</label>
+                    <div class="input-group mb-3 ng-scope">
+                        <span style="height:35px;" class="input-group-text">£ </span>
+                        <input type="number" class="form-control" id="_AmountPaid" name="_AmountPaid">
+                    </div>
+                </div>
+               
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="_AmountBalance">Amount Balance:</label>
+                    <div class="input-group mb-3 ng-scope">
+                        <span style="height:35px;" class="input-group-text">£ </span>
+                        <input type="number" class="form-control" id="_AmountInBalance" name="_AmountInBalance">
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                <div style="border: solid 0.3px lightgreen;"  class="card">
+                    <div class="card-body">
+                        <div class="col-md-12 py-4">
+                            <p style="font-size:18px; background-color:white;">
+                                The customer going to receive the mattress as order in this delivery document, the company will be not responsible for any wrong size if it's written different in this document.
+                                Please check all details again.
+                            </p>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="termsAndConditions" name="termsAndConditions">
+
+                            <label for="termsAndConditions">I agree to terms and conditions</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="acceptanceConfirmation" name="acceptanceConfirmation">
+
+                            <label for="acceptanceConfirmation">I confirm acceptance and completion of the contract and satisfactory installation of the goods.</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="authorizePayment" name="authorizePayment">
+
+                            <label for="authorizePayment">I am happy to confirm the above and hereby authorise you to pay IMPERIAL TEAM LIMITED/IMPERIAL BAMBOO.</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="goodsReceivedConfirmation" name="goodsReceivedConfirmation">
+
+                            <label for="goodsReceivedConfirmation">I can confirm that the goods have been received and are to my satisfaction.</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="financeApplicationConfirmation" name="financeApplicationConfirmation">
+
+                            <label for="financeApplicationConfirmation">I can confirm that the details entered upon my Finance Application are true and correct and I am not aware of any change in circumstances that would affect my ability to repay this loan.</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <input type="checkbox" id="creditAgreementConfirmation" name="creditAgreementConfirmation">
+
+                            <label for="creditAgreementConfirmation">I understand that I will be bound by the terms and conditions of my credit agreement, a copy of which I have received, and I must pay a minimum monthly repayment by direct debit as stated in my credit agreement.</label>
+                        </div>
+
+                        <div style="display: flex; margin-bottom: 0.5rem; align-items: baseline; " class="form-group row">
+                            <label for="satisfactionNoteConfirmation">PLEASE NOTE: THIS SATISFACTION NOTE IS TO BE SIGNED ONLY BY THE PERSON NAMED ON THE CREDIT AGREEMENT.</label>
+                        </div>
+
+
+                    </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6">
+                <label class="text-center">Customer Signature</label>
+                <div  id="signature-pad">
+                    <canvas style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
+                    <button type="button" class="btn btn-success btn-sm btn-block" id="clear-button">Clear</button>
+                </div>
+            </div>
+
+        </div>
+      
+
+        <hr />
+        <button type="button" class="btn btn-success" id="SubmitForm">Submit</button>
+    </form>
+
+</div>
+
+<script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="~/Content/template/vendors/chart.js/Chart.min.js"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="~/Content/template/js/off-canvas.js"></script>
+<script src="~/Content/template/js/hoverable-collapse.js"></script>
+<script src="~/Content/template/js/template.js"></script>
+<script src="~/Content/template/js/settings.js"></script>
+<script src="~/Content/template/js/todolist.js"></script>
+<script>
+    $(document).ready(function () {
+        var currentLabel = 'a';
+        $("#addProduct").click(function () {
+            var currentIndex = $(".product-row").length;
+            var nextLabel = String.fromCharCode(currentLabel.charCodeAt(0) + currentIndex);
+
+            var newProductRow = `
+                <div class="fom-group product-row">
+                <div class="input-group mb-3 ng-scope">
+                <span style="height:35px;" class="input-group-text ng-binding">${nextLabel}) </span>
+                    <input name="_Products[${currentIndex}]._ProductQuantity"  autocomplete="off" type="number" min="1" placeholder="Quantity" pattern="[0-9]+([\.,][0-9]+)?" class="form-control" aria-label="Quantity">
+                    <span style="height:35px;" class="input-group-text"> X </span>
+                    <input type="text" name="_Products[${currentIndex}]._ProductName" class="form-control w-50 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" placeholder="Product Name" aria-label="Product Name" aria-describedby="button-addon2" required="">
+                    <button type="button" class="btn btn-sm btn-danger remove-product">Remove</button>
+                </div>
+                    
+                </div>
+            `;
+
+            $("#productsContainer").append(newProductRow);
+        });
+
+        $(document).on("click", ".remove-product", function () {
+            $(this).closest(".product-row").remove();
+        });
+
+        $("#SubmitForm").click(function () {
+
+            var formData = $('#deliveryForm').serialize();
+            var signatureData = signaturePad.toDataURL();
+            var combinedData = formData + '&_SignatureData=' + encodeURIComponent(signatureData);
+
+            // Send AJAX request
+            $.ajax({
+                url: '@Url.Action("SubmitDeliveryForm", "DeliveryForm")',
+                type: 'POST',
+                data: combinedData,
+                success: function (response) {
+
+                    if (response.success) {
+                        var orderId = response._id; // Assuming you receive the order ID in the JSON response
+                        window.location.href = '@Url.Action("Invoice", "DeliveryForm")' + '?id=' + orderId;
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function () {
+                    alert('An error occurred while submitting the form.');
+                }
+            });
+        });
+
+        const $totalAmount = $("#_TotalAmount");
+        const $amountBalance = $("#_AmountInBalance");
+
+        const $cashCheckbox = $("#_CashPaidCB");
+        const $cashPaid = $("#_CashPaid");
+        const $cardCheckbox = $("#_CardPaidCB");
+        const $cardPaid = $("#_CardPaid");
+        const $financeCheckbox = $("#_FinancePaidCB");
+        const $financePaid = $("#_FinancePaid");
+        const $amountPaid = $("#_AmountPaid");
+
+        
+
+
+        $totalAmount.on("input", function () {
+            const totalAmount = parseFloat($totalAmount.val()) || 0;
+            $amountBalance.val(totalAmount);
+            updateAmountPaid();
+        });
+
+        function ShowFinanceCompany() {
+            const $financeCompany = $("#FinanceRow"); // Assuming this is the ID of the element you want to show/hide
+
+            if ($financeCheckbox.is(":checked")) {
+                $financeCompany.show();
+            } else {
+                $financeCompany.hide();
+            }
+        }
+
+        $financeCheckbox.on("change", ShowFinanceCompany);
+        $cashPaid.on("input", updateAmountPaid);
+        $cardPaid.on("input", updateAmountPaid);
+        $financePaid.on("input", updateAmountPaid);
+
+        function updateAmountPaid() {
+            const totalAmount = parseFloat($totalAmount.val()) || 0;
+            const cashPaid = $cashCheckbox.is(":checked") ? parseFloat($cashPaid.val()) || 0 : 0;
+            const cardPaid = $cardCheckbox.is(":checked") ? parseFloat($cardPaid.val()) || 0 : 0;
+            const financePaid = $financeCheckbox.is(":checked") ? parseFloat($financePaid.val()) || 0 : 0;
+
+            const totalPaid = cashPaid + cardPaid + financePaid;
+            const balance = totalAmount - totalPaid;
+
+            $amountPaid.val(totalPaid.toFixed(2));
+            $amountBalance.val(balance.toFixed(2));
+        }
+
+
+    });
+
+
+
+    var signaturePad = new SignaturePad(document.querySelector('canvas'));
+
+    document.getElementById('clear-button').addEventListener('click', function () {
+        signaturePad.clear();
+    });
+
+    //document.getElementById('save-button').addEventListener('click', function () {
+    //    if (signaturePad.isEmpty()) {
+    //        alert('Please provide a signature first.');
+    //    } else {
+    //        var signatureData = signaturePad.toDataURL(); // Get the signature as a base64-encoded image
+
+    //        // You can now send `signatureData` to your ASP.NET MVC controller for further processing (e.g., generating the PDF).
+    //    }
+    //});
+
+
+
+     
+
+</script>

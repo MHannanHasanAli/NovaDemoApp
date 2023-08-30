@@ -1,0 +1,210 @@
+﻿﻿@model ImperialNova.ViewModels.ProductActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit Product
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Create Product
+                </h2>
+
+            }
+
+            <form id="actionForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="hidden" value="@Model._Id" name="ID" />
+                            <label for="name">Name:</label>
+                            <input value="@Model._Name" type="text" class="form-control" name="_Name" id="_Name" placeholder="Enter name" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Categories:</label>
+                            <select class="form-control" name="_CategoryId" id="_CategoryId">
+                                @foreach (var item in Model.Categories)
+                                {
+                                    if (item._Id == Model._CategoryId)
+                                    {
+                                        <option selected value="@item._Id">@item._CName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item._Id">@item._CName</option>
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>Product Image</label>
+
+                        <input class="form-control" value="@Model._Photo" name="Photo" id="Photo" type="hidden" />
+                        <input class="form-control" id="PhotoUpload" name="PhotoUpload" type="file" accept=".png, .jpg, .jpeg" />
+
+                        <div class="thumb">
+                            <img style="height:100px; width:100px" class="img-thumbnail img-fluid" id="PhotoImg" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Size">Size:</label>
+                            <input value="@Model._Size" type="text" class="form-control" name="_Size" id="_Size" placeholder="Enter size" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Color">Color:</label>
+                            <input value="@Model._Color" type="text" class="form-control" name="_Color" id="_Color" placeholder="Enter color" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Cost">Cost:</label>
+                            <input value="@Model._Cost" type="number" class="form-control" name="_Cost" id="_Cost" placeholder="Enter cost" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_SKU">SKU:</label>
+                            <input value="@Model._SKU" type="text" class="form-control" name="_SKU" id="_SKU" placeholder="Enter SKU" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Weight">Weight:</label>
+                            <input value="@Model._Weight" type="text" class="form-control" name="_Weight" id="_Weight" placeholder="Enter weight" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Thickness">Thickness:</label>
+                            <input value="@Model._Thickness" type="text" class="form-control" name="_Thickness" id="_Thickness" placeholder="Enter thickness" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_Variations">Variations:</label>
+                            <input value="@Model._Variations" type="number" class="form-control" name="_Variations" id="_Variations" placeholder="Enter variations" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_RetailPrice">Retail Price:</label>
+                            <input value="@Model._RetailPrice" type="number" class="form-control" name="_RetailPrice" id="_RetailPrice" placeholder="Enter retail price" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_OpeningStock">Opening Stock:</label>
+                            <input value="@Model._OpeningStock" type="number" class="form-control" name="_OpeningStock" id="_OpeningStock" placeholder="Enter Opening Stock" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="_Notes">Notes:</label>
+                            <textarea class="form-control" name="_Notes" id="_Notes" placeholder="Enter notes">@Model._Notes</textarea>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+                </div>
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div style="background-Product:white;" class="card-footer">
+            @if (Model._Id != 0)
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <a href="@Url.Action("Index","Product")" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        </div>
+    </div>
+}
+
+<script>
+
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Product")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Product")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#PhotoUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#Photo").val(response.DocURL);
+                    $("#PhotoImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

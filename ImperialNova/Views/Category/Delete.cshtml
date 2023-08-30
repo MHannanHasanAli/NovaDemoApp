@@ -1,0 +1,51 @@
+﻿﻿@model ImperialNova.ViewModels.CategoryActionViewModel
+@{
+    ViewBag.Title = "_Delete";
+}
+
+@if (Model != null)
+{
+    <div class="card-content">
+        <div class="card-header">
+            <h5 class="card-title">
+                <span>Delete Category</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="card" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="card-body">
+            <form id="actionForm">
+                <input type="hidden" name="_Id" value="@Model._Id" />
+            </form>
+            <div class="alert alert-danger" role="alert">
+                Are you sure you want to delete this Category?
+            </div>
+        </div>
+        <div class="card-footer">
+            <a id="actionButton" type="button" class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</a>
+            <a href="~/Category/Index" type="button" class="btn btn-secondary" ><i class="fas fa-times mr-1"></i> Close</a>
+        </div>
+    </div>
+}
+
+<script>
+    console.log("OPENED")
+    $("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Delete", "Category")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.success)
+            {
+                alert("Deleted Successfully");
+				window.location.href = "@Url.Action("Index", "Category")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+	});
+</script>

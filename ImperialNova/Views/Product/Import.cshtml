@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Import";
+}
+<script src="https://www.appelsiini.net/download/jquery.jeditable.js"></script>
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.BeginForm("Import", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.Raw(ViewBag.Error)
+            <span>
+                Excel File
+            </span>
+            <input class="form-control" type="file" name="excelfile" />
+            <br />
+            <input class="btn btn-block btn-outline-primary" type="submit" value="Import" />
+            <br />
+        }
+        <a class="btn btn-block btn-outline-success" href="@Url.Action("Index","Product")">Back to Products</a>
+
+
+        @if (ViewBag.Products != null)
+        {
+            <table class="table table-responsive" cellpadding="2" cellspacing="2" border="1">
+                <tr>
+                    <th>
+                        Product
+                    </th>
+                    <th>
+                        Status
+                    </th>
+
+                </tr>
+                @foreach (var item in ViewBag.Products)
+                {
+                    <tr>
+                        <td>@item._Name</td>
+                        <td>IMPORTED</td>
+
+
+                    </tr>
+                }
+            </table>
+        }
+
+
+    </div>
+</div>
+

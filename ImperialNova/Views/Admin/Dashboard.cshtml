@@ -1,0 +1,219 @@
+﻿@model ImperialNova.ViewModels.AdminViewModel
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0/dist/chartjs-adapter-moment.min.js"></script>
+
+
+</head>
+<style>
+    .scroll {
+        overflow-x: scroll;
+        width: contain;
+    }
+
+    td {
+        width: 200px;
+    }
+
+</style>
+<h2>Dashboard</h2>
+<hr />
+<div class="row">
+    <div class="card  col-md-12">
+        <div class="card-body">
+            <h4 class="card-title">
+                Hi, Admin
+            </h4>
+            <div class="row">
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Action","Inventory")'" class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Inventory In</p>
+                                    <h3 class="mb-0">@Model.InventoryIn</h3>
+                                </div>
+                                <i class="mdi mdi-briefcase-download icon-xl text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("ActionOut","Inventory")'" class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Inventory Out</p>
+                                    <h3 class="mb-0">@Model.InventoryOut</h3>
+                                </div>
+                                <i class="mdi mdi-briefcase-upload icon-xl text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Inventory")'" class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Current Stock</p>
+                                    <h3 class="mb-0">@Model.CurrentStock</h3>
+                                </div>
+                                <i class="mdi mdi-store icon-xl text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Active Product</p>
+                                    <h3 class="mb-0">@Model.ActiveProducts</h3>
+                                </div>
+                                <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="card">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Low Stock Product</p>
+                                    <h3 class="mb-0">@Model.LowStockAlert</h3>
+                                </div>
+                                <svg style="height: 50px; margin: 10px;" class="icon-xl text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    
+</div>
+<hr />
+<div class="row">
+    <div class="card col-md-12">
+        <div class="card-body">
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="card col-md-12">
+        <div class="card-header bg-gradient-danger">
+            Low Stock Products
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            SKU
+                        </th>
+                        <th>
+                            Product
+                        </th>
+                        <th>
+                            Stock
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.LowStockProducts)
+                    {
+                        <tr>
+                            <td>@item._SKU</td>
+                            <td>@item._Name</td>
+                            <td>@item._Quantity</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
+<script>
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
+      var dataPoints = @Html.Raw(ViewBag.DataPoints);
+
+    dataPoints.forEach(dp => {
+        dp.Month = new Date(dp.Month);
+        dp.Month.setHours(0, 0, 0, 0); // Reset time to the beginning of the day
+    });
+
+    var ctx = document.getElementById('lineChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dataPoints.map(dp => dp.Month),
+            datasets: [{
+                label: 'Quantity In',
+                data: dataPoints.map(dp => ({ x: dp.Month, y: dp.QuantityIn })),
+                borderColor: 'rgb(75, 192, 192)',
+                fill: false
+            }, {
+                label: 'Quantity Out',
+                data: dataPoints.map(dp => ({ x: dp.Month, y: dp.QuantityOut })),
+                borderColor: 'rgb(192, 75, 75)',
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM YYYY'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Exported Month'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Quantity'
+                    }
+                }
+            }
+        }
+    });
+</script>
+

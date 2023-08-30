@@ -1,0 +1,79 @@
+﻿﻿@model ImperialNova.ViewModels.LocationActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit Location
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Create Location
+                </h2>
+
+            }
+
+            <form id="actionForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="hidden" value="@Model._Id" name="_Id" />
+                            <label for="name">Name:</label>
+                            <input value="@Model._LocationName" type="text" class="form-control" name="_LocationName" id="_LocationName" placeholder="Enter name" />
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div style="background-color:white;" class="card-footer">
+            @if (Model._Id != 0)
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
+            }
+            else
+            {
+                <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
+            }
+            <a href="@Url.Action("Index","Location")" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        </div>
+    </div>
+}
+
+<script>
+
+	$("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Location")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Location")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+</script>

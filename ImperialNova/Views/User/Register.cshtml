@@ -1,0 +1,112 @@
+﻿@model ImperialNova.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+<style>
+    label{
+        color:black;
+    }
+
+    #cardregister {
+        margin-top:20px;
+        background-color: #F4F5FA;
+    }
+    .container-form{
+        margin-top: 50px;
+        width: 500px;
+    }
+    #registerbtn {
+        margin-left: 115px;
+        width: 330px;
+    }
+</style>
+
+<div id="cardregister" class="card-content">
+    <div class="card-header">
+        <h5 class="card-title">
+            <h2>Add User</h2>
+        </h5>
+    </div>
+    <div class="container container-form">
+        <div class="card-body">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Full Name</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Role</label>
+                            <div class="col-sm-9">
+                                <select name="RoleID" class="form-control">
+                                    @foreach (var item in Model.Roles)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label style="padding-top: 0px;" class="col-sm-3 col-form-label">Confirm Password</label>
+                            <div class="col-sm-9">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Contact</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.Contact, new { @class = "form-control" })
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit" style="color:white;" class="btn btn-success" id="registerbtn" value="Register" />
+
+            }
+
+
+        </div>
+    </div>
+</div>
+   
+
+

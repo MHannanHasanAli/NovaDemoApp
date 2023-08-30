@@ -1,0 +1,452 @@
+﻿﻿@model ImperialNova.ViewModels.InventoryActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+
+
+<div class="card">
+
+    <div class="card-body">
+        @if (Model._Id != 0)
+        {
+            <h2 class="card-title">
+                Edit Inventory
+            </h2>
+
+        }
+        else
+        {
+            <h2 class="card-title">
+                Add Stock
+            </h2>
+
+        }
+
+        <form id="actionForm">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="hidden" value="@Model._Id" name="ID" />
+                        <label for="name">Store:</label>
+                        <select onchange="dropdownfiller()" class="form-control" name="_Store" id="_Store">
+                            @foreach (var item in Model.Locations)
+                            {
+                                <option selected value="@item._LocationName">@item._LocationName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="name">Products:</label>
+                        <select class="form-control" name="_ProductId" id="_ProductId">
+                            @*@foreach (var item in Model.Products)
+                                {
+                                    <option selected value="@item._Id">@item._Name | @item._Size | @item._Color | Cost: £@item._Cost | Retail: £@item._RetailPrice | Available Units: @item._Quantity</option>
+                                }*@
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="_Cost">Quantity:</label>
+                        <input value="@Model._QuantityIn" type="number" class="form-control" name="_QuantityIn" id="_QuantityIn" placeholder="Enter cost" />
+                    </div>
+                    <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="_Notes">Notes:</label>
+                        <textarea class="form-control" name="_Notes" id="_Notes" placeholder="Enter notes"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 table-responsive">
+                    <table class="table" id="ProductsTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Product ID
+                                </th>
+                                <th>
+                                    Product Name
+                                </th>
+                                <th>
+                                    Size
+                                </th>
+                                <th>
+                                    Color
+                                </th>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th>
+                                        Cost Price
+                                    </th>
+                                    <th>
+                                        Retail Price
+                                    </th>
+                                }
+                                <th>Quantity In</th>
+                                <th>Quantity Out</th>
+                                <th>
+                                    Notes
+                                </th>
+                                <th>
+                                    Store
+                                </th>
+
+                                <th hidden>
+                                    Category
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="errorDiv">
+
+    </div>
+
+
+
+    <div style="background-color:white;" class="card-footer">
+
+        <button id="actionButton" type="button" class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-save mr-1"></i> SAVE STOCK</button>
+        <a href="@Url.Action("Index","Inventory")" class="btn btn-secondary btn-sm btn-rounded" " data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+    </div>
+
+
+</div>
+
+
+@if (User.IsInRole("Admin"))
+{
+    <script>
+
+    $(document).ready(function () {
+
+
+
+    });
+            function dropdownfiller() {
+                var selectedLocation = $("#_Store").val();
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetProductInventoryJson", "Inventory")',
+                data: { location: selectedLocation },
+                success: function (response) {
+                    populateProductsDropdown(response);
+                    console.log("Location updated on the server.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating location: " + error);
+                }
+            });
+        }
+
+    function populateProductsDropdown(products) {
+        var productsDropdown = $("#_ProductId");
+        productsDropdown.empty();
+
+        // Add options to the dropdown based on the products data
+        products.forEach(function (product) {
+            var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Cost: £${product._Cost} | Retail: £${product._RetailPrice} | Available Units: ${product._Quantity}`;
+
+            productsDropdown.append($("<option>", { value: product._ProductId, text: optionText }));
+        });
+    }
+    function appendProductToTable(product,quantityin,store,Notes) {
+        var row = `
+                <tr>
+                    <td>${product._Id}</td>
+                    <td>${product._Name}</td>
+                    <td>${product._Size}</td>
+                    <td>${product._Color}</td>
+                    <td>£${product._Cost}</td>
+                    <td>£${product._RetailPrice}</td>
+                    <td>${quantityin}</td>
+                    <td>${product._QuantityOut}</td>
+                    <td>${Notes}</td>
+                    <td>${store}</td>
+                    <td hidden>${product._CategoryId}</td>
+                    <td></td>
+                </tr>
+            `;
+
+        $('#ProductsTable tbody').append(row);
+    }
+
+
+
+    $("#AdddToTableBtn").click(function () {
+        var ProductID = $("#_ProductId").val();
+        var QuantityIn = $("#_QuantityIn").val();
+        var Store = $("#_Store").val();
+        var Notes = $('#_Notes').val();
+        
+        $.ajax({
+            url: '@Url.Action("GetProductJson", "Inventory")',  // Replace with the actual URL of your controller
+            method: 'GET',
+            data: { ID: ProductID },
+            success: function (data) {
+                appendProductToTable(data, QuantityIn,Store,Notes);
+
+
+            },
+            error: function () {
+                $('#productDetails').html('<p>Failed to fetch product details.</p>');
+            }
+        });
+
+
+    });
+
+    $("#actionButton").click(function () {
+        var products = [];
+
+        $('#ProductsTable tbody tr').each(function () {
+
+            var product = {
+                _ProductId: $(this).find('td:eq(0)').text(),
+                _Name: $(this).find('td:eq(1)').text(),
+                _Size: $(this).find('td:eq(2)').text(),
+                _Color: $(this).find('td:eq(3)').text(),
+                _Cost: $(this).find('td:eq(4)').text(),
+                _RetailPrice: $(this).find('td:eq(5)').text(),
+                _QuantityIn: $(this).find('td:eq(6)').text(),
+                _QuantityOut: $(this).find('td:eq(7)').text(),
+                _Notes: $(this).find('td:eq(8)').text(),
+                _Store: $(this).find('td:eq(9)').text(),
+                _CategoryId: $(this).find('td:eq(10)').text()
+            };
+
+
+            products.push(product);
+        });
+        var productsJson = JSON.stringify(products);
+
+
+		$.ajax({
+			url: '@Url.Action("Action", "Inventory")',
+			type: "post",
+            data: { products: productsJson }, // Send serialized string as parameter
+        })
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Inventory")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#PhotoUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#Photo").val(response.DocURL);
+                    $("#PhotoImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+    </script>
+}
+else
+{
+    <script>
+
+    $(document).ready(function () {
+
+
+
+    });
+            function dropdownfiller() {
+                var selectedLocation = $("#_Store").val();
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetProductInventoryJson", "Inventory")',
+                data: { location: selectedLocation },
+                success: function (response) {
+                    populateProductsDropdown(response);
+                    console.log("Location updated on the server.");
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating location: " + error);
+                }
+            });
+        }
+
+    function populateProductsDropdown(products) {
+        
+        var productsDropdown = $("#_ProductId");
+        productsDropdown.empty();
+
+        // Add options to the dropdown based on the products data
+        products.forEach(function (product) {
+            
+            var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Available Units: ${product._Quantity}`;
+
+            productsDropdown.append($("<option>", { value: product._ProductId, text: optionText }));
+        });
+    }
+    function appendProductToTable(product,quantityin,store,Notes) {
+        var row = `
+                <tr>
+                    <td>${product._Id}</td>
+                    <td>${product._Name}</td>
+                    <td>${product._Size}</td>
+                    <td>${product._Color}</td>
+                    <td hidden>£${product._Cost}</td>
+                    <td hidden>£${product._RetailPrice}</td>
+                    <td>${quantityin}</td>
+                    <td>${product._QuantityOut}</td>
+                    <td>${Notes}</td>
+                    <td>${store}</td>
+                    <td hidden>${product._CategoryId}</td>
+                    <td></td>
+                </tr>
+            `;
+
+        $('#ProductsTable tbody').append(row);
+    }
+
+
+
+    $("#AdddToTableBtn").click(function () {
+        var ProductID = $("#_ProductId").val();
+        var QuantityIn = $("#_QuantityIn").val();
+        var Store = $("#_Store").val();
+        var Notes = $('#_Notes').val();
+        $.ajax({
+            url: '@Url.Action("GetProductJson", "Inventory")',  // Replace with the actual URL of your controller
+            method: 'GET',
+            data: { ID: ProductID },
+            success: function (data) {
+                appendProductToTable(data, QuantityIn,Store,Notes);
+
+
+            },
+            error: function () {
+                $('#productDetails').html('<p>Failed to fetch product details.</p>');
+            }
+        });
+
+
+    });
+
+    $("#actionButton").click(function () {
+        var products = [];
+
+        $('#ProductsTable tbody tr').each(function () {
+
+            var product = {
+                _ProductId: $(this).find('td:eq(0)').text(),
+                _Name: $(this).find('td:eq(1)').text(),
+                _Size: $(this).find('td:eq(2)').text(),
+                _Color: $(this).find('td:eq(3)').text(),
+                _Cost: $(this).find('td:eq(4)').text(),
+                _RetailPrice: $(this).find('td:eq(5)').text(),
+                _QuantityIn: $(this).find('td:eq(6)').text(),
+                _QuantityOut: $(this).find('td:eq(7)').text(),
+                _Notes: $(this).find('td:eq(8)').text(),
+                _Store: $(this).find('td:eq(9)').text(),
+                _CategoryId: $(this).find('td:eq(10)').text()
+            };
+
+
+            products.push(product);
+        });
+        var productsJson = JSON.stringify(products);
+
+
+		$.ajax({
+			url: '@Url.Action("Action", "Inventory")',
+			type: "post",
+            data: { products: productsJson }, // Send serialized string as parameter
+        })
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Inventory")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#PhotoUpload").change(function () {
+
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("Photo", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#Photo").val(response.DocURL);
+                    $("#PhotoImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+    </script>
+}

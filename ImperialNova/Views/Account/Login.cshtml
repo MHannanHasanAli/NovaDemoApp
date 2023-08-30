@@ -1,0 +1,93 @@
+﻿@using ImperialNova.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Imperial Nova System</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
+    <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Add Bootstrap JS (Optional, for components that require JavaScript) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<style>
+
+    .login-container {
+        display: flex;
+        width: 450px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 155px;
+    }
+    #exampleInputEmail1,
+    #exampleInputPassword1,
+    #signinbutton {
+        width: 328px;
+        margin-top: 10px;
+    }
+    hr {
+        border: 1px solid black;
+        width: 324px;
+        opacity: 0.2;
+    }
+    h6 .signin {
+        margin-top: 16px;
+    }
+    .forgotpassword{
+        background: none;
+        padding: auto;
+    }
+</style>
+
+
+ <div class="container login-container">
+                        <div>
+                            <img src="~/Content/adminTemplate/dist/img/logo.png" />
+                        </div>
+     <hr />
+                        <h6 class="signin">Sign in to start your session.</h6>
+                        <div id="loginForm">
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" placeholder="Username/Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" name="password" placeholder="Password">
+                                </div>
+                                <div class="mt-3">
+                                    <button type="submit" id="signinbutton" class="btn btn-success">SIGN IN</button>
+                                </div>
+
+
+
+                            }
+                        <a  href="@Url.Action("Register","Account")" class="forgotpassword"> I forgot my Password</a>
+                    </div>          
+
+<script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>
+<!-- endinject -->
+<!-- inject:js -->
+<script src="~/Content/template/js/off-canvas.js"></script>
+<script src="~/Content/template/js/hoverable-collapse.js"></script>
+<script src="~/Content/template/js/template.js"></script>
+<script src="~/Content/template/js/settings.js"></script>
+<script src="~/Content/template/js/todolist.js"></script>

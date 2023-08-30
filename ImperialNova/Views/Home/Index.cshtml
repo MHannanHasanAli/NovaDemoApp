@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Stock History</h1>
+<div id="userListContainer" class="container mt-4">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Color</th>
+                <th>Cost</th>
+                <th>Quantity Available</th>
+                <th>Made By</th>
+            </tr>
+        </thead>
+        <tbody id="table_data">
+        </tbody>
+    </table>
+    <nav id="paginationContainer">
+        <ul id="pagination" class="pagination justify-content-center"></ul>
+    </nav>
+</div>
+    <script>
+        $(document).ready(function () {
+            UserShow();
+        });
+
+        function UserShow() {
+            $.ajax({
+                url: '/Home/InventoryIndex',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json;charset=utf-8;',
+                success: function (result) {
+                    var object = '';
+                    var count = 0;
+                    $.each(result, function (index, item) {
+                        object += '<tr id="row_' + (count + 1) + '">';
+                        object += '<td>' + item._Name + '</td>';
+                        object += '<td>' + item._Size + '</td>';
+                        object += '<td>' + item._Color + '</td>';
+                        object += '<td>' + item._Cost + '</td>';
+                        object += '<td>' + item._Quantity + '</td>';
+                        object += '<td>' + item._UserFullName + '</td>';
+                        object += '</tr>';
+                        count++;
+                    });
+                    $('#table_data').html(object);
+
+                    if (count > 6) {
+                        pagination();
+                    }
+                },
+                error: function () {
+                    // Handle error if necessary
+                }
+            });
+        }
+
+        function pagination() {
+            var table = $('#table_data');
+            var rowsPerPage = 5; // Number of rows to show per page
+
+            var totalRows = table.find('tr').length;
+            if (totalRows <= rowsPerPage) {
+                // No need for pagination if the total rows do not exceed the limit
+                return;
+            }
+
+            var totalPages = Math.ceil(totalRows / rowsPerPage);
+            var currentPage = 1;
+
+            // Clear existing pagination links
+            $('#pagination').empty();
+
+            // Show "Previous" button with arrow icon
+            $('#pagination').append('<li class="page-item" id="previousPage"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&lt;</span></a></li>');
+
+            // Show "Next" button with arrow icon
+            $('#pagination').append('<li class="page-item" id="nextPage"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&gt;</span></a></li>');
+
+            // Show the first page by default
+            showPage(currentPage);
+
+            // Handle click event on "Previous" and "Next" buttons
+            $('#previousPage').on('click', function () {
+                if (currentPage > 1) {
+                    showPage(--currentPage);
+                }
+            });
+
+            $('#nextPage').on('click', function () {
+                if (currentPage < totalPages) {
+                    showPage(++currentPage);
+                }
+            });
+
+            function showPage(pageNumber) {
+                var startIndex = (pageNumber - 1) * rowsPerPage;
+                var endIndex = startIndex + rowsPerPage;
+                table.find('tr').hide().slice(startIndex, endIndex).show();
+
+                // Update active state of pagination buttons
+                $('#previousPage').toggleClass('disabled', currentPage === 1);
+                $('#nextPage').toggleClass('disabled', currentPage === totalPages);
+            }
+        }
+    </script>
+
