@@ -24,14 +24,15 @@
         </div>
         <div class="card-footer">
             <a id="actionButton" type="button" class="btn btn-danger"><i class="fas fa-trash-alt mr-1"></i> Delete</a>
-            <a href="~/Category/Index" type="button" class="btn btn-secondary" ><i class="fas fa-times mr-1"></i> Close</a>
+            <a href="~/Category/Index" type="button" class="btn btn-secondary"><i class="fas fa-times mr-1"></i> Close</a>
         </div>
     </div>
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    console.log("OPENED")
     $("#actionButton").click(function () {
+        alert("Clcked");
 		$.ajax({
 			url: '@Url.Action("Delete", "Category")',
 			type: "post",

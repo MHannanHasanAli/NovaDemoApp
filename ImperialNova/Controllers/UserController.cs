@@ -157,7 +157,7 @@ namespace ImperialNova.Controllers
 
             model.ID = user.Id;
 
-            return PartialView("_Delete", model);
+            return View("Delete", model);
         }
 
         [HttpPost]
@@ -196,7 +196,7 @@ namespace ImperialNova.Controllers
 
             model.UserRoles = RolesManager.Roles.Where(x => userRoleIDs.Contains(x.Id)).ToList();
             model.Roles = RolesManager.Roles.Where(x => !userRoleIDs.Contains(x.Id)).ToList();
-            return PartialView("_UserRoles", model);
+            return View("UserRoles", model);
         }
 
 

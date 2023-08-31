@@ -2813,12 +2813,12 @@
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Action.cshtml" />
     <Content Include="Views\User\_Listing.cshtml" />
-    <Content Include="Views\User\_Delete.cshtml" />
+    <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\_Listing.cshtml" />
+    <Content Include="Views\Role\Listing.cshtml" />
     <Content Include="Views\Role\Action.cshtml" />
     <Content Include="Views\Role\Delete.cshtml" />
-    <Content Include="Views\User\_UserRoles.cshtml" />
+    <Content Include="Views\User\UserRoles.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\DeliveryForm\Index.cshtml" />

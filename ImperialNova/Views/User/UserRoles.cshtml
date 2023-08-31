@@ -2,18 +2,18 @@
 
 @if (Model != null)
 {
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">
+    <div class="card-content">
+        <div class="card-header">
+            <h5 class="card-title">
                
                     <span>User Roles</span>
                 
             </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="card" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body">
+        <div class="card-body">
             @if (Model.UserRoles != null && Model.UserRoles.Count() > 0)
             {
                 <table class="table">
@@ -32,7 +32,7 @@
                                     @role.Name
                                 </td>
                                 <td>
-                                    <button data-href="@Url.Action("UserRoleOperation", "User", new { userID = Model.UserID, roleID = role.Id, isDelete = true })" type="button" class="btnRoleOperation btn btn-danger"><i class="fas fa-user-times mr-1"></i> Delete</button>
+                                    <a href="@Url.Action("UserRoleOperation", "User", new { userID = Model.UserID, roleID = role.Id, isDelete = true })" type="button" class="btnRoleOperation btn btn-danger"><i class="fas fa-user-times mr-1"></i> Delete</a>
                                 </td>
                             </tr>
                         }
@@ -64,7 +64,7 @@
                                     @role.Name
                                 </td>
                                 <td>
-                                    <button data-href="@Url.Action("UserRoleOperation", "User", new {userID = Model.UserID, roleID = role.Id })" type="button" class="btnRoleOperation btn btn-success btn-icon-text" ><i class="mdi mdi-account-details"></i>Assign</button>
+                                    <a href="@Url.Action("UserRoleOperation", "User", new {userID = Model.UserID, roleID = role.Id })" type="button" class="btnRoleOperation btn btn-success btn-icon-text" ><i class="mdi mdi-account-details"></i>Assign</a>
 
                                 </td>
                             </tr>
@@ -86,11 +86,11 @@
     
     </div>
 }
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(".btnRoleOperation").click(function () {
         $.ajax({
-            url: $(this).attr("data-href"),
+            url: $(this).attr("href"),
             type:"POST"
         })
             .done(function (response) {
@@ -100,7 +100,7 @@
                         url: "@Url.Action("UserRoles", "User", new { ID = Model.UserID })",
                     })
                         .done(function (response) {
-                            $("#actionModal .modal-dialog").html(response);
+                            $("#actioncard").html(response);
                         });
                 }
                 else
