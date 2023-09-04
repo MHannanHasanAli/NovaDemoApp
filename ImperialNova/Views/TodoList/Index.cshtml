@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+    }
+
+    .todo-container {
+        max-width: 100%;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    input[type="text"] {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .delete {
+        color: #ff0000;
+        cursor: pointer;
+    }
+    .edit {
+        color: blue;
+        margin-right: 0; /* Remove the default margin */
+    }
+
+    .edit:hover {
+        color: black;
+    }
+
+</style>
+<div class="todo-container">
+    <h1>Todo List</h1>
+    <div class="task-input">
+        <input type="text" id="task" placeholder="Add a new task...">
+        <input type="date" id="task-date">
+        <input type="file" id="file-upload" accept=".pdf, .doc, .docx, .txt, .xls, .xlsx, .png, .jpg, .jpeg">
+        <button id="add-task">Add</button>
+    </div>
+    <ul id="task-list"></ul>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="script.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#add-task').click(function () {
+            var taskText = $('#task').val();
+            var taskDate = $('#task-date').val();
+            var fileInput = document.getElementById('file-upload');
+            var fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+
+            if (taskText !== '' && taskDate !== '') {
+                var listItem = $('<li><div><input type="checkbox"><span>' + taskText + ' (Due: ' + taskDate + ') - File: ' + fileName + '</span></div><div><i class="fas fa-edit edit"></i><i class="fas fa-trash-alt delete"></i></div></li>');
+                $('#task-list').append(listItem);
+                $('#task').val('');
+                $('#task-date').val('');
+                fileInput.value = ''; // Clear the file input
+            } else {
+                alert('Please enter both a task and a date.');
+            }
+        });
+
+        $('#task-list').on('change', 'input[type="checkbox"]', function () {
+            var taskText = $(this).next('span');
+            if (this.checked) {
+                taskText.css('text-decoration', 'line-through');
+            } else {
+                taskText.css('text-decoration', 'none');
+            }
+        });
+
+        // Change the color of the dustbin icon when hovered
+        $('#task-list').on('mouseenter', '.delete', function () {
+            $(this).css('color', 'black');
+        });
+
+        $('#task-list').on('mouseleave', '.delete', function () {
+            $(this).css('color', 'red');
+        });
+
+        // Add edit functionality
+        $('#task-list').on('click', '.edit', function () {
+            var taskText = $(this).prev('span');
+            var newText = prompt('Edit Task:', taskText.text());
+
+            if (newText !== null) {
+                taskText.text(newText);
+            }
+        });
+    });
+
+
+</script>
+

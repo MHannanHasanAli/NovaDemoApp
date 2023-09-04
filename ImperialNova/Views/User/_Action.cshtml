@@ -2,9 +2,9 @@
 
 @if (Model != null)
 {
-    <div class="card-content">
-        <div class="card-header">
-            <h5 class="card-title">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
                 @if (!string.IsNullOrEmpty(Model.ID))
                 {
                     <span>Edit User</span>
@@ -14,11 +14,11 @@
             <span>Create User</span>
                 }
             </h5>
-            @*<button type="button" class="close" data-dismiss="card" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
-            </button>*@
+            </button>
         </div>
-        <div class="card-body">
+        <div class="modal-body">
             <form id="actionForm">
                 <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="form-group">
@@ -56,8 +56,12 @@
 
 
             </form>
+
+            <div class="errorDiv">
+
+            </div>
         </div>
-        <div class="card-footer">
+        <div class="modal-footer">
             @if (!string.IsNullOrEmpty(Model.ID))
             {
                 <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Update</button>
@@ -66,11 +70,11 @@
             {
                 <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i> Save</button>
             }
-            <button type="button" class="btn btn-secondary" data-dismiss="card"><i class="fas fa-times mr-1"></i> Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</button>
         </div>
     </div>
 }
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
 	$("#actionButton").click(function () {
 		$.ajax({
@@ -81,7 +85,7 @@
 		.done(function (response) {
 			if(response.Success)
 			{
-				window.location.href = "@Url.Action("Index", "User")";
+				location.reload();
 			}
 			else {
 				$(".errorDiv").html(response.Message);

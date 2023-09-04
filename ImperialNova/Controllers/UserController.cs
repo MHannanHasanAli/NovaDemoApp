@@ -86,7 +86,7 @@ namespace ImperialNova.Controllers
         public ActionResult Register(RegisterViewModel model)
         {
             model.Roles = RolesManager.Roles.ToList();
-            return View("Register", model);
+            return PartialView("_Register", model);
         }
 
         [HttpGet]
@@ -106,7 +106,7 @@ namespace ImperialNova.Controllers
                 model.Role = user.Role;
                 model.Password = user.Password;
             }
-            return View("Action", model);
+            return PartialView("_Action", model);
         }
 
 
@@ -157,7 +157,7 @@ namespace ImperialNova.Controllers
 
             model.ID = user.Id;
 
-            return View("Delete", model);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]
@@ -196,7 +196,7 @@ namespace ImperialNova.Controllers
 
             model.UserRoles = RolesManager.Roles.Where(x => userRoleIDs.Contains(x.Id)).ToList();
             model.Roles = RolesManager.Roles.Where(x => !userRoleIDs.Contains(x.Id)).ToList();
-            return View("UserRoles", model);
+            return PartialView("_UserRoles", model);
         }
 
 
@@ -244,7 +244,7 @@ namespace ImperialNova.Controllers
         {
             InventoryListingViewModel model = new InventoryListingViewModel();
             model.inventories = InventoryBackupsServices.Instance.GetInventoryBackup();
-            return View(model);
+            return PartialView(model);
         }
 
         [HttpPost]

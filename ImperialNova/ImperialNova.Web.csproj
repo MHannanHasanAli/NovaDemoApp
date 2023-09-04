@@ -281,14 +281,18 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DeliveryFormController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReminderController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
+    <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="Global.asax.cs">
@@ -303,10 +307,13 @@
     <Compile Include="ViewModels\AdminViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\DeliveryFormViewModel.cs" />
+    <Compile Include="ViewModels\DocumentsViewModel.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="ViewModels\LocationViewModel.cs" />
+    <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\RolesViewModel.cs" />
+    <Compile Include="ViewModels\TodoListViewModel.cs" />
     <Compile Include="ViewModels\UsersViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2809,16 +2816,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\User\Register.cshtml" />
-    <Content Include="Views\User\Action.cshtml" />
-    <Content Include="Views\User\_Listing.cshtml" />
-    <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\Listing.cshtml" />
     <Content Include="Views\Role\Action.cshtml" />
     <Content Include="Views\Role\Delete.cshtml" />
-    <Content Include="Views\User\UserRoles.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\DeliveryForm\Index.cshtml" />
@@ -2833,7 +2834,6 @@
     <Content Include="Views\Product\_Delete.cshtml" />
     <Content Include="Views\DeliveryForm\Listing.cshtml" />
     <Content Include="Views\Product\Import.cshtml" />
-    <Content Include="Views\User\Dashboard.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Inventory\_Delete.cshtml" />
     <Content Include="Views\Inventory\Action.cshtml" />
@@ -2841,11 +2841,25 @@
     <Content Include="Views\Inventory\Transfer.cshtml" />
     <Content Include="Views\DeliveryForm\_Delete.cshtml" />
     <Content Include="Views\Admin\StockHistory.cshtml" />
+    <Content Include="Views\TodoList\Index.cshtml" />
+    <Content Include="Views\Notifications\Index.cshtml" />
+    <Content Include="Views\Notifications\Delete.cshtml" />
+    <Content Include="Views\Notifications\DeleteAll.cshtml" />
+    <Content Include="Views\Documents\Index.cshtml" />
+    <Content Include="Views\Documents\Action.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\_Action.cshtml" />
+    <Content Include="Views\User\_Delete.cshtml" />
+    <Content Include="Views\User\_Listing.cshtml" />
+    <Content Include="Views\User\_Register.cshtml" />
+    <Content Include="Views\User\_UserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Photos\" />
+    <Folder Include="Views\Document\" />
     <Folder Include="Views\Manager\" />
+    <Folder Include="Views\Reminder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

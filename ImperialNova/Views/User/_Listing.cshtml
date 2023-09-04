@@ -2,27 +2,6 @@
 @{
     ViewBag.Title = "Index";
 }
-<style>
-    .delete {
-        padding-top: 5px;
-        padding-right: 9px;
-        padding-bottom: 5px;
-        border: 1px solid red;
-    }
-
-    .edit {
-        padding-top: 5px;
-        padding-right: 9px;
-        padding-bottom: 5px;
-        border: 1px solid blue;
-    }
-    .role {
-        padding-top: 5px;
-        padding-right: 9px;
-        padding-bottom: 5px;
-        border: 1px solid green;
-    }
-</style>
 <div class="row">
 
     <div class="col-lg-12 grid-margin stretch-card">
@@ -58,9 +37,9 @@
                                     <td>@item.Email</td>
                                     <td>@item.PhoneNumber</td>
                                     <td>
-                                        <a href="@Url.Action("Action", "User", new { ID = item.Id })" type="button" class="edit data-btn btn-outline-primary btn-icon-text"><i class="mdi mdi-pencil"></i> EDIT</a>
-                                        <a href="@Url.Action("Delete", "User", new { ID = item.Id })" type="button" class="delete data-btn btn-outline-danger btn-icon-text"><i class="mdi mdi-delete"></i>DELETE</a>
-                                        <a href="@Url.Action("UserRoles", "User", new { ID = item.Id })" type="button" class="role data-btn btn-outline-success btn-icon-text"><i class="mdi mdi-account-details"></i>ROLES</a>
+                                        <button data-href="@Url.Action("Action", "User", new { ID = item.Id })" type="button" class="data-btn btn btn-info btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-pencil"></i> EDIT</button>
+                                        <button data-href="@Url.Action("Delete", "User", new { ID = item.Id })" type="button" class="data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
+                                        <button data-href="@Url.Action("UserRoles", "User", new { ID = item.Id })" type="button" class="data-btn btn btn-success btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-account-details"></i>ROLES</button>
 
                                     </td>
                                 </tr>
@@ -79,14 +58,14 @@
             }
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(".data-btn").click(function () {
         $.ajax({
-            url: $(this).attr("href"),
+            url: $(this).attr("data-href"),
         })
             .done(function (response) {
-                $("#actionModal").html(response);
+                $("#actionModal .modal-dialog").html(response);
             });
         });
 </script>

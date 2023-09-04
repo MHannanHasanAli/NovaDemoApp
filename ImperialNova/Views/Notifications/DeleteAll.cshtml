@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "_Delete";
+}
+
+@if (Model != null)
+{
+   
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+			url: '@Url.Action("DeleteAll", "Notifications")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+		.done(function (response) {
+			if(response.success)
+            {
+       		window.location.href = "@Url.Action("Index", "Notifications")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+</script>

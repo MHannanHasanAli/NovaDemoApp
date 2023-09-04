@@ -1,0 +1,105 @@
+﻿@model ImperialNova.ViewModels.NotificationsListingViewModel
+
+@{
+}
+<style>
+    .container-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 5px;
+        margin: auto;
+        border: 2px solid black;
+        border-radius: 10px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .container-upper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .data-btn {
+        padding-left: 0px;
+        margin-right: 10px;
+    }
+
+    #AllDel {
+        border: none;
+        background: #f4f6f9;
+        color: blue;
+    }
+    .container{
+        width: 95%;
+    }
+</style>
+
+
+
+<div class="row">
+
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="container">
+            <br>
+            <div class="container-upper">
+                <h1>Notifications </h1>
+                <button type="button" id="AllDel"><i class="fas fa-check" style="color: blue;"></i>Mark All as Read</button>
+            </div>
+            <hr />
+            @if (Model.Notifications != null)
+            {
+                <div class="container">
+                    @foreach (var item in Model.Notifications)
+                    {
+                        <div class="container-inner">
+                            <h3>@item._Description</h3>
+                            <a href="@Url.Action("Delete", "Notifications", new { ID = item._Id })" type="button" class="data-btn btn btn-sm btn-rounded btn-danger btn-icon-text"><i class="mdi mdi-delete"></i>Seen</a>
+
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+
+                <div class="alert alert-warning col-md-12" role="alert">
+                    Sorry! No records exist.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="card fade" id="actioncard" tabindex="-1" role="dialog">
+    <div class="card-dialog" role="document">
+    </div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#AllDel").click(function () {
+        $.ajax({
+            url: '@Url.Action("DeleteAll", "Notifications")',
+            type: "post",
+        })
+            .done(function (response) {
+                if (response.success) {
+                    window.location.href = "@Url.Action("Index", "Notifications")";
+                }
+                else {
+                    $(".errorDiv").html(response.Message);
+                }
+            });
+    });
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("href"),
+        })
+            .done(function (response) {
+                $("#actioncard").html(response);
+            });
+    });
+</script>

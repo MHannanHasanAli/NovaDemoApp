@@ -33,7 +33,10 @@ namespace ImperialNova.Database
         public DbSet<InventoryBackups> inventorybackups { get; set; }
         public DbSet<InventoryTemporary> inventorytemporary { get; set; }
         public DbSet<Locations> locations { get; set; }
-
+        public DbSet<Notification> notifications { get; set; }
+        public DbSet<TodoList> todolists { get; set; }
+       public DbSet<Document> documents { get; set; }
+        public DbSet<Reminder> reminders { get; set; }
 
 
     }

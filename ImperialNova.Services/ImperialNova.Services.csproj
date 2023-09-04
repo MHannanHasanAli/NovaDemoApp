@@ -80,15 +80,19 @@
   <ItemGroup>
     <Compile Include="CategoryServices.cs" />
     <Compile Include="DeliveryFormServices.cs" />
+    <Compile Include="DocumentServices.cs" />
     <Compile Include="InventoryBackupsServices.cs" />
     <Compile Include="InventoryServices.cs" />
     <Compile Include="InventoryTemporaryServices.cs" />
     <Compile Include="LocationServices.cs" />
+    <Compile Include="NotificationServices.cs" />
     <Compile Include="ProductServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AMRolesManager.cs" />
     <Compile Include="AMSignInManager.cs" />
     <Compile Include="AMUserManager.cs" />
+    <Compile Include="ReminderServices.cs" />
+    <Compile Include="TodoListServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
