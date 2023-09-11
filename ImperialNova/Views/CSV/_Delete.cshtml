@@ -1,14 +1,10 @@
-﻿﻿@model ImperialNova.ViewModels.ProductActionViewModel
-@{
-    ViewBag.Title = "_Delete";
-}
-
+﻿@model ImperialNova.ViewModels.CSVViewModel.CSVActionViewModel
 @if (Model != null)
 {
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
-                <span>Delete Product</span>
+                <span>Delete CSV</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -16,10 +12,10 @@
         </div>
         <div class="modal-body">
             <form id="actionForm">
-                <input type="hidden" name="_Id" value="@Model._Id" />
+                <input type="hidden" name="_Id" value="@Model._Id />
             </form>
             <div class="alert alert-danger" role="alert">
-                Are you sure you want to delete this Product?
+                Are you sure you want to delete this CSV File?
             </div>
         </div>
         <div class="modal-footer">
@@ -32,14 +28,14 @@
 <script>
 	$("#actionButton").click(function () {
 		$.ajax({
-			url: '@Url.Action("Delete", "Product")',
+			url: '@Url.Action("Delete", "CSV")',
 			type: "post",
 			data: $("#actionForm").serialize()
 		})
 		.done(function (response) {
-			if(response.success)
-            {
-				window.location.href = "@Url.Action("Index", "Product")";
+			if(response.Success)
+			{
+				window.location.href = "@Url.Action("Index", "CSV")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

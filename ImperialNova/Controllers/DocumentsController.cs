@@ -3,6 +3,7 @@ using ImperialNova.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -70,7 +71,7 @@ namespace ImperialNova.Controllers
             DocumentsActionViewModel model = new DocumentsActionViewModel();
             var Document = DocumentServices.Instance.GetDocumentById(ID);
             model._Id = Document._Id;
-            return View("Delete", model);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]

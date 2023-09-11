@@ -124,6 +124,26 @@
     <Compile Include="Migrations\202309041655252_Shahbazzzz.designer.cs">
       <DependentUpon>202309041655252_Shahbazzzz.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309051607021_Two.cs" />
+    <Compile Include="Migrations\202309051607021_Two.designer.cs">
+      <DependentUpon>202309051607021_Two.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309071113167_Updated.cs" />
+    <Compile Include="Migrations\202309071113167_Updated.designer.cs">
+      <DependentUpon>202309071113167_Updated.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309090759462_mainnahiBataounga.cs" />
+    <Compile Include="Migrations\202309090759462_mainnahiBataounga.designer.cs">
+      <DependentUpon>202309090759462_mainnahiBataounga.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309110446295_Sarak.cs" />
+    <Compile Include="Migrations\202309110446295_Sarak.designer.cs">
+      <DependentUpon>202309110446295_Sarak.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309110531006_YebikGaiHaiGormint.cs" />
+    <Compile Include="Migrations\202309110531006_YebikGaiHaiGormint.designer.cs">
+      <DependentUpon>202309110531006_YebikGaiHaiGormint.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -189,6 +209,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309041655252_Shahbazzzz.resx">
       <DependentUpon>202309041655252_Shahbazzzz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309051607021_Two.resx">
+      <DependentUpon>202309051607021_Two.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309071113167_Updated.resx">
+      <DependentUpon>202309071113167_Updated.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309090759462_mainnahiBataounga.resx">
+      <DependentUpon>202309090759462_mainnahiBataounga.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309110446295_Sarak.resx">
+      <DependentUpon>202309110446295_Sarak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309110531006_YebikGaiHaiGormint.resx">
+      <DependentUpon>202309110531006_YebikGaiHaiGormint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

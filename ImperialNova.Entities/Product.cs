@@ -32,6 +32,8 @@ namespace ImperialNova.Entities
         public DateTime _ExportDate { get; set; } = DateTime.Now;
 
         public int _CategoryId { get; set; }
+        public int _WarehouseId { get; set; }
+        public int _LowStockAlert { get; set; }
         public string _Photo { get; set; }
 
     }

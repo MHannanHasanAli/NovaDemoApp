@@ -48,7 +48,7 @@ namespace ImperialNova.Controllers
             {
                 var Location = LocationsServices.Instance.GetLocationsById(model._Id);
                 Location._Id = model._Id;
-                model._LocationName = Location._LocationName;
+                Location._LocationName = model._LocationName;
 
                 LocationsServices.Instance.UpdateLocations(Location);
 

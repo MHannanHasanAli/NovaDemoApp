@@ -1,4 +1,4 @@
-﻿@model ImperialNova.ViewModels.DocumentsListingViewModel
+﻿@model ImperialNova.ViewModels.CSVViewModel.CSVListingViewModel
 
 @{
 }
@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body  container-top">
             <div>
-                <h2>Documents </h2>
+                <h2>CSV </h2>
             </div>
             <div>
                 <form>
@@ -36,13 +36,13 @@
                     <div class="input-group">
 
                         @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Documents")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+                        <a href="@Url.Action("Action", "CSV")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
 
                     </div>
                 </form>
             </div>
         </div>
-        @if (Model.documents != null)
+        @if (Model.csvs != null)
         {
             <section class="content">
                 <div class="container-fluid">
@@ -59,13 +59,14 @@
                                         <thead>
                                             <tr>
                                                 <th>Actions</th>
-                                                <th>Name</th>
-                                                <th>Documents</th>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                                <th>File</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.documents)
+                                            @foreach (var item in Model.csvs)
                                             {
                                                 <tr>
                                                     <td>
@@ -75,20 +76,15 @@
 
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Documents", new { ID = item._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "CSV", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                    <i class="mdi mdi-delete"></i> DELETE
                                                                 </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Documents", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
-
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Documents", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-            <i class="mdi mdi-delete"></i> DELETE
-        </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
-                                                    <td>@item._Name</td>
-                                                    @*<td>@item._File</td>*@
+                                                    <td>@item._Date</td>
+                                                    <td>@item._Description</td>
                                                     <td>
                                                         <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
                                                             <i class="fa fa-download" aria-hidden="true"></i>
@@ -128,13 +124,13 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["csv", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        
+
     });
     $(".data-btn").click(function () {
         $.ajax({

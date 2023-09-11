@@ -17,23 +17,29 @@
             else
             {
                 <h2 class="card-title">
-                    Create Product
+                    <b>Create Product</b>
+
                 </h2>
-
+            
             }
-
+            <br />
             <form id="actionForm">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <input type="hidden" value="@Model._Id" name="ID" />
-                            <label for="name">Name:</label>
+                            <label for="name">Title:</label>
                             <input value="@Model._Name" type="text" class="form-control" name="_Name" id="_Name" placeholder="Enter name" />
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_SKU">SKU:</label>
+                            <input value="@Model._SKU" type="text" class="form-control" name="_SKU" id="_SKU" placeholder="Enter SKU" />
+                        </div>
+                    </div>
 
-
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="name">Categories:</label>
                             <select class="form-control" name="_CategoryId" id="_CategoryId">
@@ -52,10 +58,29 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_WarehouseId">Warehouse:</label>
+                            <select class="form-control" name="_WarehouseId" id="_WarehouseId">
+                                @foreach (var item in Model.Warehouses)
+                                {
+                                    if (item._Id == Model._WarehouseId)
+                                    {
+                                        <option selected value="@item._Id">@item._LocationName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item._Id">@item._LocationName</option>
+
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
                         <label>Product Image</label>
 
-                        <input class="form-control" value="@Model._Photo" name="Photo" id="Photo" type="hidden" />
+                        <input class="form-control" value="@Model._Photo" name="_Photo" id="_Photo" type="hidden" />
                         <input class="form-control" id="PhotoUpload" name="PhotoUpload" type="file" accept=".png, .jpg, .jpeg" />
 
                         <div class="thumb">
@@ -76,14 +101,14 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="_Cost">Cost:</label>
+                            <label for="_Cost">Purchase Price:</label>
                             <input value="@Model._Cost" type="number" class="form-control" name="_Cost" id="_Cost" placeholder="Enter cost" />
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="_SKU">SKU:</label>
-                            <input value="@Model._SKU" type="text" class="form-control" name="_SKU" id="_SKU" placeholder="Enter SKU" />
+                            <label for="_RetailPrice">Sell Price:</label>
+                            <input value="@Model._RetailPrice" type="number" class="form-control" name="_RetailPrice" id="_RetailPrice" placeholder="Enter retail price" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -104,16 +129,17 @@
                             <input value="@Model._Variations" type="number" class="form-control" name="_Variations" id="_Variations" placeholder="Enter variations" />
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="_RetailPrice">Retail Price:</label>
-                            <input value="@Model._RetailPrice" type="number" class="form-control" name="_RetailPrice" id="_RetailPrice" placeholder="Enter retail price" />
-                        </div>
-                    </div>
+
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="_OpeningStock">Opening Stock:</label>
                             <input value="@Model._OpeningStock" type="number" class="form-control" name="_OpeningStock" id="_OpeningStock" placeholder="Enter Opening Stock" />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_LowStockAlert">Low Stock Alert:</label>
+                            <input value="@Model._LowStockAlert" type="number" class="form-control" name="_LowStockAlert" id="_LowStockAlert" placeholder="Enter Opening Stock" />
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -174,7 +200,6 @@
     });
 
     $("#PhotoUpload").change(function () {
-        alert("activated");
         var element = this;
         var formData = new FormData();
 
@@ -197,7 +222,7 @@
 
                 console.log(response);
                 if (response.Success) {
-                    $("#Photo").val(response.DocURL);
+                    $("#_Photo").val(response.DocURL);
                     $("#PhotoImg").attr("src", response.DocURL);
 
                 }

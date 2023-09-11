@@ -1,4 +1,4 @@
-﻿﻿@model ImperialNova.ViewModels.DocumentsActionViewModel
+﻿﻿@model ImperialNova.ViewModels.CustomerViewModel.CustomerActionViewModel
 @{
     ViewBag.Title = "Action";
 }
@@ -25,6 +25,10 @@
     input{
         width: 400px;
     }
+    .setter {
+        position: relative;
+        left: -113px;
+    }
 </style>
 @if (Model != null)
 {
@@ -33,38 +37,54 @@
             @if (Model._Id != 0)
             {
                 <h2 class="card-title">
-                    Edit Document
+                    Edit Customer
                 </h2>
 
             }
             else
             {
                 <h2 class="card-title">
-                    Add Document
+                    Add Customer
                 </h2>
 
             }
             <div class="container">
                 <form id="actionForm">
-                    <div class="row form-container">
+                    <div class="form-container">
                         <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
-
-                        <div class="form-group col-md-8">
-                            <label for="_Name">Name &nbsp;</label>
-                            <input value="@Model._Name" type="text" class="form-control" name="_Name" id="_Name" placeholder="Enter name" />
-                        </div>
-                        <div class="form-group col-md-8">
-                            <label>File &nbsp;</label>
-
-                            <input class="form-control" value="@Model._File" name="_File" id="_File" type="hidden" />
-                            <input class="form-control" id="FileUpload" name="FileUpload" type="file" accept=".png, .jpg, .jpeg" />
-                            <div class="thumb">
-                                <img style="height:100px; width:100px" class="img-thumbnail img-fluid" id="FileImg" />
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <label for="_Name">Name<sup>*</sup> &nbsp;</label>
+                                <input value="@Model._Name" type="text" class="form-control" name="_Name" id="_Name" />
                             </div>
-                            @*<div class="thumb">
-                <img style="height:100px; width:100px" class="img-thumbnail img-fluid" id="FileImg" />
-            </div>*@
+                            <div class="form-group col-md-3">
+                                <label for="_Email">Email<sup>*</sup>  &nbsp;</label>
+                                <input value="@Model._Email" type="text" class="form-control" name="_Email" id="_Email" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="_Phone">Phone<sup>*</sup>  &nbsp;</label>
+                                <input value="@Model._Phone" type="text" class="form-control" name="_Phone" id="_Phone" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="_Address">Address &nbsp;</label>
+                                <input value="@Model._Address" type="text" class="form-control" name="_Address" id="_Address" />
+                            </div>
                         </div>
+                        <div class="row setter">
+                            <div class="form-group col-md-3">
+                                <label for="_Zip">Zip/Postal &nbsp;</label>
+                                <input value="@Model._Zip" type="text" class="form-control" name="_Zip" id="_Zip" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="_City">City &nbsp;</label>
+                                <input value="@Model._City" type="text" class="form-control" name="_City" id="_City" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="_Country">State/Country &nbsp;</label>
+                                <input value="@Model._Country" type="text" class="form-control" name="_Country" id="_Country" />
+                            </div>
+                        </div>
+                       </div>
 
 </form>
 
@@ -75,7 +95,7 @@
                 </div>
             </div>
             <div style="background-color:white;" class="card-footer container-bottom">
-                <a href="@Url.Action("Index","Documents")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                <a href="@Url.Action("Index","Customer")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
                 @if (Model._Id != 0)
                 {
                     <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
@@ -95,15 +115,22 @@
 <script>
 
     $("#actionButton").click(function () {
+        var name = $('#_Name').val();
+        var email = $('#_Email').val();
+        var phone = $('#_Phone').val();
+        if (name === '' || email === '' || phone === '') {
+            alert('Please fill in all of the required fields.');
+            return;
+        }
 		$.ajax({
-			url: '@Url.Action("Action", "Documents")',
+			url: '@Url.Action("Action", "Customer")',
 			type: "post",
 			data: $("#actionForm").serialize()
 		})
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Documents")";
+				window.location.href = "@Url.Action("Index", "Customer")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

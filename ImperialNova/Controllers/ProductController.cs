@@ -31,8 +31,9 @@ namespace ImperialNova.Controllers
             var ProductList = new List<ProductsModel>();
             foreach (var item in products)
             {
+                var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
                 var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
-                ProductList.Add(new ProductsModel { Product = item, Category = category });
+                ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
             model.Products = ProductList;
             return View("Index", model);
@@ -263,6 +264,7 @@ namespace ImperialNova.Controllers
 
             ProductActionViewModel model = new ProductActionViewModel();
             model.Categories = CategoryServices.Instance.GetCategorys();
+            model.Warehouses = LocationsServices.Instance.GetLocations();
             if (ID != 0)
             {
                 var Product = ProductServices.Instance.GetProductById(ID);
@@ -281,7 +283,8 @@ namespace ImperialNova.Controllers
                 model._Notes = Product._Notes;
                 model._ExportDate = Product._ExportDate;
                 model._CategoryId = Product._CategoryId;
-
+                model._WarehouseId = Product._WarehouseId;
+                model._LowStockAlert = Product._LowStockAlert;
             }
             return View("Action", model);
         }
@@ -309,6 +312,8 @@ namespace ImperialNova.Controllers
                 Product._Notes = model._Notes;
                 Product._ExportDate = model._ExportDate;
                 Product._CategoryId = model._CategoryId;
+                Product._WarehouseId = model._WarehouseId;
+                Product._LowStockAlert = model._LowStockAlert;
                 ProductServices.Instance.UpdateProduct(Product);
 
             }
@@ -329,6 +334,9 @@ namespace ImperialNova.Controllers
                 Product._Notes = model._Notes;
                 Product._ExportDate = model._ExportDate;
                 Product._CategoryId = model._CategoryId;
+                Product._WarehouseId = model._WarehouseId;
+                Product._LowStockAlert = model._LowStockAlert;
+
                 ProductServices.Instance.CreateProduct(Product);
 
 

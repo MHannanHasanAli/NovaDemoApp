@@ -1,4 +1,4 @@
-﻿@model ImperialNova.ViewModels.DocumentsListingViewModel
+﻿@model ImperialNova.ViewModels.SupplierViewModel.SupplierListingViewModel
 
 @{
 }
@@ -28,7 +28,7 @@
     <div class="card">
         <div class="card-body  container-top">
             <div>
-                <h2>Documents </h2>
+                <h2>Supplier </h2>
             </div>
             <div>
                 <form>
@@ -36,13 +36,13 @@
                     <div class="input-group">
 
                         @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Documents")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+                        <a href="@Url.Action("Action", "Supplier")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
 
                     </div>
                 </form>
             </div>
         </div>
-        @if (Model.documents != null)
+        @if (Model.suppliers != null)
         {
             <section class="content">
                 <div class="container-fluid">
@@ -60,12 +60,16 @@
                                             <tr>
                                                 <th>Actions</th>
                                                 <th>Name</th>
-                                                <th>Documents</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Zip/Postal</th>
+                                                <th>City</th>
+                                                <th>State/Country</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.documents)
+                                            @foreach (var item in Model.suppliers)
                                             {
                                                 <tr>
                                                     <td>
@@ -75,25 +79,30 @@
 
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Documents", new { ID = item._Id })">
+                                                                <a class="dropdown-item" href="@Url.Action("Action", "Supplier", new { ID = item._Id })">
                                                                     <i class="mdi mdi-pencil"></i> VIEW/EDIT
                                                                 </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Documents", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+                                                                @*<button data-href="@Url.Action("Delete", "Supplier", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Documents", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-            <i class="mdi mdi-delete"></i> DELETE
-        </a>
+                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Supplier", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                    <i class="mdi mdi-delete"></i> DELETE
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
                                                     <td>@item._Name</td>
+                                                    <td>@item._Email</td>
+                                                    <td>@item._Phone</td>
+                                                    <td>@item._Zip</td>
+                                                    <td>@item._City</td>
+                                                    <td>@item._Country</td>
                                                     @*<td>@item._File</td>*@
-                                                    <td>
-                                                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>
+                                                    @*<td>
+            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                <i class="fa fa-download" aria-hidden="true"></i>
+            </a>
+        </td>*@
                                                 </tr>
                                             }
                                         </tbody>
@@ -128,13 +137,13 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["csv", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        
+
     });
     $(".data-btn").click(function () {
         $.ajax({
@@ -145,3 +154,4 @@
             });
     });
 </script>
+

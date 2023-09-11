@@ -1,4 +1,4 @@
-﻿﻿@model ImperialNova.ViewModels.DocumentsActionViewModel
+﻿﻿@model ImperialNova.ViewModels.CSVViewModel.CSVActionViewModel
 @{
     ViewBag.Title = "Action";
 }
@@ -25,6 +25,17 @@
     input{
         width: 400px;
     }
+    .setter {
+        text-align: start;
+        position: relative;
+        left: -9px;
+        width: 100%;
+    }
+    .file {
+        width: 100%;
+        position: relative;
+        left: -50px;
+    }
 </style>
 @if (Model != null)
 {
@@ -33,37 +44,38 @@
             @if (Model._Id != 0)
             {
                 <h2 class="card-title">
-                    Edit Document
+                    Edit CSV
                 </h2>
 
             }
             else
             {
                 <h2 class="card-title">
-                    Add Document
+                    Add CSV
                 </h2>
 
             }
             <div class="container">
                 <form id="actionForm">
                     <div class="row form-container">
+                        
                         <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
-
-                        <div class="form-group col-md-8">
-                            <label for="_Name">Name &nbsp;</label>
-                            <input value="@Model._Name" type="text" class="form-control" name="_Name" id="_Name" placeholder="Enter name" />
+                        <div class="row setter">
+                            <div class="form-group col-md-4">
+                                <label for="_Date">Date&nbsp;</label>
+                                <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" />
+                            </div>
+                            <div class="form-group col-md-7">
+                                <label for="_Description">Description&nbsp;</label>
+                                <input value="@Model._Description" type="text" class="form-control" name="_Description" id="_Description" placeholder="Enter name" />
+                            </div>
                         </div>
-                        <div class="form-group col-md-8">
-                            <label>File &nbsp;</label>
+                        <div class="form-group file col-md-11">
+                            <label>Upload CSV file &nbsp;</label>
 
                             <input class="form-control" value="@Model._File" name="_File" id="_File" type="hidden" />
-                            <input class="form-control" id="FileUpload" name="FileUpload" type="file" accept=".png, .jpg, .jpeg" />
-                            <div class="thumb">
-                                <img style="height:100px; width:100px" class="img-thumbnail img-fluid" id="FileImg" />
-                            </div>
-                            @*<div class="thumb">
-                <img style="height:100px; width:100px" class="img-thumbnail img-fluid" id="FileImg" />
-            </div>*@
+                            <input class="form-control" id="FileUpload" name="FileUpload" type="file" accept=".csv" />
+                          
                         </div>
 
 </form>
@@ -75,14 +87,14 @@
                 </div>
             </div>
             <div style="background-color:white;" class="card-footer container-bottom">
-                <a href="@Url.Action("Index","Documents")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                <a href="@Url.Action("Index","CSV")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
                 @if (Model._Id != 0)
                 {
                     <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
                 }
                 else
                 {
-                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save & Continue</button>
                 }
 
             </div>
@@ -96,14 +108,14 @@
 
     $("#actionButton").click(function () {
 		$.ajax({
-			url: '@Url.Action("Action", "Documents")',
+			url: '@Url.Action("Action", "CSV")',
 			type: "post",
 			data: $("#actionForm").serialize()
 		})
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Documents")";
+				window.location.href = "@Url.Action("Index", "CSV")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);
@@ -111,7 +123,8 @@
 		});
     });
 
-    $("#FileUpload").change(function () {  
+    $("#FileUpload").change(function () {
+        debugger
         var element = this;
         var formData = new FormData();
 

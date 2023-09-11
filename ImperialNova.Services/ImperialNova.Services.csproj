@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CategoryServices.cs" />
+    <Compile Include="CSVServices.cs" />
+    <Compile Include="CustomerServices.cs" />
     <Compile Include="DeliveryFormServices.cs" />
     <Compile Include="DocumentServices.cs" />
     <Compile Include="InventoryBackupsServices.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="AMSignInManager.cs" />
     <Compile Include="AMUserManager.cs" />
     <Compile Include="ReminderServices.cs" />
+    <Compile Include="SupplierServices.cs" />
     <Compile Include="TodoListServices.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,15 +1,21 @@
 ﻿@model ImperialNova.ViewModels.CategoryListingViewModel
 
-@{
-}
+<style>
+    .delbtn {
+        background: red;
+        width: 86px;
+        border-radius: 4px;
+        margin-left: 5px;
+    }
+</style>
 <div class="card">
     <div class="card-body">
-        <h4 class="card-title">Categorys </h4>
+        <h1>Category</h1>
 
 
         <form>
 
-            <div class="input-group">
+            @*<div class="input-group">
 
                 @Html.ValidationSummary("", new { @class = "text-danger" })
 
@@ -17,7 +23,7 @@
                 <button class="btn btn-primary" type="submit"><i class="fa fa-search mr-1"></i>Search</button>
                 <a href="@Url.Action("Action", "Category")" class="btn btn-outline-success"><i class="fas fa-plus mr-1"></i> Create</a>
 
-            </div>
+            </div>*@
         </form>
 
     </div>
@@ -54,9 +60,12 @@
                                     <td>@item._Description</td>
 
                                     <td>
-                                        <a href="@Url.Action("Action", "Category", new { ID = item._Id })" type="button" class="btn btn-sm btn-rounded  btn-info btn-icon-text"><i class="mdi mdi-pencil"></i> VIEW/EDIT</a>
-                                        <a href="@Url.Action("Delete", "Category", new { ID = item._Id })" type="button" class="data-btn btn btn-sm btn-rounded btn-danger btn-icon-text"><i class="mdi mdi-delete"></i>DELETE</a>
-
+                                        <div class="btn-group">
+                                            <a href="@Url.Action("Action", "Category", new { ID = item._Id })" type="button" class="btn btn-sm btn-rounded  btn-info btn-icon-text"><i class="mdi mdi-pencil"></i> VIEW/EDIT</a>
+                                            <a class="data-btn dropdown-item delbtn" data-href="@Url.Action("Delete", "Category", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                <i class="mdi mdi-delete"></i> DELETE
+                                            </a>
+                                        </div>
                                     </td>
                                 </tr>
                             }
@@ -79,7 +88,7 @@
 
 
 
-<div id="tethaki">
+<!--<div id="tethaki">
     <h1><u>Heading Of Message</u></h1>
     <h4>Subheading</h4>
     <p>
@@ -111,9 +120,9 @@
     <div class="card card-primary card-outline">
         <div class="card-header">
             <h3 class="card-title">Compose New Message</h3>
-        </div>
+        </div>-->
         <!-- /.card-header -->
-        <div class="card-body">
+        <!--<div class="card-body">
             <div class="form-group">
                 <input class="form-control" placeholder="To:">
             </div>
@@ -132,19 +141,19 @@
                 </div>
                 <p class="help-block">Max. 32MB</p>
             </div>
-        </div>
+        </div>-->
         <!-- /.card-body -->
-        <div class="card-footer">
+        <!--<div class="card-footer">
             <div class="float-right">
                 <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Draft</button>
                 <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Send</button>
             </div>
             <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Discard</button>
-        </div>
+        </div>-->
         <!-- /.card-footer -->
-    </div>
+    <!--</div>-->
     <!-- /.card -->
-</div>
+<!--</div>-->
 @*$("#tethaki").html();*@
 
 @*$('.note-editable.card-block').html();*@

@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Reminder
+    public class Payment
     {
         [Key] public int _Id { get; set; }
-        public DateTime _CreatedAt { get; set; }
-        public string _CreatedBy { get; set; }
-        public string _Title { get; set; }
-        public string _Description { get; set; }
+        public int _Record { get; set; }
+        public DateTime _Date { get; set; }
+        public string _Individual { get; set; }
+        public decimal _Amount { get; set; }
+        public string _Remarks { get; set; }
     }
 }

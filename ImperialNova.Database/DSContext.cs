@@ -37,6 +37,11 @@ namespace ImperialNova.Database
         public DbSet<TodoList> todolists { get; set; }
        public DbSet<Document> documents { get; set; }
         public DbSet<Reminder> reminders { get; set; }
+        public DbSet<Customer> customers{ get; set; }
+        public DbSet<Supplier> suppliers { get; set; }
+        public DbSet<CSV> csvs { get; set; }
+        public DbSet<Payment> payments { get; set; }
+
 
 
     }

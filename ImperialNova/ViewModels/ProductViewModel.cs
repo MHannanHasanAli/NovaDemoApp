@@ -15,10 +15,13 @@ namespace ImperialNova.ViewModels
     {
         public Product Product { get; set; }
         public Category Category { get; set; }
+
+        public Locations Warehouse { get; set; }
     }
     public class ProductActionViewModel
     {
         public List<Category> Categories { get; set; }
+        public List<Locations> Warehouses { get; set; }
         public int _Id { get; set; }
         public string _Name { get; set; }
         public string _Size { get; set; }
@@ -36,6 +39,8 @@ namespace ImperialNova.ViewModels
         public DateTime _ExportDate { get; set; } = DateTime.Now;
 
         public int _CategoryId { get; set; }
+        public int _WarehouseId { get; set; }
+        public int _LowStockAlert { get; set; }
         public string _Photo { get; set; }
 
     }

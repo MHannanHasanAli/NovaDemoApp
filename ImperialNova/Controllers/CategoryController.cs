@@ -76,7 +76,7 @@ namespace ImperialNova.Controllers
             CategoryActionViewModel model = new CategoryActionViewModel();
             var Category = CategoryServices.Instance.GetCategoryById(ID);
             model._Id = Category._Id;
-            return View("Delete", model);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]
