@@ -42,7 +42,7 @@ namespace ImperialNova.Database
         public DbSet<CSV> csvs { get; set; }
         public DbSet<Payment> payments { get; set; }
 
-
+        public DbSet<Adjustment> adjustments { get; set; }
 
     }
 }

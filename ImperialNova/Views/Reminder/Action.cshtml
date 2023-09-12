@@ -1,0 +1,186 @@
+﻿﻿@model ImperialNova.ViewModels.ReminderActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .container-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .back{
+        margin-right: 10px;
+    }
+    .col-md-8{
+        display:flex;
+        justify-content: space-between;
+    }
+    input{
+        width: 400px;
+    }
+    .form-container{
+        flex-direction: row;
+    }
+    .setter {
+        justify-content: start;
+        position: relative;
+        left: -330px;
+        top: 20px;
+    }
+    datesetter {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+    #_Title {
+        width: 100%;
+    }
+    .backer {
+        margin-left: -121px;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit Reminder
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Add Reminder
+                </h2>
+
+            }
+            <div class="container">
+                <form id="actionForm" class="form-inline">
+                    <div class="row form-container">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+
+                        <div class="form-group col-md-12">
+                            <label for="_Title">Title &nbsp;</label>
+                            <input value="@Model._Title" type="text" class="form-control" name="_Title" id="_Title" placeholder="Enter name" />
+                        </div>
+
+                        <div class="col-md-11 backer">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="_Description">Description &nbsp;</label>
+                                        <div id="_Description" class="form-control" style="height: 300px" value="@Model._Description">
+
+                                        </div>
+                                        <input name="_Description" id="MainDescription" class="form-control" type="hidden" />
+                                    </div>
+
+                                </div>
+                        </div>
+
+                    </div>
+
+</form>
+
+
+                <div class="errorDiv">
+
+                </div>
+            </div>
+            <div style="background-color:white;" class="card-footer container-bottom">
+                <a href="@Url.Action("Index","Reminder")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                @if (Model._Id != 0)
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
+                }
+                else
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                }
+
+            </div>
+
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        //Add text editor
+        $('#_Description').summernote();
+        console.log();
+    })
+    $(document).ready(function () {
+            $("#actionButton").click(function () {
+        var string = $('.note-editable.card-block').html();
+        $('#MainDescription').val(string);
+        var id = $('#_Id').val();
+        var title = $('#_Title').val();
+        var description = $('#MainDescription').val();
+        debugger
+		$.ajax({
+			url: '@Url.Action("Action", "Reminder")',
+			type: 'POST',
+            data: {
+                _Id: id,
+                _Title: title,
+                _Description: description
+            }
+		})
+            .done(function (response) {
+                debugger
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Reminder")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    })
+
+    $("#FileUpload").change(function () {
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("File", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#_File").val(response.DocURL);
+                    $("#FileImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

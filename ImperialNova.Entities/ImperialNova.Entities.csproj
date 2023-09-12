@@ -66,6 +66,7 @@
     <Compile Include="Document.cs" />
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryBackups.cs" />
+    <Compile Include="InventoryIn.cs" />
     <Compile Include="InventoryTemporary.cs" />
     <Compile Include="Locations.cs" />
     <Compile Include="Notification.cs" />

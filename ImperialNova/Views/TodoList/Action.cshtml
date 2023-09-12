@@ -1,0 +1,153 @@
+﻿﻿@model ImperialNova.ViewModels.TodoListActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .container-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .back{
+        margin-right: 10px;
+    }
+    .col-md-8{
+        display:flex;
+        justify-content: space-between;
+    }
+    input{
+        width: 400px;
+    }
+    #FileUpload {
+        margin-left: 71px;
+    }
+    #_DueDate {
+        margin-left: 35px;
+    }
+    #_Description {
+        margin-left: 16px;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit TodoList
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Add TodoList
+                </h2>
+
+            }
+            <div class="container">
+                <form id="actionForm">
+                    <div class="row form-container">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+
+                        <div class="form-group col-md-8">
+                            <label for="_DueDate" style=" width: 75px;">Due Date &nbsp;</label>
+                            <input value="@Model._DueDate" type="date" class="form-control" name="_DueDate" id="_DueDate"/>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>File &nbsp;</label>
+
+                            <input class="form-control" value="@Model._File" name="_File" id="_File" type="hidden" />
+                            <input class="form-control" id="FileUpload" name="FileUpload" type="file" accept=".png, .jpg, .jpeg .xls .xlsx .doc .docx .pdf" />
+                           
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="_Description">Description &nbsp;</label>
+                            <input value="@Model._Description" type="text" class="form-control" name="_Description" id="_Description" />
+                        </div>
+                    </div>
+
+                </form>
+                <div class="errorDiv">
+
+                </div>
+            </div>
+            <div style="background-color:white;" class="card-footer container-bottom">
+                <a href="@Url.Action("Index","TodoList")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                @if (Model._Id != 0)
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
+                }
+                else
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                }
+
+            </div>
+
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "TodoList")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "TodoList")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#FileUpload").change(function () {  
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("File", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#_File").val(response.DocURL);
+                    $("#FileImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

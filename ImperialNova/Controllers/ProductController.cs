@@ -285,6 +285,7 @@ namespace ImperialNova.Controllers
                 model._CategoryId = Product._CategoryId;
                 model._WarehouseId = Product._WarehouseId;
                 model._LowStockAlert = Product._LowStockAlert;
+                model._Photo = Product._Photo;
             }
             return View("Action", model);
         }
@@ -314,6 +315,7 @@ namespace ImperialNova.Controllers
                 Product._CategoryId = model._CategoryId;
                 Product._WarehouseId = model._WarehouseId;
                 Product._LowStockAlert = model._LowStockAlert;
+                Product._Photo = model._Photo;
                 ProductServices.Instance.UpdateProduct(Product);
 
             }
@@ -336,6 +338,7 @@ namespace ImperialNova.Controllers
                 Product._CategoryId = model._CategoryId;
                 Product._WarehouseId = model._WarehouseId;
                 Product._LowStockAlert = model._LowStockAlert;
+                Product._Photo = model._Photo;
 
                 ProductServices.Instance.CreateProduct(Product);
 

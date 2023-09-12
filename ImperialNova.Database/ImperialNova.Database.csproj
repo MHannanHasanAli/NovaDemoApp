@@ -144,6 +144,14 @@
     <Compile Include="Migrations\202309110531006_YebikGaiHaiGormint.designer.cs">
       <DependentUpon>202309110531006_YebikGaiHaiGormint.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309121100290_onceagaiN.cs" />
+    <Compile Include="Migrations\202309121100290_onceagaiN.designer.cs">
+      <DependentUpon>202309121100290_onceagaiN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309121156360_Kashamorika.cs" />
+    <Compile Include="Migrations\202309121156360_Kashamorika.designer.cs">
+      <DependentUpon>202309121156360_Kashamorika.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -224,6 +232,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309110531006_YebikGaiHaiGormint.resx">
       <DependentUpon>202309110531006_YebikGaiHaiGormint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309121100290_onceagaiN.resx">
+      <DependentUpon>202309121100290_onceagaiN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309121156360_Kashamorika.resx">
+      <DependentUpon>202309121156360_Kashamorika.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

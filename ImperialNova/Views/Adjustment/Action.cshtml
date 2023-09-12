@@ -1,0 +1,140 @@
+﻿﻿@model ImperialNova.ViewModels.AdjustmentActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .container-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .back{
+        margin-right: 10px;
+    }
+    .col-md-8{
+        display:flex;
+        justify-content: space-between;
+    }
+    input{
+        width: 400px;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+            @if (Model._Id != 0)
+            {
+                <h2 class="card-title">
+                    Edit Adjustment
+                </h2>
+
+            }
+            else
+            {
+                <h2 class="card-title">
+                    Add Adjustment
+                </h2>
+
+            }
+            <div class="container">
+                <form id="actionForm">
+                    <div class="row form-container">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+
+                        <div class="form-group col-md-4">
+                            <label for="_Date">Name &nbsp;</label>
+                            <input value="@Model._Date" type="text" class="form-control" name="_Date" id="_Date" placeholder="Enter name" />
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label for="_Remarks">Remarks &nbsp;</label>
+                            <input value="@Model._Remarks" type="text" class="form-control" name="_Remarks" id="_Remarks" placeholder="Enter name" />
+                        </div>
+                        
+
+</form>
+
+
+
+                <div class="errorDiv">
+
+                </div>
+            </div>
+            <div style="background-color:white;" class="card-footer container-bottom">
+                <a href="@Url.Action("Index","Adjustment")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                @if (Model._Id != 0)
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
+                }
+                else
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                }
+
+            </div>
+
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $("#actionButton").click(function () {
+		$.ajax({
+			url: '@Url.Action("Action", "Adjustment")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Index", "Adjustment")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#FileUpload").change(function () {  
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("File", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#_File").val(response.DocURL);
+                    $("#FileImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

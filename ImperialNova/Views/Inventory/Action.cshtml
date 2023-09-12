@@ -27,25 +27,28 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <input type="hidden" value="@Model._Id" name="ID" />
-                        <label for="name">Store:</label>
-                        <select onchange="dropdownfiller()" class="form-control" name="_Store" id="_Store">
-                            @foreach (var item in Model.Locations)
-                            {
-                                <option selected value="@item._LocationName">@item._LocationName</option>
-                            }
-                        </select>
+                        <label for="_Cost">Date:</label>
+                        <input value="@Model._QuantityIn" type="number" class="form-control" name="_QuantityIn" id="_QuantityIn" placeholder="Enter cost" />
+
+                        @*<label for="name">Store:</label>
+        <select onchange="dropdownfiller()" class="form-control" name="_Store" id="_Store">
+            @foreach (var item in Model.Locations)
+            {
+                <option selected value="@item._LocationName">@item._LocationName</option>
+            }
+        </select>*@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="name">Products:</label>
-                        <select class="form-control" name="_ProductId" id="_ProductId">
+                        <select class="form-control" name="_ProductId" id="_ProductId">-->
                             @*@foreach (var item in Model.Products)
                                 {
                                     <option selected value="@item._Id">@item._Name | @item._Size | @item._Color | Cost: £@item._Cost | Retail: £@item._RetailPrice | Available Units: @item._Quantity</option>
                                 }*@
-                        </select>
-                    </div>
+                        <!--</select>
+                    </div>-->
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">

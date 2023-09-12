@@ -1,131 +1,174 @@
-﻿
+﻿@model ImperialNova.ViewModels.TodoListListingViewModel
+
 @{
-    ViewBag.Title = "Index";
 }
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background-color: #f4f4f4;
-    }
-
-    .todo-container {
-        max-width: 100%;
-        margin: 0 auto;
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    input[type="text"] {
-        width: 70%;
+    .addbtn {
+        border-radius: 50%;
         padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+        background: black;
+        color: white;
+        border: 1px solid black;
     }
 
-    button {
-        padding: 10px 20px;
-        background-color: #007BFF;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    li {
+    .container-top {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        border-bottom: 1px solid #ccc;
     }
 
-    .delete {
-        color: #ff0000;
-        cursor: pointer;
+    .fa-download {
+        color: blue; /* Set the default color to blue */
+        transition: color 0.3s; /* Add a smooth color transition */
     }
-    .edit {
+
+        .fa-download:hover {
+            color: black; /* Change the color to black on hover */
+        }
+        .del{
+            color: red;
+        }
+.Task{
+    display: flex;
+    justify-content: space-between;
+}
+    .fa-file, .fa-edit {
         color: blue;
-        margin-right: 0; /* Remove the default margin */
     }
-
-    .edit:hover {
-        color: black;
-    }
-
 </style>
-<div class="todo-container">
-    <h1>Todo List</h1>
-    <div class="task-input">
-        <input type="text" id="task" placeholder="Add a new task...">
-        <input type="date" id="task-date">
-        <input type="file" id="file-upload" accept=".pdf, .doc, .docx, .txt, .xls, .xlsx, .png, .jpg, .jpeg">
-        <button id="add-task">Add</button>
+<div class="container">
+    <div class="card">
+        <div class="card-body  container-top">
+            <div>
+                <h2>TodoList </h2>
+            </div>
+            <div>
+                <form>
+
+                    <div class="input-group">
+
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <a href="@Url.Action("Action", "TodoList")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        @if (Model.todolists != null)
+        {
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    @foreach (var item in Model.todolists)
+                                    {
+                                        <div class="Task">
+                                            <div>
+                                                <input type="checkbox" class="task-checkbox" id="checkbox-@item._Id" @(item._Ticked ? "True" : "")>
+                                                <label for="checkbox-@item._Id">@item._DueDate.Date.ToString("yyyy-MM-dd") - @item._Description</label>
+                                                <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                                                    <i class="fa fa-file" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a class="data-btn del" data-href="@Url.Action("Delete", "TodoList", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+        }
+        else
+        {
+
+            <div class="alert alert-warning col-md-12" role="alert">
+                Sorry! No records exist.
+            </div>
+        }
     </div>
-    <ul id="task-list"></ul>
 </div>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="script.js"></script>
+
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    </div>
+</div>
+
 <script>
     $(document).ready(function () {
-        $('#add-task').click(function () {
-            var taskText = $('#task').val();
-            var taskDate = $('#task-date').val();
-            var fileInput = document.getElementById('file-upload');
-            var fileName = fileInput.files[0] ? fileInput.files[0].name : '';
+        $('.task-checkbox').change(function () {
+            var $checkbox = $(this);
+            var isChecked = $checkbox.is(':checked');
+            var taskId = $checkbox.data('task-id'); // Get the task ID from a data attribute
 
-            if (taskText !== '' && taskDate !== '') {
-                var listItem = $('<li><div><input type="checkbox"><span>' + taskText + ' (Due: ' + taskDate + ') - File: ' + fileName + '</span></div><div><i class="fas fa-edit edit"></i><i class="fas fa-trash-alt delete"></i></div></li>');
-                $('#task-list').append(listItem);
-                $('#task').val('');
-                $('#task-date').val('');
-                fileInput.value = ''; // Clear the file input
-            } else {
-                alert('Please enter both a task and a date.');
-            }
+            // Send an AJAX request to update the database
+            $.ajax({
+                type: 'POST', // You can use 'PUT' or 'PATCH' depending on your server setup
+                url: '/TodoList/UpdateTask', // Replace with the actual URL to your update action
+                data: {
+                    taskId: taskId,
+                    isChecked: isChecked
+                },
+                success: function (data) {
+                    // Handle the response from the server if needed
+                    console.log(data);
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
         });
 
-        $('#task-list').on('change', 'input[type="checkbox"]', function () {
-            var taskText = $(this).next('span');
+        $('.task-checkbox').change(function () {
+            var $task = $(this).closest('.Task');
+            var $label = $task.find('label');
+
             if (this.checked) {
-                taskText.css('text-decoration', 'line-through');
+                $label.css('text-decoration', 'line-through');
             } else {
-                taskText.css('text-decoration', 'none');
+                $label.css('text-decoration', 'none');
             }
         });
 
-        // Change the color of the dustbin icon when hovered
-        $('#task-list').on('mouseenter', '.delete', function () {
-            $(this).css('color', 'black');
-        });
+       
+        //function tickmarker() {
+        //    if (this.checked) {
+        //        $('.Task').css('text-decoration', 'line-through');
+        //    } else {
+        //        $('.Task').css('text-decoration', 'none');
+        //    };
 
-        $('#task-list').on('mouseleave', '.delete', function () {
-            $(this).css('color', 'red');
-        });
+        $("#example1").DataTable({
 
-        // Add edit functionality
-        $('#task-list').on('click', '.edit', function () {
-            var taskText = $(this).prev('span');
-            var newText = prompt('Edit Task:', taskText.text());
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["csv", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
-            if (newText !== null) {
-                taskText.text(newText);
-            }
-        });
     });
-
-
+    $(".data-btn").click(function () {
+        $.ajax({
+            url: $(this).attr("data-href"),
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
 </script>
-

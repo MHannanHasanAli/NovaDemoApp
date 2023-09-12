@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjustmentServices.cs" />
     <Compile Include="CategoryServices.cs" />
     <Compile Include="CSVServices.cs" />
     <Compile Include="CustomerServices.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="InventoryTemporaryServices.cs" />
     <Compile Include="LocationServices.cs" />
     <Compile Include="NotificationServices.cs" />
+    <Compile Include="PaymentServices.cs" />
     <Compile Include="ProductServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AMRolesManager.cs" />

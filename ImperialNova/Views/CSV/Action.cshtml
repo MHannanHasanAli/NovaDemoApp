@@ -58,12 +58,12 @@
             <div class="container">
                 <form id="actionForm">
                     <div class="row form-container">
-                        
+
                         <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
                         <div class="row setter">
                             <div class="form-group col-md-4">
                                 <label for="_Date">Date&nbsp;</label>
-                                <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" />
+                                <input value="@Model._Date.ToString("dd/MM/yyyy")" type="date" class="form-control" name="_Date" id="_Date" />
                             </div>
                             <div class="form-group col-md-7">
                                 <label for="_Description">Description&nbsp;</label>
@@ -75,10 +75,11 @@
 
                             <input class="form-control" value="@Model._File" name="_File" id="_File" type="hidden" />
                             <input class="form-control" id="FileUpload" name="FileUpload" type="file" accept=".csv" />
-                          
-                        </div>
 
-</form>
+                        </div>
+                    </div>
+
+                </form>
 
 
 
