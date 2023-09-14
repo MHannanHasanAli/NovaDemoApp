@@ -30,17 +30,7 @@
             <div>
                 <h2>Reminder </h2>
             </div>
-            <div>
-                <form>
-
-                    <div class="input-group">
-
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Reminder")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
-
-                    </div>
-                </form>
-            </div>
+            
         </div>
         @if (Model.Reminders != null)
         {

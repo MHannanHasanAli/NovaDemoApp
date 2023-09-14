@@ -33,6 +33,16 @@
     .fa-file, .fa-edit {
         color: blue;
     }
+    .topdiv{
+        display: flex;
+    }
+    .task-checkbox {
+        margin-top: 1px;
+        margin-right: 6px;
+    }
+    .btn {
+        margin-top: -7px;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -68,14 +78,14 @@
                                     @foreach (var item in Model.todolists)
                                     {
                                         <div class="Task">
-                                            <div>
+                                            <div class="topdiv">
                                                 <input type="checkbox" class="task-checkbox" id="checkbox-@item._Id" @(item._Ticked ? "True" : "")>
                                                 <label for="checkbox-@item._Id">@item._DueDate.Date.ToString("yyyy-MM-dd") - @item._Description</label>
                                                 <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
                                                     <i class="fa fa-file" aria-hidden="true"></i>
                                                 </a>
                                             </div>
-                                            <div>
+                                            <div class="bottomdiv">
                                                 <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
                                                     <i class="fas fa-edit"></i>
                                                 </a>

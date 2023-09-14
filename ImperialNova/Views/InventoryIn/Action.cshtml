@@ -1,4 +1,4 @@
-﻿﻿@model ImperialNova.ViewModels.AdjustmentActionViewModel
+﻿﻿@model ImperialNova.ViewModels.InventoryInActionViewModel
 @{
     ViewBag.Title = "Action";
 }
@@ -7,17 +7,12 @@
     #_Date, #_Tracking {
         margin-top: 1px;
     }
-
     .product-box input {
         margin-inline: auto;
     }
-
-    #autocomplete {
+    #autocomplete{
         font-size: 12px;
         width: 400px;
-    }
-    #_Remarks {
-        margin-top: 1px;
     }
 </style>
 <div class="card">
@@ -26,79 +21,117 @@
         @if (Model._Id != 0)
         {
             <h2 class="card-title">
-                Edit Inventory Adjustment
+                Edit Inventory
             </h2>
 
         }
         else
         {
             <h2 class="card-title">
-                Add Inventory Adjustment
+                Add Inventory
             </h2>
 
         }
         <br /><br />
-        <form id="actionForm">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <input type="hidden" value="@Model._Id" name="ID" />
-                        <label for="_Date">Date:</label>
-                        <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />
-                    </div>
-                </div>
-                
-                <div class="col-md-9">
-                    <label for="_Remarks">Remarks:</label>
-                    <input value="@Model._Remarks" type="number" class="form-control" name="_Remarks" id="_Remarks" />
+              <form id="actionForm">
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <input type="hidden" value="@Model._Id" name="ID" />
+                              <label for="_Date">Date:</label>
+                              <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_ShippingCompany">Supplier:</label>
+                              <select class="form-control" name="_ShippingCompany" id="_ShippingCompany">
+                                  <option value="Fedex">Fedex</option>
+                                  <option value="UPS">UPS</option>
+                                  <option value="USPS">USPS</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <label for="_Tracking">Tracking#:</label>
+                          <input value="@Model._Tracking" type="number" class="form-control" name="_Tracking" id="_Tracking" />
 
-                </div>
-               
-            </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_SupplierId">Supplier:</label>
+                              <select class="form-control" name="_SupplierId" id="_SupplierId">
+                                  @foreach (var item in Model.suppliers)
+                                  {
+                                      if (item._Id == Model._SupplierId)
+                                      {
+                                          <option selected value="@item._Id">@item._Name</option>
+                                      }
+                                      else
+                                      {
+                                          <option value="@item._Id">@item._Name</option>
 
-            <div class="product-box">
-                <input type="text" name="country" id="autocomplete" placeholder="Search Product here" />
-            </div>
-            <div id="selection"></div>
+                                      }
+                                  }
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                 
+                  <div class="product-box">
+                      <input type="text" name="country" id="autocomplete" placeholder="Search Product here" />
+                  </div>
+                  <div id="selection"></div>
 
-            <div class="row">
-                <div class="col-md-12 table-responsive">
-                    <table class="table" id="ProductsTable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Photo
-                                </th>
-                                <th>
-                                    SKU
-                                </th>
-                                <th>
-                                    Title
-                                </th>
-                                <th>
-                                    Qty
-                                </th>
+                  <div class="row">
+                      <div class="col-md-12 table-responsive">
+                          <table class="table" id="ProductsTable">
+                              <thead>
+                                  <tr>
+                                      <th>
+                                          Photo
+                                      </th>
+                                      <th>
+                                          SKU
+                                      </th>
+                                      <th>
+                                          Title
+                                      </th>
+                                      <th>
+                                          Expiry Date
+                                      </th>
 
-                                @*@if (User.IsInRole("Admin"))
-                                    {
-                                        <th>
-                                            Cost Price
-                                        </th>
-                                        <th>
-                                            Retail Price
-                                        </th>
-                                    }*@
-                                
+                                      @*@if (User.IsInRole("Admin"))
+                                      {
+                                          <th>
+                                              Cost Price
+                                          </th>
+                                          <th>
+                                              Retail Price
+                                          </th>
+                                      }*@
+                                      <th>Location</th>
+                                      <th>Quantity</th>
+                                      <th>
+                                          Price
+                                      </th>
+                                      <th>
+                                          Amount
+                                      </th>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                                      <th hidden>
+                                          Category
+                                      </th>
 
-                </div>
-            </div>
-        </form>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                          </table>
+
+                      </div>
+                  </div>
+              </form>
 
     </div>
 
@@ -111,7 +144,7 @@
     <div style="background-color:white;" class="card-footer">
 
         <button id="actionButton" type="button" class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-save mr-1"></i> SAVE STOCK</button>
-        <a href="@Url.Action("Index","Adjustment")" class="btn btn-secondary btn-sm btn-rounded" data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        <a href="@Url.Action("Index","InventoryIn")" class="btn btn-secondary btn-sm btn-rounded"  data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
     </div>
 
 
@@ -145,7 +178,7 @@
                 var selectedLocation = $("#_Store").val();
             $.ajax({
                 type: "GET",
-                url: '@Url.Action("GetProductAdjustmentJson", "Adjustment")',
+                url: '@Url.Action("GetProductInventoryInJson", "InventoryIn")',
                 data: { location: selectedLocation },
                 success: function (response) {
                     populateProductsDropdown(response);
@@ -198,7 +231,7 @@
         var Notes = $('#_Notes').val();
 
         $.ajax({
-            url: '@Url.Action("GetProductJson", "Adjustment")',  // Replace with the actual URL of your controller
+            url: '@Url.Action("GetProductJson", "InventoryIn")',  // Replace with the actual URL of your controller
             method: 'GET',
             data: { ID: ProductID },
             success: function (data) {
@@ -240,14 +273,14 @@
 
 
 		$.ajax({
-			url: '@Url.Action("Action", "Adjustment")',
+			url: '@Url.Action("Action", "InventoryIn")',
 			type: "post",
             data: { products: productsJson }, // Send serialized string as parameter
         })
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Adjustment")";
+				window.location.href = "@Url.Action("Index", "InventoryIn")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);
@@ -304,7 +337,7 @@ else
                 var selectedLocation = $("#_Store").val();
             $.ajax({
                 type: "GET",
-                url: '@Url.Action("GetProductAdjustmentJson", "Adjustment")',
+                url: '@Url.Action("GetProductInventoryInJson", "InventoryIn")',
                 data: { location: selectedLocation },
                 success: function (response) {
                     populateProductsDropdown(response);
@@ -358,7 +391,7 @@ else
         var Store = $("#_Store").val();
         var Notes = $('#_Notes').val();
         $.ajax({
-            url: '@Url.Action("GetProductJson", "Adjustment")',  // Replace with the actual URL of your controller
+            url: '@Url.Action("GetProductJson", "InventoryIn")',  // Replace with the actual URL of your controller
             method: 'GET',
             data: { ID: ProductID },
             success: function (data) {
@@ -400,14 +433,14 @@ else
 
 
 		$.ajax({
-			url: '@Url.Action("Action", "Adjustment")',
+			url: '@Url.Action("Action", "InventoryIn")',
 			type: "post",
             data: { products: productsJson }, // Send serialized string as parameter
         })
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Adjustment")";
+				window.location.href = "@Url.Action("Index", "InventoryIn")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

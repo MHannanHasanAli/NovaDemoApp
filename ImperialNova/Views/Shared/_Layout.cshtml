@@ -26,7 +26,7 @@
     <!-- summernote -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-
+    <link href="~/Content/autocomplete/content/styles.css" rel="stylesheet" />
     <style>
         .logo {
             width: 243px;
@@ -290,7 +290,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
+                                <a href="~/role/Action" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p> Ready To Ship Order</p>
                                 </a>
@@ -314,13 +314,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
+                                <a href="~/Customer/Action" class="nav-link">
                                     <i class="fas fa-user-edit nav-icon" aria-hidden="true"></i>
                                     <p> Add Customer</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
+                                <a href="~/Customer/Index" class="nav-link">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <p>All Customers</p>
                                 </a>
@@ -337,37 +337,37 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Inventory/Action" class="nav-link">
+                                <a href="~/InventoryIn/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Inventory In</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Inventory/Index" class="nav-link">
+                                <a href="~/InventoryIn/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
+                                <a href="~/InventoryIn/PendingOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p> Pending Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
+                                <a href="~/InventoryIn/CompletedOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Completed</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
+                                <a href="~/Supplier/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p> Add Supplier</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
+                                <a href="~/Supplier/Index" class="nav-link">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <p>All Supplier</p>
                                 </a>
@@ -384,13 +384,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/User/Register" class="nav-link">
+                                <a href="~/Adjustment/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Adjustments</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/User/Index" class="nav-link">
+                                <a href="~/Adjustment/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
@@ -430,13 +430,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/User/Register" class="nav-link">
+                                <a href="~/Reminder/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Reminder</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/User/Index" class="nav-link">
+                                <a href="~/Reminder/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Reminders</p>
                                 </a>
@@ -508,6 +508,29 @@
                                 <a href="~/Location/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Warehouses</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <p>
+                                Delivery Form
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="~/DeliveryForm/Index" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Add Delivery Form</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="~/DeliveryForm/Listing" class="nav-link">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                    <p>All Records</p>
                                 </a>
                             </li>
                         </ul>

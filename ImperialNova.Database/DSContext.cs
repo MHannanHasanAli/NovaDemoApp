@@ -43,6 +43,7 @@ namespace ImperialNova.Database
         public DbSet<Payment> payments { get; set; }
 
         public DbSet<Adjustment> adjustments { get; set; }
+        public DbSet<InventoryIn> inventoryins { get; set; }
 
     }
 }

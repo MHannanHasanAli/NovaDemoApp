@@ -25,10 +25,10 @@
     input{
         width: 400px;
     }
-    .form-container{
+   /* .form-container{
         flex-direction: row;
-    }
-    .setter {
+    }*/
+    /*.setter {
         justify-content: start;
         position: relative;
         left: -330px;
@@ -38,7 +38,7 @@
         display: flex;
         flex-direction: column;
         align-items: start;
-    }
+    }*/
 </style>
 @if (Model != null)
 {
@@ -60,28 +60,31 @@
             }
             <div class="container">
                 <form id="actionForm" class="form-inline">
-                    <div class="row form-container">
-                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
-                      
+                    <div class="form-container">
+                        <div class="row">
+                            <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+
                             <div class="form-group col-md-3">
                                 <label for="_Name">Record# &nbsp;</label>
                                 <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record" placeholder="Enter name" />
                             </div>
                             <div class="form-group col-md-2 datesetter">
                                 <label for="_Date">Date &nbsp;</label>
-                                <input value="@Model._Date.ToString("yyyy-MM-dd")" type="date" class="form-control" name="_Date" id="_Date"/>
+                                <input value="@Model._Date.ToString("yyyy-MM-dd")" type="date" class="form-control" name="_Date" id="_Date" />
                             </div>
-                        
-                        <div class="form-group col-md-3">
-                            <label for="_Individual">Individual &nbsp;</label>
-                            <input value="@Model._Individual" type="text" class="form-control" name="_Individual" id="_Name" placeholder="Enter name" />
+
+                            <div class="form-group col-md-3">
+                                <label for="_Individual">Individual &nbsp;</label>
+                                <input value="@Model._Individual" type="text" class="form-control" name="_Individual" id="_Name" placeholder="Enter name" />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="_Amount">Amount &nbsp;</label>
+                                <input value="@Model._Amount" type="number" class="form-control" name="_Amount" id="_Amount" placeholder="Enter name" />
+                            </div>
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="_Amount">Amount &nbsp;</label>
-                            <input value="@Model._Amount" type="number" class="form-control" name="_Amount" id="_Amount" placeholder="Enter name" />
-                        </div>
+                       
                         <br />
-                        <div class="form-group col-md-3 setter">
+                        <div class="form-group col-md-12 setter">
                             <label for="_Remarks">Remarks &nbsp;</label>
                             <input value="@Model._Remarks" type="text" class="form-control" name="_Remarks" id="_Remarks" placeholder="Enter name" />
                         </div>

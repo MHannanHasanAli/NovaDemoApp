@@ -1,4 +1,4 @@
-﻿@model ImperialNova.ViewModels.DocumentsListingViewModel
+﻿@model ImperialNova.ViewModels.InventoryInListingViewModel
 
 @{
 }
@@ -23,29 +23,32 @@
         .fa-download:hover {
             color: black; /* Change the color to black on hover */
         }
-    #example1_filter {
-        float: right;
+    #example1_filter{
+        float:right;
+    }
+    .form-control-sm {
+        margin-top: 1px;
     }
 </style>
 <div class="container">
     <div class="card">
         <div class="card-body  container-top">
             <div>
-                <h2>Documents </h2>
+                <h2>Inventory In </h2>
             </div>
-            <div>
+            @*<div>
                 <form>
 
                     <div class="input-group">
 
                         @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Documents")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+                        <a href="@Url.Action("Action", "InventoryIn")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
 
                     </div>
                 </form>
-            </div>
+            </div>*@
         </div>
-        @if (Model.documents != null)
+        @if (Model.inventoryins != null)
         {
             <section class="content">
                 <div class="container-fluid">
@@ -62,13 +65,16 @@
                                         <thead>
                                             <tr>
                                                 <th>Actions</th>
-                                                <th>Name</th>
-                                                <th>Documents</th>
-
+                                                <th>Supplier</th>
+                                                <th>Shipping Company</th>
+                                                <th>Tracking#</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.documents)
+                                            @foreach (var item in Model.inventoryins)
                                             {
                                                 <tr>
                                                     <td>
@@ -78,25 +84,24 @@
 
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Documents", new { ID = item._Id })">
+                                                                <a class="dropdown-item" href="@Url.Action("Action", "InventoryIn", new { ID = item._Id })">
                                                                     <i class="mdi mdi-pencil"></i> VIEW/EDIT
                                                                 </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Documents", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+                                                                @*<button data-href="@Url.Action("Delete", "InventoryIn", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Documents", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-            <i class="mdi mdi-delete"></i> DELETE
-        </a>
+                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "InventoryIn", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                    <i class="mdi mdi-delete"></i> DELETE
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
-                                                    <td>@item._Name</td>
-                                                    @*<td>@item._File</td>*@
-                                                    <td>
+                                                    @*<td>@item._Name</td>*@
+                                                    @*<td>
                                                         <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
                                                             <i class="fa fa-download" aria-hidden="true"></i>
                                                         </a>
-                                                    </td>
+                                                    </td>*@
                                                 </tr>
                                             }
                                         </tbody>
@@ -131,13 +136,13 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["csv", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        
+
     });
     $(".data-btn").click(function () {
         $.ajax({

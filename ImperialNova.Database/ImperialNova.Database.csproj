@@ -152,6 +152,10 @@
     <Compile Include="Migrations\202309121156360_Kashamorika.designer.cs">
       <DependentUpon>202309121156360_Kashamorika.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309131653036_Checkitout.cs" />
+    <Compile Include="Migrations\202309131653036_Checkitout.designer.cs">
+      <DependentUpon>202309131653036_Checkitout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -238,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309121156360_Kashamorika.resx">
       <DependentUpon>202309121156360_Kashamorika.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309131653036_Checkitout.resx">
+      <DependentUpon>202309131653036_Checkitout.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,15 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ImperialNova.Entities
+namespace ImperialNova.ViewModels
 {
-    public class InventoryIn
+    public class InventoryInViewModel
     {
-        [Key] public int _Id { get; set; }
+
+    }
+
+    public class InventoryInListingViewModel
+    {
+        public List<Entities.InventoryIn> inventoryins { get; set; }
+        
+
+    }
+
+    public class InventoryInActionViewModel
+    {
+        public List<Entities.Supplier> suppliers { get; set; }
+        public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _ShippingCompany { get; set; }
         public string _Tracking { get; set; }
@@ -25,6 +36,5 @@ namespace ImperialNova.Entities
         public decimal _Price { get; set; }
         public decimal _Amount { get; set; }
         public int _SupplierId { get; set; }
-
     }
 }
