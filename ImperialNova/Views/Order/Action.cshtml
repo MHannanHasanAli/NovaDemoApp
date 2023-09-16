@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "Action";
 }
+<head>
+    <link href="~/Content/autocomplete/content/styles.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="~/Content/autocomplete/src/jquery.autocomplete.js"></script>
+
+</head>
 <style>
     .form-container {
         display: flex;
@@ -236,11 +242,11 @@ function initializeAutocompleteForProducts() {
                             '<tbody>' +
                             '<tr>' +
                             '<td class="suggestion-initial">' +
-                            '<div class="circular-box">' + suggestion._Photo + '</div>' +
+                            '<div class="circular-box">' + suggestion.ProductPhoto + '</div>' +
                             '</td>' +
                             '<td class="suggestion-details">' +
-                            '<div class="customer-name">' + suggestion._Name + '</div>' +
-                            '<div class="customer-email">' + suggestion._SKU + '</div>' +
+                            '<div class="customer-name">' + suggestion.ProductName + '</div>' +
+                            '<div class="customer-email">' + suggestion.ProductSKU + '</div>' +
                             '</td>' +
                             '</tr>' +
                             '</tbody>' +
