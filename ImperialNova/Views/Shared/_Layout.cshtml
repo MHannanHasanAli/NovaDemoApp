@@ -38,6 +38,9 @@
             margin-left: 4px;
             margin-right: 5px;
         }
+        .dashboard {
+            margin-top: -31px;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -241,10 +244,10 @@
                         <img src="~/Content/adminTemplate/dist/img/logo.png" alt="AdminLTE Logo" class="logo">
                     </a>
                     @*menu-open*@
-                    <li class="nav-item ">
+                    <li class="nav-item dashboard">
 
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <a href="~/Admin/Dashboard" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt "></i>
                             <p>
                                 Dashboard
                             </p>
@@ -266,6 +269,18 @@
                                     <p>Stock Report</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="~/DeliveryForm/Index" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Add Delivery Form</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="~/DeliveryForm/Listing" class="nav-link">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                    <p>All Records</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -278,25 +293,25 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/User/Register" class="nav-link">
+                                <a href="~/Order/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/User/Index" class="nav-link">
+                                <a href="~/Order/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Orders</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/role/Action" class="nav-link">
+                                <a href="~/Order/ReadyToShipOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p> Ready To Ship Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
+                                <a href="~/Order/Shipped" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p>Shipped Orders</p>
                                 </a>
@@ -372,6 +387,19 @@
                                     <p>All Supplier</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="~/Location/Action" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Add Warehouse</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="~/Location/Index" class="nav-link">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                    <p>All Warehouses</p>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -464,17 +492,6 @@
                                     <p>All Products</p>
                                 </a>
                             </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <p>
-                                Category
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="~/Category/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -493,78 +510,44 @@
                         <a href="#" class="nav-link">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <p>
-                                Warehouses
+                                Features
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Location/Action" class="nav-link">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    <p>Add Warehouse</p>
+
+                                <a href="~/TodoList/Index" class="nav-link">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
+                                    <p>
+                                        To Do
+                                    </p>
                                 </a>
+
                             </li>
                             <li class="nav-item">
-                                <a href="~/Location/Index" class="nav-link">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                    <p>All Warehouses</p>
+
+                                <a href="~/Notifications/Index" class="nav-link">
+                                    <i class="fa fa-bell" aria-hidden="true"></i>
+                                    <p>
+                                        Notifications
+                                    </p>
                                 </a>
+
+                            </li>
+                            <li class="nav-item">
+
+                                <a href="~/Documents/Index" class="nav-link">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                    <p>
+                                        Documents
+                                    </p>
+                                </a>
+
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                            <p>
-                                Delivery Form
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="~/DeliveryForm/Index" class="nav-link">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    <p>Add Delivery Form</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="~/DeliveryForm/Listing" class="nav-link">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                    <p>All Records</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-
-                        <a href="~/TodoList/Index" class="nav-link">
-                            <i class="fa fa-clipboard" aria-hidden="true"></i>
-                            <p>
-                                To Do
-                            </p>
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-
-                        <a href="~/Notifications/Index" class="nav-link">
-                            <i class="fa fa-bell" aria-hidden="true"></i>
-                            <p>
-                                Notifications
-                            </p>
-                        </a>
-
-                    </li>
-                    <li class="nav-item">
-
-                        <a href="~/Documents/Index" class="nav-link">
-                            <i class="fa fa-folder" aria-hidden="true"></i>
-                            <p>
-                                Documents
-                            </p>
-                        </a>
-
-                    </li>
+                   
 
                     <li class="nav-item">
                         <a href="#" class="nav-link">
@@ -601,41 +584,41 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fa fa-cog" aria-hidden="true"></i>
-                            <p>
-                                Settings
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="~/User/Register" class="nav-link">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    <p>Add User</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="~/User/Index" class="nav-link">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                    <p>Users</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    <p> Add Roles</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
-                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    <p>Roles</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    @*<li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <p>
+                    Settings
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="~/User/Register" class="nav-link">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <p>Add User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/User/Index" class="nav-link">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Role/Action" class="nav-link">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <p> Add Roles</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Role/Index" class="nav-link">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        <p>Roles</p>
+                    </a>
+                </li>
+            </ul>
+        </li>*@
                     @*<li class="nav-header">MISCELLANEOUS</li>
         <li class="nav-item">
             <a href="iframe.html" class="nav-link">

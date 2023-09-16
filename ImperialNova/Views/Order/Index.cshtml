@@ -1,4 +1,4 @@
-﻿@model ImperialNova.ViewModels.ProductListingViewModel
+﻿@model ImperialNova.ViewModels.OrderListingViewModel
 
 @{
 }
@@ -23,29 +23,23 @@
         .fa-download:hover {
             color: black; /* Change the color to black on hover */
         }
-    .dataTables_filter {
+
+    #example1_filter {
         float: right;
+    }
+    .container {
+        width: 100%;
+        margin: 0 auto;
     }
 </style>
 <div class="container">
     <div class="card">
         <div class="card-body  container-top">
             <div>
-                <h2>Product </h2>
-            </div>
-            <div>
-                <form>
-
-                    @*<div class="input-group">
-
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Product")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
-
-                    </div>*@
-                </form>
+                <h2>Order </h2>
             </div>
         </div>
-        @if (Model.Products != null)
+        @if (Model.orders != null)
         {
             <section class="content">
                 <div class="container-fluid">
@@ -61,18 +55,21 @@
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th>Photo</th>
-                                                <th>SKU</th>
-                                                <th>Title</th>
-                                                <th>Category</th>
-                                                <th>Stock Alert</th>
-                                                <th>Location</th>
-
+                                                <th>Actions</th>
+                                                <th>Date</th>
+                                                <th>Record#</th>
+                                                <th>Ship By Date</th>
+                                                <th>Ship To</th>
+                                                <th>Tracking#</th>
+                                                <th>Customer</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                                <th>Packing</th>
+                                                <th>Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach (var item in Model.Products)
+                                            @foreach (var item in Model.orders)
                                             {
                                                 <tr>
                                                     <td>
@@ -82,25 +79,18 @@
 
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Product", new { ID = item.Product._Id })">
+                                                                <a class="dropdown-item" href="@Url.Action("Action", "Order", new { ID = item._Id })">
                                                                     <i class="mdi mdi-pencil"></i> VIEW/EDIT
                                                                 </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+                                                                @*<button data-href="@Url.Action("Delete", "Order", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Order", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
                                                                     <i class="mdi mdi-delete"></i> DELETE
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
-                                                    <td>
-    <img style="height:50px; width:50px;"  src="@item.Product._Photo" /></td>
-                                                    <td>@item.Product._SKU</td>
-                                                    <td>@item.Product._Name</td>
-                                                    <td>@item.Category._CName</td>
-                                                    <td>@item.Product._LowStockAlert</td>
-                                                    <td>@item.Warehouse._LocationName</td>
                                                    
                                                 </tr>
                                             }
@@ -136,13 +126,13 @@
 
 <script>
     $(document).ready(function () {
-        
+
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "buttons": ["csv", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        
+
     });
     $(".data-btn").click(function () {
         $.ajax({

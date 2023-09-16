@@ -90,6 +90,7 @@
     <Compile Include="InventoryTemporaryServices.cs" />
     <Compile Include="LocationServices.cs" />
     <Compile Include="NotificationServices.cs" />
+    <Compile Include="OrderServices.cs" />
     <Compile Include="PaymentServices.cs" />
     <Compile Include="ProductServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

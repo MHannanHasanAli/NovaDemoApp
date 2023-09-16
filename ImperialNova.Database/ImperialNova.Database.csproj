@@ -156,6 +156,10 @@
     <Compile Include="Migrations\202309131653036_Checkitout.designer.cs">
       <DependentUpon>202309131653036_Checkitout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309161105181_OrderUpdated.cs" />
+    <Compile Include="Migrations\202309161105181_OrderUpdated.designer.cs">
+      <DependentUpon>202309161105181_OrderUpdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -245,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309131653036_Checkitout.resx">
       <DependentUpon>202309131653036_Checkitout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309161105181_OrderUpdated.resx">
+      <DependentUpon>202309161105181_OrderUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
