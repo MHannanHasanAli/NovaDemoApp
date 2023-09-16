@@ -90,5 +90,12 @@ namespace ImperialNova.Controllers
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult Test()
+        {
+           
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

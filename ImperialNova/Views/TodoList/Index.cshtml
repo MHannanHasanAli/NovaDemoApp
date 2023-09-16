@@ -123,30 +123,61 @@
 </div>
 
 <script>
+    //$(document).ready(function () {
+        
+    //});
     $(document).ready(function () {
-        $('.task-checkbox').change(function () {
-            var $checkbox = $(this);
-            var isChecked = $checkbox.is(':checked');
-            var taskId = $checkbox.data('task-id'); // Get the task ID from a data attribute
+        //$('.task-checkbox').change(function () {
+        //    var $checkbox = $(this);
+        //    var isChecked = $checkbox.is(':checked');
+        //    var taskId = $checkbox.data('task-id'); // Get the task ID from a data attribute
 
-            // Send an AJAX request to update the database
+        //    // Send an AJAX request to update the database
+        //    $.ajax({
+        //        type: 'POST', // You can use 'PUT' or 'PATCH' depending on your server setup
+        //        url: '/TodoList/UpdateTask', // Replace with the actual URL to your update action
+        //        data: {
+        //            taskId: taskId,
+        //            isChecked: isChecked
+        //        },
+        //        success: function (data) {
+        //            // Handle the response from the server if needed
+        //            console.log(data);
+        //        },
+        //        error: function (error) {
+        //            console.error(error);
+        //        }
+        //    });
+        //});
+        // Attach a change event handler to all elements with class "task-checkbox"
+        $(".task-checkbox").change(function () {
+            // Get the ID of the clicked checkbox
+            var checkboxId = $(this).attr("id");
+
+            // Check if the checkbox is checked or unchecked
+            var isChecked = $(this).is(":checked");
+
+            // Create an object with data to send to the server
+            var dataToSend = {
+                checkboxId: checkboxId,
+                isChecked: isChecked
+            };
+
+            // Send an AJAX request to the server
             $.ajax({
-                type: 'POST', // You can use 'PUT' or 'PATCH' depending on your server setup
-                url: '/TodoList/UpdateTask', // Replace with the actual URL to your update action
-                data: {
-                    taskId: taskId,
-                    isChecked: isChecked
-                },
-                success: function (data) {
-                    // Handle the response from the server if needed
-                    console.log(data);
+                url: '/TodoList/Test', // Replace with the actual URL of your controller action
+                type: 'POST', // Use 'POST' or 'GET' based on your controller action
+               /* data: dataToSend,*/
+                success: function (response) {
+                    // Handle the server response here if needed
+                    alert("Server response: " + response);
                 },
                 error: function (error) {
-                    console.error(error);
+                    // Handle any errors here
+                    alert("Error: " + error.statusText);
                 }
             });
         });
-
         $('.task-checkbox').change(function () {
             var $task = $(this).closest('.Task');
             var $label = $task.find('label');
@@ -157,15 +188,6 @@
                 $label.css('text-decoration', 'none');
             }
         });
-
-       
-        //function tickmarker() {
-        //    if (this.checked) {
-        //        $('.Task').css('text-decoration', 'line-through');
-        //    } else {
-        //        $('.Task').css('text-decoration', 'none');
-        //    };
-
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
