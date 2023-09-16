@@ -29,6 +29,13 @@ namespace ImperialNova.Controllers
             return View("Shipped", model);
         }
         [HttpGet]
+        public ActionResult GetProductsInJson()
+        {
+            var product = ProductServices.Instance.GetProduct();
+            return Json(product, JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
         public ActionResult Action(int ID = 0)
         {
 
