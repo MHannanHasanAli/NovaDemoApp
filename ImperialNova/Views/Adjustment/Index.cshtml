@@ -67,9 +67,10 @@
                                         <thead>
                                             <tr>
                                                 <th>Actions</th>
+                                                <th>Date</th>
                                                 <th>Remarks</th>
                                                 <th>Qty</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -94,13 +95,14 @@
                                                             </div>
                                                         </div>
                                                     </td>
-
-                                                    @*<td>@item._Name</td>*@
+                                                    <td>@item._Date.ToString("yyyy-MM-dd")</td>
+                                                    <td>@item._Remarks</td>
+                                                    <td>@item._Quantity</td>
                                                     @*<td>
-                                                            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                                <i class="fa fa-download" aria-hidden="true"></i>
-                                                            </a>
-                                                        </td>*@
+            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                <i class="fa fa-download" aria-hidden="true"></i>
+            </a>
+        </td>*@
                                                 </tr>
                                             }
                                         </tbody>

@@ -20,7 +20,6 @@ namespace ImperialNova.ViewModels
        public List<Locations> Locations { get; set; }
         public int _Id { get; set; }
         public DateTime _Date { get; set; }
-        public string _Type { get; set; }
         public string _Remarks { get; set; }
         public int _Quantity { get; set; }
 

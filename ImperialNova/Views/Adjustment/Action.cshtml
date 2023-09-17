@@ -30,6 +30,13 @@
         margin-top: -2px;
         font-size: 15px;
     }
+    #output {
+        float: right;
+        position: relative;
+        left: -147px;
+        background: #aca1a1;
+        padding: 2px;
+    }
 </style>
 <div class="card">
 
@@ -61,15 +68,15 @@
 
                       <div class="col-md-9">
                           <label for="_Remarks">Remarks:</label>
-                          <input value="@Model._Remarks" type="number" class="form-control" name="_Remarks" id="_Remarks" />
+                          <input value="@Model._Remarks" type="text" class="form-control" name="_Remarks" id="_Remarks" />
 
                       </div>
 
                   </div>
                   <div class="col-md-3">
                       <div class="form-group">
-                          <label for="name">Store:</label>
-                          <select onchange="dropdownfiller()" class="form-control" name="_Store" id="_Store">
+                          <label for="_StoreId">Store:</label>
+                          <select  class="form-control" name="_StoreId" id="_StoreId">
                               @foreach (var item in Model.Locations)
                               {
                                   <option selected value="@item._Id">@item._LocationName</option>
@@ -110,22 +117,24 @@
                                       </th>
 
                                       @*@if (User.IsInRole("Admin"))
-                            {
-                                <th>
-                                    Cost Price
-                                </th>
-                                <th>
-                                    Retail Price
-                                </th>
-                            }*@
+                {
+                    <th>
+                        Cost Price
+                    </th>
+                    <th>
+                        Retail Price
+                    </th>
+                }*@
 
 
                                   </tr>
                               </thead>
                               <tbody>
                               </tbody>
+                              
                           </table>
-
+                          <hr />
+                          <h6 id="output"></h6>
                       </div>
                   </div>
               </form>
@@ -152,8 +161,28 @@
 @*@if (User.IsInRole("Admin"))
 {*@
 <script>
-        $(document).ready(function () {
-            $("#_Store").change(function () {
+    $(document).ready(function () {
+        $('.QtyInput').on('change', function () {
+            updateTotalQuantity(); // Update the total quantity when an input changes
+        });
+        $(document).on('input', '.QtyInput', updateOutput);
+        function updateOutput() {
+            let sum = 0;
+            const values = [];
+
+            // Loop through all input fields with the class "input-field"
+            $('.QtyInput').each(function () {
+                const value = $(this).val();
+                values.push(value);
+
+                const numericValue = parseFloat(value) || 0;
+                sum += numericValue;
+            });
+
+            // Set the content of the <h1> tag to display both the concatenated values and their sum
+            $('#output').text(`Total : ${sum}`);
+        }
+            $("#_StoreId").change(function () {
                 var selectedStore = $(this).val();
                 $.getJSON("/InventoryIn/GetItems", { store: selectedStore }, function (data) {
                     var itemDropdown = $("#_ProductId");
@@ -172,6 +201,8 @@
                     });
                 });
             });
+       
+
         $("#AdddToTableBtn").click(function () {
             var ProductID = $("#_ProductId").val();
 
@@ -206,7 +237,20 @@
 
                 $('#ProductsTable tbody').append(row);
             }
-        })
+    })
+        var totalQuantity = 0;
+
+        // Function to update the total quantity and display it in the <h6> tag
+        function updateTotalQuantity() {
+            totalQuantity = 0; // Reset total quantity
+            // Loop through all input fields with class "QtyInput"
+            $('.QtyInput').each(function () {
+                var quantity = parseInt($(this).val()) || 0; // Parse quantity as an integer, default to 0
+                totalQuantity += quantity; // Add the quantity to the total
+            });
+            // Display the total quantity in the element with ID "totalQuantity"
+            $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
+        }
         $("#actionButton").click(function () {
         var products = [];
 
@@ -217,7 +261,7 @@
                 _SKU: $(this).find('td:eq(1)').text(),
                 _Name: $(this).find('td:eq(2)').text(),
                 _Quantity: $('#_Quantity').val(),
-               
+
             };
 
 
@@ -226,21 +270,37 @@
         var productsJson = JSON.stringify(products);
 
             console.log(productsJson);
+            var sender = $("#actionForm").serialize();
 
-		$.ajax({
-			url: '@Url.Action("Action", "Adjustment")',
+            $.ajax({
+			url: '@Url.Action("ActionProducts", "Adjustment")',
 			type: "post",
-            data: { model: productsJson }, // Send serialized string as parameter
+            data: { products: productsJson}, // Send serialized string as parameter
         })
             .done(function (response) {
 			if(response.success)
 			{
+                 $.ajax({
+			url: '@Url.Action("Action", "Adjustment")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
 				window.location.href = "@Url.Action("Index", "Adjustment")";
+
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+            });
 			}
 			else {
 				$(".errorDiv").html(response.Message);
 			}
 		});
+
     });
    @*$(function () {
        $("#autocomplete").autocomplete({

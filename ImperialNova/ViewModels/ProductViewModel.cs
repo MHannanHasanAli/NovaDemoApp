@@ -6,6 +6,14 @@ using System.Web;
 
 namespace ImperialNova.ViewModels
 {
+    public class ProductModel
+    {
+        public string _ProductId { get; set; }
+        public string _Photo { get; set; }
+        public string _Name { get; set; }
+        public string _SKU { get; set; }
+        public string _Quantity { get; set; }
+    }
     public class ProductListingViewModel
     {
         public List<ProductsModel> Products { get; set; }

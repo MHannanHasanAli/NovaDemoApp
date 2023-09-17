@@ -1,5 +1,6 @@
 ﻿using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace ImperialNova.Controllers
             return View("Index", model);
         }
 
-
+        public static int QuantityUpdate;
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
@@ -28,7 +29,6 @@ namespace ImperialNova.Controllers
             {
                 var Adjustment = AdjustmentServices.Instance.GetAdjustmentById(ID);
                 model._Id = Adjustment._Id;
-                model._Type = Adjustment._Type;
                 model._Date = Adjustment._Date;
                 model._Quantity = Adjustment._Quantity;
                 model._Remarks = Adjustment._Remarks;
@@ -44,18 +44,65 @@ namespace ImperialNova.Controllers
             return Json(product, JsonRequestBehavior.AllowGet);
 
         }
+        //[HttpPost]
+        //public ActionResult Action(string products)
+        //{
+        //    var ListOfInventory = JsonConvert.DeserializeObject<List<InventoryModel>>(products);
+        //    foreach(var item in ListOfInventory)
+        //    {
 
+        //    }
+        //    if (model._Id != 0)
+        //    {
+        //        var Adjustment = AdjustmentServices.Instance.GetAdjustmentById(model._Id);
+        //        Adjustment._Id = model._Id;
+        //        Adjustment._Type = model._Type;
+        //        Adjustment._Date = model._Date;
+        //        Adjustment._Quantity = model._Quantity;
+        //        Adjustment._Remarks = model._Remarks;
+
+        //        AdjustmentServices.Instance.UpdateAdjustment(Adjustment);
+
+        //    }
+        //    else
+        //    {
+        //        var Adjustment = new Entities.Adjustment();
+        //        Adjustment._Type = model._Type;
+        //        Adjustment._Date = model._Date;
+        //        Adjustment._Quantity = model._Quantity;
+        //        Adjustment._Remarks = model._Remarks;
+
+        //        AdjustmentServices.Instance.CreateAdjustment(Adjustment);
+        //    }
+
+
+        //    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        //}
+
+        [HttpPost]
+        public ActionResult ActionProducts(string products)
+        {
+            QuantityUpdate = 0;
+            var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
+            foreach (var item in ListOfInventory)
+            {
+                var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
+                product._Quantity = int.Parse(item._Quantity);
+                QuantityUpdate = QuantityUpdate + product._Quantity;
+                ProductServices.Instance.UpdateProduct(product);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult Action(AdjustmentActionViewModel model)
         {
-
+            
             if (model._Id != 0)
             {
                 var Adjustment = AdjustmentServices.Instance.GetAdjustmentById(model._Id);
                 Adjustment._Id = model._Id;
-                Adjustment._Type = model._Type;
                 Adjustment._Date = model._Date;
-                Adjustment._Quantity = model._Quantity;
+                Adjustment._Quantity = QuantityUpdate;
                 Adjustment._Remarks = model._Remarks;
 
                 AdjustmentServices.Instance.UpdateAdjustment(Adjustment);
@@ -64,9 +111,8 @@ namespace ImperialNova.Controllers
             else
             {
                 var Adjustment = new Entities.Adjustment();
-                Adjustment._Type = model._Type;
                 Adjustment._Date = model._Date;
-                Adjustment._Quantity = model._Quantity;
+                Adjustment._Quantity = QuantityUpdate;
                 Adjustment._Remarks = model._Remarks;
 
                 AdjustmentServices.Instance.CreateAdjustment(Adjustment);
@@ -75,7 +121,6 @@ namespace ImperialNova.Controllers
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
-
 
 
         [HttpGet]
