@@ -235,9 +235,11 @@ $(document).ready(function () {
             // Loop through all input fields with the class "input-field"
             $('.QtyInput').each(function () {
                 const value = $(this).val();
-                const price = $(this).closest('tr').find('.price').val();
+                const priceWithDollarSign = $(this).closest('tr').find('.price').text();
+                const price = parseFloat(priceWithDollarSign.replace('£', ''));
                 alert(value);
                 alert(price);
+
                 values.push(value);
                 const numericValue = parseFloat(value) || 0;
                 sum += numericValue;
