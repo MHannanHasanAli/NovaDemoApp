@@ -58,6 +58,9 @@
         background: #aca1a1;
         padding: 2px;
     }
+    .price{
+        display: block;
+    }
 </style>
 <div class="card">
 
@@ -213,7 +216,7 @@
 
 </div>
 
-<script type="text/javascript" src="src/jquery.autocomplete.js"></script>
+@*<script type="text/javascript" src="src/jquery.autocomplete.js"></script>*@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @*@if (User.IsInRole("Admin"))
@@ -222,7 +225,7 @@
 $(document).ready(function () {
              $('.QtyInput').on('change', function () {
                  updateTotalQuantity();
-                 updateAmount($(this));// Update the total quantity when an input changes
+                
         });
         $(document).on('input', '.QtyInput', updateOutput);
         function updateOutput() {
@@ -232,31 +235,36 @@ $(document).ready(function () {
             // Loop through all input fields with the class "input-field"
             $('.QtyInput').each(function () {
                 const value = $(this).val();
+                const price = $(this).closest('tr').find('.price').val();
+                alert(value);
+                alert(price);
                 values.push(value);
-                updateAmount(value);
                 const numericValue = parseFloat(value) || 0;
                 sum += numericValue;
+                var amount = value * price;
 
+                // Update the amount cell in the table.
+                $(this).closest('tr').find('.amount').text('£' + amount);
             });
 
             // Set the content of the <h1> tag to display both the concatenated values and their sum
             $('#output').text(`Total : ${sum}`);
 
     }
-    function updateAmount(quantityInput) {
-        alert("Amount Activated");
-        const row = quantityInput.closest('tr'); // Find the parent table row
-        const quantity = parseFloat(quantityInput.val()) || 0; // Get the quantity value
-        const price = parseFloat(row.find('.price').text().replace('£', '')) || 0; // Get the price from the 'price' td
-        alert(row);
-        alert(quantity);
-        alert(price);
-        // Calculate the total amount
-        const totalAmount = quantity * price;
+    //function updateAmount(quantityInput) {
+    //    alert("Amount Activated");
+    //    const row = quantityInput.closest('tr'); // Find the parent table row
+    //    const quantity = parseFloat(quantityInput.val()) || 0; // Get the quantity value
+    //    const price = parseFloat(row.find('.price').text().replace('£', '')) || 0; // Get the price from the 'price' td
+    //    alert(row);
+    //    alert(quantity);
+    //    alert(price);
+    //    // Calculate the total amount
+    //    const totalAmount = quantity * price;
 
-        // Update the 'amount' td with the calculated total amount
-        row.find('.amount').text(`£${totalAmount.toFixed(2)}`);
-    }
+    //    // Update the 'amount' td with the calculated total amount
+    //    row.find('.amount').text(`£${totalAmount.toFixed(2)}`);
+    //}
             $("#_StoreId").change(function () {
                 var selectedStore = $(this).val();
                 $.getJSON("/InventoryIn/GetItems", { store: selectedStore }, function (data) {
@@ -302,17 +310,16 @@ $(document).ready(function () {
     //, quantityin, store, Notes
             function appendProductToTable(product) {
                 var row = `
-                <tr>
-                    <td>${product._Id}</td>
-                    <td  class="photo"><img src="${product._Photo}"  style="width:50px;height:50px;"/></td>
-                    <td>${product._SKU}</td>
-                    <td>${product._Name}</td>
-                    <td  class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate"/></td>
-                    <td  class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
-                    <td  class="price">£${product._Cost}</td>
-                    <td  class="amount"></td>
-
-                </tr>
+               <tr>
+  <td>${product._Id}</td>
+  <td class="photo"><img src="${product._Photo}" style="width:50px;height:50px;"/></td>
+  <td>${product._SKU}</td>
+  <td>${product._Name}</td>
+  <td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate"/></td>
+  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
+  <td class="price">£${product._Cost}</td>
+  <td class="amount"></td>
+</tr>
             `;
 
                 $('#ProductsTable tbody').append(row);
