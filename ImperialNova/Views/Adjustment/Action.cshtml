@@ -37,6 +37,14 @@
         background: #aca1a1;
         padding: 2px;
     }
+    .setting{
+        display: flex;
+        gap: 5px;
+    }
+    #AdddToTableBtn {
+        height: 34px;
+        margin-top: 32px;
+    }
 </style>
 <div class="card">
 
@@ -84,15 +92,16 @@
                           </select>
                       </div>
                   </div>
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label for="_ProductId">Products:</label>
-                          <select class="form-control" name="_ProductId" id="_ProductId">
-                          </select>
+                  <div class="setting">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="_ProductId">Products:</label>
+                              <select class="form-control" name="_ProductId" id="_ProductId">
+                              </select>
+                          </div>
                       </div>
+                      <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
                   </div>
-                  <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
-
                   @*<div class="product-box">
             <input type="text" name="product" autocomplete="off" id="autocomplete" class="autocomplete" placeholder="Search Product here" />
         </div>
@@ -103,6 +112,9 @@
                           <table class="table" id="ProductsTable">
                               <thead>
                                   <tr>
+                                      <th>
+                                          Id
+                                      </th>
                                       <th>
                                           Photo
                                       </th>
@@ -117,14 +129,14 @@
                                       </th>
 
                                       @*@if (User.IsInRole("Admin"))
-                {
-                    <th>
-                        Cost Price
-                    </th>
-                    <th>
-                        Retail Price
-                    </th>
-                }*@
+        {
+            <th>
+                Cost Price
+            </th>
+            <th>
+                Retail Price
+            </th>
+        }*@
 
 
                                   </tr>
@@ -229,6 +241,7 @@
                 var row = `
                 <tr>
                     <td>${product._Id}</td>
+                    <td><img src="${product._Photo}"  style="width:50px;height:50px;"/></td>
                     <td>${product._SKU}</td>
                     <td>${product._Name}</td>
                     <td><input class="QtyInput" type="number" id="_Quantity"/></td>
