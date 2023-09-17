@@ -100,7 +100,7 @@ namespace ImperialNova.Controllers
             {
                 // Update the checkbox state for the individual
                 individual._Ticked = checkboxState;
-
+                TodoListServices.Instance.UpdateTodoList(individual);
                 // Handle the data as needed (for demonstration purposes, just return the updated state)
                 return Json(new { Success = true, Message = $"Checkbox state updated for {individual._Description}" });
             }

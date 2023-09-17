@@ -25,6 +25,9 @@
     input{
         width: 400px;
     }
+    .remark{
+
+    }
    /* .form-container{
         flex-direction: row;
     }*/
@@ -66,7 +69,7 @@
 
                             <div class="form-group col-md-3">
                                 <label for="_Name">Record# &nbsp;</label>
-                                <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record" placeholder="Enter name" />
+                                <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record"/>
                             </div>
                             <div class="form-group col-md-2 datesetter">
                                 <label for="_Date">Date &nbsp;</label>
@@ -75,7 +78,7 @@
 
                             <div class="form-group col-md-3">
                                 <label for="_Individual">Individual &nbsp;</label>
-                                <input value="@Model._Individual" type="text" class="form-control" name="_Individual" id="_Name" placeholder="Enter name" />
+                                <input value="@Model._Individual" type="text" class="form-control" name="_Individual" id="_Name"  />
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="_Amount">Amount &nbsp;</label>
@@ -86,7 +89,7 @@
                         <br />
                         <div class="form-group col-md-12 setter">
                             <label for="_Remarks">Remarks &nbsp;</label>
-                            <input value="@Model._Remarks" type="text" class="form-control" name="_Remarks" id="_Remarks" placeholder="Enter name" />
+                            <input value="@Model._Remarks" type="text" class="form-control remark" name="_Remarks" id="_Remarks" placeholder="Enter name" />
                         </div>
                         @*<div class="form-group col-md-8">
         <label>File &nbsp;</label>

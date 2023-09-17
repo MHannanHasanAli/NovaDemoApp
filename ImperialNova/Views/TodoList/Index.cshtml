@@ -57,7 +57,7 @@
             padding-top: 2px;
     }
   .mover-description{
-      text-decoration: line-through;
+      /*text-decoration: line-through;*/
         margin-bottom: 1px;
     }
     .mover-file {
@@ -65,6 +65,10 @@
         padding-top: 17px;
         height: 34px;
     }
+    .completed {
+        text-decoration: line-through;
+    }
+
 </style>
 <div class="container">
     <div class="card">
@@ -132,8 +136,8 @@
                                                             @Html.CheckBoxFor(model => @item._Ticked)
                                                             <input type="hidden" name="id" value="@item._Id" />
                                                         </td>
-                                                        <td class="tab-attr mover-date">@item._DueDate.ToString("yyyy-MM-dd") -</td>
-                                                        <td class="tab-attr mover-description">
+                                                        <td class="tab-attr mover-date @((item._Ticked) ? "completed" : "")">@item._DueDate.ToString("yyyy-MM-dd") -</td>
+                                                        <td class="tab-attr mover-description @((item._Ticked) ? "completed" : "")">
                                                             <div class="Task">
                                                                 <div class="topdiv" style="display: flex; align-items: center;">
                                                                     @Html.DisplayFor(model => item._Description)
@@ -142,8 +146,7 @@
                                                                     </a>
                                                                 </div>
                                                             </div>
-                                                         </td>
-                                                       
+                                                        </td>
                                                         <td style="float:right;">
                                                             <div class="bottomdiv">
                                                                 <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
@@ -218,41 +221,13 @@
                     }
                 });
             }
-        function updateStyles(id, checkboxState) {
-            const row = $("input[type=checkbox][value='" + id + "']").closest("tr");
-
-            if (checkboxState) {
-                // Checkbox is checked, add line-through style
-                row.find(".mover-date, .mover-description").css("text-decoration-line", "line-through");
-            } else {
-                // Checkbox is unchecked, remove line-through style
-                row.find(".mover-date, .mover-description").css("text-decoration-line", "none");
-            }
-        }
-            // Attach a change event handler to all checkboxes
+      
             $("input[type=checkbox]").change(function () {
-                const checkbox = $(this);
-                const id = checkbox.closest("tr").find("[name='id']").val();
-                const checkboxState = checkbox.prop("checked");
-                updateStyles(id, true);
+                var isChecked = $(this).prop("checked");
+                $(this).closest("tr").find(".tab-attr.mover-date, .tab-attr.mover-description").toggleClass("completed", isChecked);
                 sendAjaxRequest(id, checkboxState);
             });
-        //$("input[type=checkbox]:checked").each(function () {
-        //    const checkbox = $(this);
-        //    const id = checkbox.closest("tr").find("[name='id']").val();
-        //    // Apply line-through style
-        //});
-       
-        //$('.task-checkbox').change(function () {
-        //    var $task = $(this).closest('.Task');
-        //    var $label = $task.find('label');
-
-        //    if (this.checked) {
-        //        $label.css('text-decoration', 'line-through');
-        //    } else {
-        //        $label.css('text-decoration', 'none');
-        //    }
-        //});
+        
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
