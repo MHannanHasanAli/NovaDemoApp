@@ -91,11 +91,21 @@ namespace ImperialNova.Controllers
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Test()
+        public JsonResult UpdateData(int id, bool checkboxState)
         {
-           
+            // Find the individual with the specified Id
+            var individual = TodoListServices.Instance.GetTodoListById(id);
 
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            if (individual != null)
+            {
+                // Update the checkbox state for the individual
+                individual._Ticked = checkboxState;
+
+                // Handle the data as needed (for demonstration purposes, just return the updated state)
+                return Json(new { Success = true, Message = $"Checkbox state updated for {individual._Description}" });
+            }
+
+            return Json(new { Success = false, Message = "Individual not found" });
         }
     }
 }

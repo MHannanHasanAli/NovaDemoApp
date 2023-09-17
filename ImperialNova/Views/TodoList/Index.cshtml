@@ -43,6 +43,28 @@
     .btn {
         margin-top: -7px;
     }
+    .bottomdiv {
+        position: absolute;
+        left: 1025px;
+    }
+    .tab-attr {
+        float: left;
+    }
+    .mover-date {
+        padding-top: -1px;
+    }
+    .chkbox{
+            padding-top: 2px;
+    }
+  .mover-description{
+      text-decoration: line-through;
+        margin-bottom: 1px;
+    }
+    .mover-file {
+        margin-top: -21px;
+        padding-top: 17px;
+        height: 34px;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -62,6 +84,24 @@
                 </form>
             </div>
         </div>
+        @*<div class="bottomdiv">
+            <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a class="data-btn del" data-href="@Url.Action("Delete", "TodoList", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="Task">
+            <div class="topdiv">
+                <input type="checkbox" class="task-checkbox" id="checkbox-@item._Id" @(item._Ticked ? "True" : "")>
+                <label for="checkbox-@item._Id">@item._DueDate.Date.ToString("yyyy-MM-dd") - @item._Description</label>
+                <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                    <i class="fa fa-file" aria-hidden="true"></i>
+                </a>
+            </div>
+
+        </div>*@
         @if (Model.todolists != null)
         {
             <section class="content">
@@ -75,26 +115,55 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    @foreach (var item in Model.todolists)
-                                    {
-                                        <div class="Task">
-                                            <div class="topdiv">
-                                                <input type="checkbox" class="task-checkbox" id="checkbox-@item._Id" @(item._Ticked ? "True" : "")>
-                                                <label for="checkbox-@item._Id">@item._DueDate.Date.ToString("yyyy-MM-dd") - @item._Description</label>
-                                                <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                    <i class="fa fa-file" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                            <div class="bottomdiv">
-                                                <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a class="data-btn del" data-href="@Url.Action("Delete", "TodoList", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    }
+                                    <form id="myForm">
+                                        @Html.AntiForgeryToken()
+
+                                        <table>
+                                            <thead>
+                                                
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.todolists)
+                                                {
+
+
+                                                    <tr>
+                                                        <td class="chkbox">
+                                                            @Html.CheckBoxFor(model => @item._Ticked)
+                                                            <input type="hidden" name="id" value="@item._Id" />
+                                                        </td>
+                                                        <td class="tab-attr mover-date">@item._DueDate.ToString("yyyy-MM-dd") -</td>
+                                                        <td class="tab-attr mover-description">
+                                                            <div class="Task">
+                                                                <div class="topdiv" style="display: flex; align-items: center;">
+                                                                    @Html.DisplayFor(model => item._Description)
+                                                                    <a class="btn mover-file" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                                                                        <i class="fa fa-file" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                         </td>
+                                                       
+                                                        <td style="float:right;">
+                                                            <div class="bottomdiv">
+                                                                <a class="edit" href="@Url.Action("Action", "TodoList", new { ID = item._Id })">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </a>
+                                                                <a class="data-btn del" data-href="@Url.Action("Delete", "TodoList", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                
+
+
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                        <input type="submit" value="Submit" style="display: none;" />
+                                    </form>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -124,70 +193,66 @@
 
 <script>
     //$(document).ready(function () {
-        
+
     //});
     $(document).ready(function () {
-        //$('.task-checkbox').change(function () {
-        //    var $checkbox = $(this);
-        //    var isChecked = $checkbox.is(':checked');
-        //    var taskId = $checkbox.data('task-id'); // Get the task ID from a data attribute
+        const form = $("#myForm");
 
-        //    // Send an AJAX request to update the database
-        //    $.ajax({
-        //        type: 'POST', // You can use 'PUT' or 'PATCH' depending on your server setup
-        //        url: '/TodoList/UpdateTask', // Replace with the actual URL to your update action
-        //        data: {
-        //            taskId: taskId,
-        //            isChecked: isChecked
-        //        },
-        //        success: function (data) {
-        //            // Handle the response from the server if needed
-        //            console.log(data);
-        //        },
-        //        error: function (error) {
-        //            console.error(error);
-        //        }
-        //    });
-        //});
-        // Attach a change event handler to all elements with class "task-checkbox"
-        $(".task-checkbox").change(function () {
-            // Get the ID of the clicked checkbox
-            var checkboxId = $(this).attr("id");
-
-            // Check if the checkbox is checked or unchecked
-            var isChecked = $(this).is(":checked");
-
-            // Create an object with data to send to the server
-            var dataToSend = {
-                checkboxId: checkboxId,
-                isChecked: isChecked
-            };
-
-            // Send an AJAX request to the server
-            $.ajax({
-                url: '/TodoList/Test', // Replace with the actual URL of your controller action
-                type: 'POST', // Use 'POST' or 'GET' based on your controller action
-               /* data: dataToSend,*/
-                success: function (response) {
-                    // Handle the server response here if needed
-                    alert("Server response: " + response);
-                },
-                error: function (error) {
-                    // Handle any errors here
-                    alert("Error: " + error.statusText);
-                }
-            });
-        });
-        $('.task-checkbox').change(function () {
-            var $task = $(this).closest('.Task');
-            var $label = $task.find('label');
-
-            if (this.checked) {
-                $label.css('text-decoration', 'line-through');
-            } else {
-                $label.css('text-decoration', 'none');
+            // Function to send the AJAX request
+            function sendAjaxRequest(id, checkboxState) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateData", "TodoList")",
+                    data: { id: id, checkboxState: checkboxState },
+                    success: function (response) {
+                        alert(response);
+                        if (response.Success) {
+                            alert(response.Message);
+                        } else {
+                            alert("Error: " + response.Message);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err);
+                        alert("An error occurred.");
+                    }
+                });
             }
-        });
+        function updateStyles(id, checkboxState) {
+            const row = $("input[type=checkbox][value='" + id + "']").closest("tr");
+
+            if (checkboxState) {
+                // Checkbox is checked, add line-through style
+                row.find(".mover-date, .mover-description").css("text-decoration-line", "line-through");
+            } else {
+                // Checkbox is unchecked, remove line-through style
+                row.find(".mover-date, .mover-description").css("text-decoration-line", "none");
+            }
+        }
+            // Attach a change event handler to all checkboxes
+            $("input[type=checkbox]").change(function () {
+                const checkbox = $(this);
+                const id = checkbox.closest("tr").find("[name='id']").val();
+                const checkboxState = checkbox.prop("checked");
+                updateStyles(id, true);
+                sendAjaxRequest(id, checkboxState);
+            });
+        //$("input[type=checkbox]:checked").each(function () {
+        //    const checkbox = $(this);
+        //    const id = checkbox.closest("tr").find("[name='id']").val();
+        //    // Apply line-through style
+        //});
+       
+        //$('.task-checkbox').change(function () {
+        //    var $task = $(this).closest('.Task');
+        //    var $label = $task.find('label');
+
+        //    if (this.checked) {
+        //        $label.css('text-decoration', 'line-through');
+        //    } else {
+        //        $label.css('text-decoration', 'none');
+        //    }
+        //});
         $("#example1").DataTable({
 
             "responsive": true, "lengthChange": false, "autoWidth": false,
