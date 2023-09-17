@@ -19,13 +19,7 @@ namespace ImperialNova.Entities
         public int _Variations { get; set; }
         public int _OpeningStock { get; set; }
         public decimal _RetailPrice { get; set;}
-        public int _Quantity
-        {
-            get
-            {
-                return this._QuantityIn - this._QuantityOut;
-            }
-        }
+        public int _Quantity { get; set; }
         public int _QuantityIn { get; set; }
         public int _QuantityOut { get; set; } = 0;
         public string _Notes { get; set; }

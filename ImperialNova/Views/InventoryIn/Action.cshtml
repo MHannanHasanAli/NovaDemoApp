@@ -14,6 +14,10 @@
         font-size: 12px;
         width: 400px;
     }
+    .dropdownimg{
+        width: 30px;
+        height: 30px;
+    }
 </style>
 <div class="card">
 
@@ -77,12 +81,24 @@
                           </div>
                       </div>
                   </div>
-                 
-                  <div class="product-box">
-                      <input type="text" name="country" id="autocomplete" placeholder="Search Product here" />
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="name">Store:</label>
+                          <select onchange="dropdownfiller()" class="form-control" name="_Store" id="_Store">
+                              @foreach (var item in Model.locations)
+                              {
+                                  <option selected value="@item._Id">@item._LocationName</option>
+                              }
+                          </select>
+                      </div>
                   </div>
-                  <div id="selection"></div>
-
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label for="_ProductId">Products:</label>
+                          <select class="form-control" name="_ProductId" id="_ProductId">
+                          </select>
+                      </div>
+                  </div>
                   <div class="row">
                       <div class="col-md-12 table-responsive">
                           <table class="table" id="ProductsTable">
@@ -102,14 +118,14 @@
                                       </th>
 
                                       @*@if (User.IsInRole("Admin"))
-                                      {
-                                          <th>
-                                              Cost Price
-                                          </th>
-                                          <th>
-                                              Retail Price
-                                          </th>
-                                      }*@
+                            {
+                                <th>
+                                    Cost Price
+                                </th>
+                                <th>
+                                    Retail Price
+                                </th>
+                            }*@
                                       <th>Location</th>
                                       <th>Quantity</th>
                                       <th>
@@ -133,7 +149,7 @@
                   </div>
               </form>
 
-    </div>
+</div>
 
     <div class="errorDiv">
 
@@ -154,41 +170,63 @@
 <script type="text/javascript" src="scripts/jquery.mockjax.js"></script>
 <script type="text/javascript" src="src/jquery.autocomplete.js"></script>
 
-@if (User.IsInRole("Admin"))
-{
+@*@if (User.IsInRole("Admin"))
+{*@
     <script>
+        $(document).ready(function () {
+            $("#_Store").change(function () {
+                var selectedStore = $(this).val();
+                $.getJSON("/InventoryIn/GetItems", { store: selectedStore }, function (data) {
+                    var itemDropdown = $("#_ProductId");
+                    itemDropdown.empty();
+                    $.each(data, function (i, item) {
+                        var option = $("<option></option>").attr("value", item._Id);
+                        var image = item._Photo; // Convert image to string
+                        var text = item._Name + " | " + item._SKU + " | Qty: " + item._Quantity;
 
-   $(function () {
-        $("#autocomplete").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "@Url.Action("Autocomplete", "Country")",
-                    type: "GET",
-                    dataType: "json",
-                    data: { term: request.term },
-                    success: function (data) {
-                        response(data);
-                    }
+                        // Append the image and text to the option
+                        option.append('<img class="dropdownimg" src="' + image + '"/>');
+                        option.append(text);
+
+                        // Append the option to the dropdown
+                        itemDropdown.append(option);
+                    });
                 });
-            },
-            minLength: 2, // Minimum characters to trigger autocomplete
-        });
-    });
-            function dropdownfiller() {
-                var selectedLocation = $("#_Store").val();
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetProductInventoryInJson", "InventoryIn")',
-                data: { location: selectedLocation },
-                success: function (response) {
-                    populateProductsDropdown(response);
-                    console.log("Location updated on the server.");
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error updating location: " + error);
-                }
             });
-        }
+
+
+        })
+   //$(function () {
+   //     $("#autocomplete").autocomplete({
+   //         source: function (request, response) {
+   //             $.ajax({
+                    @*url: "@Url.Action("Autocomplete", "Country")",*@
+    //                type: "GET",
+    //                dataType: "json",
+    //                data: { term: request.term },
+    //                success: function (data) {
+    //                    response(data);
+    //                }
+    //            });
+    //        },
+    //        minLength: 1, 
+    //    });
+    //});
+            //function dropdownfiller() {
+            //    var selectedLocation = $("#_Store").val();
+            //$.ajax({
+            //    type: "GET",
+                @*url: '@Url.Action("GetProductInventoryInJson", "InventoryIn")',*@
+        //        data: { location: selectedLocation },
+        //        success: function (response) {
+        //            populateProductsDropdown(response);
+        //            console.log("Location updated on the server.");
+        //        },
+        //        error: function (xhr, status, error) {
+        //            console.error("Error updating location: " + error);
+        //        }
+        //    });
+        //}
 
     function populateProductsDropdown(products) {
         var productsDropdown = $("#_ProductId");
@@ -323,8 +361,8 @@
             })
     });
     </script>
-}
-else
+    @*}*@
+@*else
 {
     <script>
 
@@ -483,4 +521,4 @@ else
             })
     });
     </script>
-}
+}*@

@@ -26,6 +26,7 @@ namespace ImperialNova.Services
         }
         #endregion
 
+        
 
         public List<InventoryIn> GetInventoryIns()
         {

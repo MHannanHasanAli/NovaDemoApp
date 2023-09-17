@@ -34,9 +34,16 @@ namespace ImperialNova.Controllers
                 model._Remarks = Adjustment._Remarks;
 
             }
+            model.Locations = LocationsServices.Instance.GetLocations();
             return View("Action", model);
         }
+        [HttpGet]
+        public ActionResult GetProductJson(int ID)
+        {
+            var product = ProductServices.Instance.GetProductById(ID);
+            return Json(product, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpPost]
         public ActionResult Action(AdjustmentActionViewModel model)

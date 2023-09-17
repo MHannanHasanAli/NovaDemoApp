@@ -24,7 +24,16 @@ namespace ImperialNova.Services
         }
         #endregion
 
-
+        public List<Product> GetProductsByStore(int storeId)
+        {
+            using (var context = new DSContext())
+            {
+                return context.products
+                    .Where(x => x._WarehouseId == storeId)
+                    .OrderBy(x => x._Name)
+                    .ToList();
+            }
+        }
         public List<Product> GetProduct(string SearchTerm = "")
         {
             using (var context = new DSContext())

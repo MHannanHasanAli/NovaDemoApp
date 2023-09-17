@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImperialNova.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,6 +21,7 @@ namespace ImperialNova.ViewModels
     public class InventoryInActionViewModel
     {
         public List<Entities.Supplier> suppliers { get; set; }
+        public List<Locations> locations { get; set; }
         public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _ShippingCompany { get; set; }

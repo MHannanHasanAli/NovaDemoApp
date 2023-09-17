@@ -17,6 +17,7 @@ namespace ImperialNova.ViewModels
     }
     public class AdjustmentActionViewModel
     {
+       public List<Locations> Locations { get; set; }
         public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _Type { get; set; }
