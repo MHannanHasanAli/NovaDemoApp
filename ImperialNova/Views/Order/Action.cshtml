@@ -137,48 +137,84 @@
 
                         </div>
                     </div>
-                    <div class="product-box">
-                        <input type="text" name="country" id="autocomplete" class="autocomplete" placeholder="Search Product here" />
-                    </div>
-                    <div id="selection"></div>
-
-                    <div class="row">
-                        <div class="col-md-12 table-responsive">
-                            <table class="table" id="ProductsTable">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Photo
-                                        </th>
-                                        <th>
-                                            SKU
-                                        </th>
-                                        <th>
-                                            Title
-                                        </th>
-                                        <th>
-                                            Qty
-                                        </th>
-
-                                        @*@if (User.IsInRole("Admin"))
-                            {
-                                <th>
-                                    Cost Price
-                                </th>
-                                <th>
-                                    Retail Price
-                                </th>
-                            }*@
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="_StoreId">Store:</label>
+                            <select class="form-control" name="_StoreId" id="_StoreId">
+                                @foreach (var item in Model.locations)
+                                {
+                                    <option selected value="@item._Id">@item._LocationName</option>
+                                }
+                            </select>
                         </div>
                     </div>
+                    <div class="setting">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="_ProductId">Products:</label>
+                                <select class="form-control" name="_ProductId" id="_ProductId">
+                                </select>
+                            </div>
+                        </div>
+                        <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+                    </div>
+                    @*<div class="product-box">
+            <input type="text" name="country" id="autocomplete" class="autocomplete" placeholder="Search Product here" />
+        </div>
+        <div id="selection"></div>*@
+
+                <div class="row">
+                    <div class="col-md-12 table-responsive">
+                        <table class="table" id="ProductsTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Photo
+                                    </th>
+                                    <th>
+                                        SKU
+                                    </th>
+                                    <th>
+                                        Title
+                                    </th>
+                                    <th>
+                                        Expiry Date
+                                    </th>
+
+                                    @*@if (User.IsInRole("Admin"))
+                        {
+                            <th>
+                                Cost Price
+                            </th>
+                            <th>
+                                Retail Price
+                            </th>
+                        }*@
+                                    <th>Quantity</th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Amount
+                                    </th>
+
+                                    <th hidden>
+                                        Category
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <hr />
+                        <h6 id="output"></h6>
+
+                    </div>
+                </div>
 
                 </form>
 
@@ -206,7 +242,34 @@
 
 <script>
     $(document).ready(function () {
-        initializeAutocompleteForProducts();
+        $('.QtyInput').on('change', function () {
+            updateTotalQuantity();
+
+        });
+        $(document).on('input', '.QtyInput', updateOutput);
+        function updateOutput() {
+            let sum = 0;
+            const values = [];
+
+            // Loop through all input fields with the class "input-field"
+            $('.QtyInput').each(function () {
+                const value = $(this).val();
+                const priceWithDollarSign = $(this).closest('tr').find('.price').text();
+                const price = parseFloat(priceWithDollarSign.replace('£', ''));
+                alert(value);
+                alert(price);
+
+                values.push(value);
+                const numericValue = parseFloat(value) || 0;
+                sum += numericValue;
+                var amount = value * price;
+
+                // Update the amount cell in the table.
+                $(this).closest('tr').find('.amount').text('£' + amount);
+            });
+
+            // Set the content of the <h1> tag to display both the concatenated values and their sum
+            $('#output').text(`Total : ${sum}`);
     });
 function initializeAutocompleteForProducts() {
         $.ajax({

@@ -17,6 +17,7 @@ namespace ImperialNova.ViewModels
     public class OrderActionViewModel
     {
         public List<Customer> customers { get; set; }
+        public List<Locations> locations { get; set; }
         public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _Record { get; set; }

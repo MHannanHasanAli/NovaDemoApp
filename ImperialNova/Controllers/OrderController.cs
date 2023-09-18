@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace ImperialNova.Controllers
 
             }
             model.customers = CustomerServices.Instance.GetCustomers();
+            model.locations = LocationsServices.Instance.GetLocations();
             return View("Action", model);
         }
 
@@ -141,6 +143,19 @@ namespace ImperialNova.Controllers
             }
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetItems(int store)
+        {
+            var products = ProductServices.Instance.GetProducts();
+            List<Product> SortedProduct = new List<Product>();
+            foreach (var product in products)
+            {
+                if (product._WarehouseId == store)
+                {
+                    SortedProduct.Add(product);
+                }
+            }
+            return Json(SortedProduct, JsonRequestBehavior.AllowGet);
         }
     }
 }
