@@ -61,8 +61,52 @@
         top: 3px;
     }
     .container {
-        width: 850px;
+        width: 100%;
         margin: 0 auto;
+    }
+    .setting {
+        display: flex;
+        gap: 5px;
+    }
+
+    #AdddToTableBtn {
+        height: 34px;
+        margin-top: 32px;
+    }
+    .row {
+
+        width: 100%;
+    }
+    .quak{
+        margin-left: 0px;
+    }
+    .QtyInput {
+        width: 70px;
+        height: 29px;
+        margin-top: -2px;
+        font-size: 15px;
+    }
+    table {
+        margin-left: 65px;
+    }
+    #output {
+        float: right;
+        position: relative;
+        left: -432px;
+        background: #aca1a1;
+        padding: 2px;
+    }
+    #totalAmount {
+        float: right;
+        position: relative;
+        left: -44px;
+        background: #aca1a1;
+        padding: 2px;
+    }
+    .packedchkbox {
+        width: 30px;
+        margin-left: 19px;
+        margin-top: 4px;
     }
 </style>
 @if (Model != null)
@@ -87,15 +131,15 @@
                 <form id="actionForm">
 
                     <div class="form-container">
-                        <div class="row">
+                        <div class="row quak">
                             <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
 
                             <div class="form-group col-md-3">
-                                <label for="_Date">Record# &nbsp;</label>
+                                <label for="_Date">Date &nbsp;</label>
                                 <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter name" />
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="_Record">Date &nbsp;</label>
+                                <label for="_Record">Record# &nbsp;</label>
                                 <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record" />
                             </div>
                             <div class="form-group col-md-3">
@@ -180,19 +224,17 @@
                                     <th>
                                         Title
                                     </th>
-                                    <th>
-                                        Expiry Date
-                                    </th>
+
 
                                     @*@if (User.IsInRole("Admin"))
-                        {
-                            <th>
-                                Cost Price
-                            </th>
-                            <th>
-                                Retail Price
-                            </th>
-                        }*@
+                    {
+                        <th>
+                            Cost Price
+                        </th>
+                        <th>
+                            Retail Price
+                        </th>
+                    }*@
                                     <th>Quantity</th>
                                     <th>
                                         Price
@@ -200,7 +242,9 @@
                                     <th>
                                         Amount
                                     </th>
-
+                                    <th>
+                                        Is Packed
+                                    </th>
                                     <th hidden>
                                         Category
                                     </th>
@@ -212,6 +256,7 @@
                         </table>
                         <hr />
                         <h6 id="output"></h6>
+                        <h6 id="totalAmount"></h6>
 
                     </div>
                 </div>
@@ -249,126 +294,104 @@
         $(document).on('input', '.QtyInput', updateOutput);
         function updateOutput() {
             let sum = 0;
+            let totalAmount = 0; // Initialize a variable to store the total amount
             const values = [];
-
-            // Loop through all input fields with the class "input-field"
+       
+            // Loop through all input fields with the class "QtyInput"
             $('.QtyInput').each(function () {
                 const value = $(this).val();
                 const priceWithDollarSign = $(this).closest('tr').find('.price').text();
                 const price = parseFloat(priceWithDollarSign.replace('£', ''));
-                alert(value);
-                alert(price);
 
                 values.push(value);
                 const numericValue = parseFloat(value) || 0;
                 sum += numericValue;
-                var amount = value * price;
+                const amount = numericValue * price;
+                totalAmount += amount; // Add the amount to the totalAmount
 
                 // Update the amount cell in the table.
-                $(this).closest('tr').find('.amount').text('£' + amount);
+                $(this).closest('tr').find('.amount').text('£' + amount.toFixed(2)); // Display the amount with 2 decimal places
             });
 
-            // Set the content of the <h1> tag to display both the concatenated values and their sum
-            $('#output').text(`Total : ${sum}`);
+            // Set the content of the <h6> tag to display the total quantity
+            $('#output').text(`Total Quantity: ${sum}`);
+
+            // Set the content of another <h6> tag to display the total amount
+            $('#totalAmount').text(`Total Amount: £${totalAmount}`); // Display the totalAmount with 2 decimal places
+        }
+
+        $("#_StoreId").change(function () {
+            var selectedStore = $(this).val();
+            $.getJSON("/Order/GetItems", { store: selectedStore }, function (data) {
+                var itemDropdown = $("#_ProductId");
+                itemDropdown.empty();
+                $.each(data, function (i, item) {
+                    var option = $("<option></option>").attr("value", item._Id);
+                    var image = item._Photo; // Convert image to string
+                    var text = item._Name + " | " + item._SKU + " | Qty: " + item._Quantity;
+
+                    // Append the image and text to the option
+                    option.append('<img class="dropdownimg" src="' + image + '"/>');
+                    option.append(text);
+
+                    // Append the option to the dropdown
+                    itemDropdown.append(option);
+                });
+            });
+        });
     });
-function initializeAutocompleteForProducts() {
+    var totalQuantity = 0;
+
+    // Function to update the total quantity and display it in the <h6> tag
+    function updateTotalQuantity() {
+        totalQuantity = 0; // Reset total quantity
+        // Loop through all input fields with class "QtyInput"
+        $('.QtyInput').each(function () {
+            var quantity = parseInt($(this).val()) || 0; // Parse quantity as an integer, default to 0
+            totalQuantity += quantity; // Add the quantity to the total
+        });
+        // Display the total quantity in the element with ID "totalQuantity"
+        $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
+    }
+    $("#AdddToTableBtn").click(function () {
+            var ProductID = $("#_ProductId").val();
+
+
         $.ajax({
-            url: '@Url.Action("GetProductsInJson", "Order")',
-            type: 'GET',
-            dataType: 'json',
+            url: '@Url.Action("GetProductJson", "Adjustment")',  // Replace with the actual URL of your controller
+            method: 'GET',
+            data: { ID: ProductID },
             success: function (data) {
-                var lookup = [];
-
-                // Iterate through the ServiceModel items
-                data.forEach(function (product) {
-                    lookup.push({
-                        value: product._Id,
-                        ProductPhoto: product._Photo,
-                        ProductName: product._Name,
-                        ProductSKU: product._SKU
-                        //CustomerEmail: customer.Email,
-                        //CustomerMobileNumber: customer.MobileNumber,
-                        //data: {
-                        //    id: customer.ID // Add the service.ID to data
-                        //}
-                    });
-
-                });
-                debugger
-                $('.autocomplete').devbridgeAutocomplete({
-                    lookup: lookup,
-                    minChars: 0,
-                    formatResult: function (suggestion, currentValue) {
-                        // Customize the rendering of each suggestion
-
-                        return '<table class="table table-hovered">' +
-                            '<tbody>' +
-                            '<tr>' +
-                            '<td class="suggestion-initial">' +
-                            '<div class="circular-box">' + suggestion.ProductPhoto + '</div>' +
-                            '</td>' +
-                            '<td class="suggestion-details">' +
-                            '<div class="customer-name">' + suggestion.ProductName + '</div>' +
-                            '<div class="customer-email">' + suggestion.ProductSKU + '</div>' +
-                            '</td>' +
-                            '</tr>' +
-                            '</tbody>' +
-                            '</table>';
-                    },
-                    onSelect: function (suggestion) {
-                        var selectedCustomerID = suggestion.data.id;
-                        console.log(selectedCustomerID);
-                        var $inputElement = $(this);
-
-                        $.ajax({
-                            url: '@Url.Action("GetCustomerDetails", "Appointment")', // Replace with your controller action URL
-                            type: 'GET',
-                            dataType: 'json',
-                            data: { ID: selectedCustomerID }, // Pass the selectedServiceId as a parameter
-                            success: function (customer) {
-                                console.log("customer Details" + customer);
-                                $("#MainCustomerSelectedContainer").empty();
-                                var DivToBeAdded = '<div class="suggestion-container">' +
-                                    '<button  style="float:right;" onclick="ClearTheCustomer()" type="button" class="close-button" aria-label="Close">' +
-                                    '<span aria-hidden="true">&times;</span>' +
-                                    '</button>' +
-                                    '<table class="table table-hovered">' +
-                                    '<tbody>' +
-                                    '<tr>' +
-                                    '<td class="suggestion-initial">' +
-                                    '<div class="circular-box">' + customer.FirstName.charAt(0) + customer.LastName.charAt(0) + '</div>' +
-                                    '</td>' +
-                                    '<td class="suggestion-details">' +
-                                    '<input type="hidden" name="CustomerID" id="CustomerID" value='+customer.ID+' class="customer-id">'+
-                                    '<div class="customer-name">' + customer.FirstName + " " + customer.LastName + '</div>' +
-                                    '<div class="customer-email">' + customer.Email + '</div>' +
-                                    '<div class="customer-mobile">' + customer.MobileNumber + '</div>' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '</tbody>' +
-                                    '</table>' +
-                                    '</div>';
-
-                                $("#MainCustomerSelectedContainer").append(DivToBeAdded);
+                //, QuantityIn, Store, Notes
+                appendProductToTable(data);
 
 
-                            },
-                            error: function (error) {
-                                console.error('Error fetching service details:', error);
-                            }
-                        });
-                        // Now you can access the selected service ID (selectedServiceId)
-                        // and use it as needed.
-                    },
-                    showNoSuggestionNotice: true,
-                    noSuggestionNotice: 'Sorry, no matching results'
-                });
             },
-            error: function (error) {
-                console.error('Error fetching data:', error);
+            error: function () {
+                $('#productDetails').html('<p>Failed to fetch product details.</p>');
             }
         });
+
+
+    });
+    function appendProductToTable(product) {
+        var row = `
+               <tr>
+                     <td>${product._Id}</td>
+                     <td class="photo"><img src="${product._Photo}" style="width:50px;height:50px;"/></td>
+                     <td>${product._SKU}</td>
+                     <td>${product._Name}</td>
+                     <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
+                     <td class="price">£${product._Cost}</td>
+                     <td class="amount"></td>
+                     <td class="ispacked"><input class="packedchkbox" type="checkbox" id="_Packed"/></td>
+              </tr>
+            `;
+
+        $('#ProductsTable tbody').append(row);
     }
+    
+    
 
     $("#actionButton").click(function () {
 		$.ajax({

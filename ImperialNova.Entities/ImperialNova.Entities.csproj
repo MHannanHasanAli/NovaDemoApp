@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adjustment.cs" />
+    <Compile Include="AdjustmentProduct.cs" />
     <Compile Include="BaseEntity.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="CSV.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Inventory.cs" />
     <Compile Include="InventoryBackups.cs" />
     <Compile Include="InventoryIn.cs" />
+    <Compile Include="InventoryInProduct.cs" />
     <Compile Include="InventoryTemporary.cs" />
     <Compile Include="Locations.cs" />
     <Compile Include="Notification.cs" />

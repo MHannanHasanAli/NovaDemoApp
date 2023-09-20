@@ -13,6 +13,9 @@ namespace ImperialNova.ViewModels
         public string _Name { get; set; }
         public string _SKU { get; set; }
         public string _Quantity { get; set; }
+        public string _Price { get; set; }
+        public string _Amount { get; set; }
+        public string _ExpiryDate { get; set; }
     }
     public class ProductListingViewModel
     {

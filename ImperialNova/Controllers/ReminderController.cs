@@ -92,6 +92,8 @@ namespace ImperialNova.Controllers
         public ActionResult Action(string _Id, string _Title, string _Description)
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
+            string decodedDescription = HttpUtility.UrlDecode(_Description);
+
             if (_Id != "0")
             {
                 var Reminder = ReminderServices.Instance.GetReminderById(int.Parse(_Id));
@@ -99,7 +101,7 @@ namespace ImperialNova.Controllers
                 Reminder._CreatedAt = DateTime.Now;
                 Reminder._CreatedBy = user.Name;
                 Reminder._Title = _Title;
-                Reminder._Description = _Description;
+                Reminder._Description = decodedDescription;
 
                 ReminderServices.Instance.UpdateReminder(Reminder);
 
@@ -110,7 +112,7 @@ namespace ImperialNova.Controllers
                 Reminder._CreatedAt = DateTime.Now;
                 Reminder._CreatedBy = user.Name;
                 Reminder._Title = _Title;
-                Reminder._Description = _Description;
+                Reminder._Description = decodedDescription;
 
                 ReminderServices.Instance.CreateReminder(Reminder);
             }

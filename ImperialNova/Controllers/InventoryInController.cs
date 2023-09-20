@@ -2,6 +2,7 @@
 using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,9 @@ namespace ImperialNova.Controllers
 
             return View("PendingOrder", model);
         }
+        public static decimal savedAmount = 0;
+        public static int savedQuantity = 0;
+
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
@@ -42,31 +46,52 @@ namespace ImperialNova.Controllers
             if (ID != 0)
             {
                 var InventoryIn = InventoryInServices.Instance.GetInventoryInById(ID);
-                model._Id              = InventoryIn._Id;
+                model._Id = InventoryIn._Id;
                 model._ShippingCompany = InventoryIn._ShippingCompany;
-                model._Tracking        = InventoryIn._Tracking;
-                model._SupplierId        = InventoryIn._SupplierId;
-                model._Status          = InventoryIn._Status;
-                model._ProductId       = InventoryIn._ProductId;
-                model._SKU             = InventoryIn._SKU;
-                model._Title           = InventoryIn._Title;
-                model._Location        = InventoryIn._Location;
-                model._Quantity        = InventoryIn._Quantity;
-                model._ExpiryDate      = InventoryIn._ExpiryDate;
-                model._Amount          = InventoryIn._Amount;
-                model._Price           = InventoryIn._Price;
-                model._Photo           = InventoryIn._Photo;
+                model._Tracking = InventoryIn._Tracking;
+                model._Status = InventoryIn._Status;
+                model._Quantity = InventoryIn._Quantity.ToString();
+                model._Amount = InventoryIn._Amount.ToString();
                 model._Date = InventoryIn._Date;
-
-
+                savedQuantity = InventoryIn._Quantity;
+                savedAmount = InventoryIn._Amount;
             }
 
             model.suppliers = SupplierServices.Instance.GetSuppliers();
             model.locations = LocationsServices.Instance.GetLocations();
-
+            model.products = InventoryInProductServices.Instance.GetInventoryInProducts();
             return View("Action", model);
         }
+        public static int QuantityUpdate;
 
+        public ActionResult ActionProducts(string products)
+        {
+            QuantityUpdate = 0;
+            var InventoryInid = InventoryInServices.Instance.GetLastEntryId();
+            var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
+            var Invproduct = new InventoryInProduct();
+            foreach (var item in ListOfInventory)
+            {
+
+                var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
+                product._Quantity = product._Quantity + int.Parse(item._Quantity);
+                QuantityUpdate = QuantityUpdate + int.Parse(item._Quantity);
+                ProductServices.Instance.UpdateProduct(product);
+
+                Invproduct._Qty = product._Quantity;
+                Invproduct._SKU = product._SKU;
+                Invproduct._Title = product._Name;
+                Invproduct._Photo = product._Photo;
+                Invproduct._Price = product._Cost;
+                Invproduct._ExpiryDate =DateTime.Parse(item._ExpiryDate);
+                Invproduct._Amount = decimal.Parse(item._Amount);
+                Invproduct._InventoryInId = InventoryInid;
+
+                InventoryInProductServices.Instance.CreateInventoryInProducts(Invproduct);
+
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Autocomplete(string term)
         {
             var products = ProductServices.Instance.GetProducts();
@@ -88,18 +113,11 @@ namespace ImperialNova.Controllers
                 InventoryIn._Id = model._Id;
                 InventoryIn._ShippingCompany = model._ShippingCompany;
                 InventoryIn._Tracking = model._Tracking;
-                InventoryIn._SupplierId = model._SupplierId;
-                InventoryIn._Status = model._Status;
-                InventoryIn._ProductId = model._ProductId;
-                InventoryIn._SKU = model._SKU;
-                InventoryIn._Title = model._Title;
-                InventoryIn._Location = model._Location;
-                InventoryIn._Quantity = model._Quantity;
-                InventoryIn._ExpiryDate = model._ExpiryDate;
-                InventoryIn._Amount = model._Amount;
-                InventoryIn._Price = model._Price;
-                InventoryIn._Photo = model._Photo;
+                InventoryIn._Status = model._Status;              
+                InventoryIn._Quantity = savedQuantity;
+                InventoryIn._Amount = savedAmount;
                 InventoryIn._Date = model._Date;
+                InventoryIn._Supplier = model._Supplier;
                 InventoryInServices.Instance.UpdateInventoryIn(InventoryIn);
 
             }
@@ -108,19 +126,11 @@ namespace ImperialNova.Controllers
                 var InventoryIn = new Entities.InventoryIn();
                 InventoryIn._ShippingCompany = model._ShippingCompany;
                 InventoryIn._Tracking = model._Tracking;
-                InventoryIn._SupplierId = model._SupplierId;
-                InventoryIn._Status = model._Status;
-                InventoryIn._ProductId = model._ProductId;
-                InventoryIn._SKU = model._SKU;
-                InventoryIn._Title = model._Title;
-                InventoryIn._Location = model._Location;
-                InventoryIn._Quantity = model._Quantity;
-                InventoryIn._ExpiryDate = model._ExpiryDate;
-                InventoryIn._Amount = model._Amount;
-                InventoryIn._Price = model._Price;
-                InventoryIn._Photo = model._Photo;
+                InventoryIn._Status = "Pending Order";            
+                InventoryIn._Quantity = int.Parse(model._Quantity);
+                InventoryIn._Amount = decimal.Parse(model._Amount);              
                 InventoryIn._Date = model._Date;
-
+                InventoryIn._Supplier = model._Supplier;
                 InventoryInServices.Instance.CreateInventoryIn(InventoryIn);
             }
 

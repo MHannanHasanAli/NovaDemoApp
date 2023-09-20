@@ -61,6 +61,13 @@
     .price{
         display: block;
     }
+    #totalAmount {
+        float: right;
+        position: relative;
+        left: -1px;
+        background: #aca1a1;
+        padding: 2px;
+    }
 </style>
 <div class="card">
 
@@ -80,124 +87,170 @@
 
         }
         <br /><br />
-        <form id="actionForm">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <input type="hidden" value="@Model._Id" name="ID" />
-                        <label for="_Date">Date:</label>
-                        <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="_ShippingCompany">Supplier:</label>
-                        <select class="form-control" name="_ShippingCompany" id="_ShippingCompany">
-                            <option value="Fedex">Fedex</option>
-                            <option value="UPS">UPS</option>
-                            <option value="USPS">USPS</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="_Tracking">Tracking#:</label>
-                    <input value="@Model._Tracking" type="number" class="form-control" name="_Tracking" id="_Tracking" />
+              <form id="actionForm">
+                  <div class="row">
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <input type="hidden" value="@Model._Id" name="_Id" />
+                              <label for="_Date">Date:</label>
+                              @if (Model._Id != 0)
+                              {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                          }
+                          else
+                          {
+                              @Html.TextBox("_Date", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                              @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                          }
+                              @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_ShippingCompany">Supplier:</label>
+                              <select class="form-control" name="_ShippingCompany" id="_ShippingCompany">
+                                  <option value="Fedex" @(Model._ShippingCompany == "Fedex" ? "selected" : "")>Fedex</option>
+                                  <option value="UPS" @(Model._ShippingCompany == "UPS" ? "selected" : "")>UPS</option>
+                                  <option value="USPS" @(Model._ShippingCompany == "USPS" ? "selected" : "")>USPS</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <label for="_Tracking">Tracking#:</label>
+                          <input value="@Model._Tracking" type="number" class="form-control" name="_Tracking" id="_Tracking" />
 
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="_SupplierId">Supplier:</label>
-                        <select class="form-control" name="_SupplierId" id="_SupplierId">
-                            @foreach (var item in Model.suppliers)
+                      </div>
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_Supplier">Supplier:</label>
+                              <select class="form-control" name="_Supplier" id="_Supplier">
+                                  @foreach (var item in Model.suppliers)
+                                  {
+                                      if (item._Name == Model._Supplier)
+                                      {
+                                          <option selected value="@item._Name">@item._Name</option>
+                                      }
+                                      else
+                                      {
+                                          <option value="@item._Name">@item._Name</option>
+
+                                      }
+                                  }
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                  @if (Model._Id != 0)
+                  {
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_Status">Status:</label>
+                              <select class="form-control" name="_Status" id="_Status">
+                                  <option value="Pending Order">Pending Order</option>
+                                  <option value="Completed">Completed</option>
+                              </select>
+                          </div>
+                      </div>
+                  }
+                  else
+                  {
+
+                  }
+                  <div class="col-md-3">
+                      <div class="form-group">
+                          <label for="_StoreId">Store:</label>
+                          <select class="form-control" name="_StoreId" id="_StoreId">
+                              @foreach (var item in Model.locations)
+                              {
+                                  <option selected value="@item._Id">@item._LocationName</option>
+                              }
+                          </select>
+                      </div>
+                  </div>
+                  <div class="setting">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="_ProductId">Products:</label>
+                              <select class="form-control" name="_ProductId" id="_ProductId">
+                              </select>
+                          </div>
+                      </div>
+                      <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12 table-responsive">
+                          <table class="table" id="ProductsTable">
+                              <thead>
+                                  <tr>
+                                      <th>
+                                          Id
+                                      </th>
+                                      <th>
+                                          Photo
+                                      </th>
+                                      <th>
+                                          SKU
+                                      </th>
+                                      <th>
+                                          Title
+                                      </th>
+                                      <th>
+                                          Expiry Date
+                                      </th>
+
+                                      @*@if (User.IsInRole("Admin"))
                             {
-                                if (item._Id == Model._SupplierId)
-                                {
-                                    <option selected value="@item._Id">@item._Name</option>
-                                }
-                                else
-                                {
-                                    <option value="@item._Id">@item._Name</option>
+                                <th>
+                                    Cost Price
+                                </th>
+                                <th>
+                                    Retail Price
+                                </th>
+                            }*@
+                                      <th>Quantity</th>
+                                      <th>
+                                          Price
+                                      </th>
+                                      <th>
+                                          Amount
+                                      </th>
 
-                                }
-                            }
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label for="_StoreId">Store:</label>
-                    <select class="form-control" name="_StoreId" id="_StoreId">
-                        @foreach (var item in Model.locations)
-                        {
-                            <option selected value="@item._Id">@item._LocationName</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div class="setting">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="_ProductId">Products:</label>
-                        <select class="form-control" name="_ProductId" id="_ProductId">
-                        </select>
-                    </div>
-                </div>
-                <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
-            </div>
-            <div class="row">
-                <div class="col-md-12 table-responsive">
-                    <table class="table" id="ProductsTable">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Id
-                                </th>
-                                <th>
-                                    Photo
-                                </th>
-                                <th>
-                                    SKU
-                                </th>
-                                <th>
-                                    Title
-                                </th>
-                                <th>
-                                    Expiry Date
-                                </th>
+                                      <th hidden>
+                                          Category
+                                      </th>
 
-                                @*@if (User.IsInRole("Admin"))
-                                    {
-                                        <th>
-                                            Cost Price
-                                        </th>
-                                        <th>
-                                            Retail Price
-                                        </th>
-                                    }*@
-                                <th>Quantity</th>
-                                <th>
-                                    Price
-                                </th>
-                                <th>
-                                    Amount
-                                </th>
-
-                                <th hidden>
-                                    Category
-                                </th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <hr />
-                    <h6 id="output"></h6>
-
-                </div>
-            </div>
-        </form>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  @if (Model._Id != 0)
+                                  {
+                                      foreach (var item in Model.products)
+                                      {
+                                          <tr>
+                                              <td>@item._Id</td>
+                                              <td>
+                                                  <img style="height:50px; width:50px;" src="@item._Photo" />
+                                              </td>
+                                              <td>@item._SKU</td>
+                                              <td>@item._Title</td>
+                                              <td>
+                                                  @Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                                              </td>
+                                              <td>@item._Qty</td>
+                                              <td>£@item._Price</td>
+                                              <td>£@item._Amount</td>
+                                          </tr>
+                                      }
+                                  }
+                                  </tbody>
+                          </table>
+                          <hr />
+                          <h6 id="output">Total : @Model._Quantity</h6>
+                          <h6 id="totalAmount">Total Amount: £@Model._Amount</h6>
+                          <input name="_Quantity" id="_TotalQuantity" type="hidden" />
+                          <input name="_Amount" id="_TotalAmount" type="hidden" />
+                      </div>
+                  </div>
+              </form>
 
     </div>
 
@@ -206,7 +259,7 @@
     </div>
 
 
-
+    
     <div style="background-color:white;" class="card-footer">
 
         <button id="actionButton" type="button" class="btn btn-primary btn-sm btn-rounded"><i class="fas fa-save mr-1"></i> SAVE STOCK</button>
@@ -225,46 +278,39 @@
 $(document).ready(function () {
              $('.QtyInput').on('change', function () {
                  updateTotalQuantity();
-                
+
         });
         $(document).on('input', '.QtyInput', updateOutput);
-        function updateOutput() {
-            let sum = 0;
-            const values = [];
+    function updateOutput() {
+        let sum = 0;
+        let totalAmount = 0; // Initialize a variable to store the total amount
+        const values = [];
 
-            // Loop through all input fields with the class "input-field"
-            $('.QtyInput').each(function () {
-                const value = $(this).val();
-                const priceWithDollarSign = $(this).closest('tr').find('.price').text();
-                const price = parseFloat(priceWithDollarSign.replace('£', ''));
-                values.push(value);
-                const numericValue = parseFloat(value) || 0;
-                sum += numericValue;
-                var amount = value * price;
+        // Loop through all input fields with the class "QtyInput"
+        $('.QtyInput').each(function () {
+            const value = $(this).val();
+            const priceWithDollarSign = $(this).closest('tr').find('.price').text();
+            const price = parseFloat(priceWithDollarSign.replace('£', ''));
 
-                // Update the amount cell in the table.
-                $(this).closest('tr').find('.amount').text('£' + amount);
-            });
+            values.push(value);
+            const numericValue = parseFloat(value) || 0;
+            sum += numericValue;
+            const amount = numericValue * price;
+            totalAmount += amount; // Add the amount to the totalAmount
 
-            // Set the content of the <h1> tag to display both the concatenated values and their sum
-            $('#output').text(`Total : ${sum}`);
+            // Update the amount cell in the table.
+            $(this).closest('tr').find('.amount').text('£' + amount.toFixed(2)); // Display the amount with 2 decimal places
+        });
 
+        // Set the content of the <h6> tag to display the total quantity
+        $('#output').text(`Total Quantity: ${sum}`);
+        $('#_TotalQuantity').val(sum);
+        // Set the content of another <h6> tag to display the total amount
+        $('#totalAmount').text(`Total Amount: £${totalAmount}`);
+        $('#_TotalAmount').val(totalAmount);// Display the totalAmount with 2 decimal places
     }
-    //function updateAmount(quantityInput) {
-    //    alert("Amount Activated");
-    //    const row = quantityInput.closest('tr'); // Find the parent table row
-    //    const quantity = parseFloat(quantityInput.val()) || 0; // Get the quantity value
-    //    const price = parseFloat(row.find('.price').text().replace('£', '')) || 0; // Get the price from the 'price' td
-    //    alert(row);
-    //    alert(quantity);
-    //    alert(price);
-    //    // Calculate the total amount
-    //    const totalAmount = quantity * price;
 
-    //    // Update the 'amount' td with the calculated total amount
-    //    row.find('.amount').text(`£${totalAmount.toFixed(2)}`);
-    //}
-            $("#_StoreId").change(function () {
+    $("#_StoreId").change(function () {
                 var selectedStore = $(this).val();
                 $.getJSON("/InventoryIn/GetItems", { store: selectedStore }, function (data) {
                     var itemDropdown = $("#_ProductId");
@@ -344,12 +390,14 @@ $(document).ready(function () {
 
             var product = {
                 _ProductId: $(this).find('td:eq(0)').text(),
-                _SKU: $(this).find('td:eq(1)').text(),
-                _Name: $(this).find('td:eq(2)').text(),
+                _Photo: $(this).find('td:eq(1)').text(),
+                _SKU: $(this).find('td:eq(2)').text(),
+                _Name: $(this).find('td:eq(3)').text(),
+                _ExpiryDate: $('#_ExpiryDate').val(),
                 _Quantity: $('#_Quantity').val(),
-
+                _Price: $(this).find('td:eq(6)').text().replace('£', ''),
+                _Amount: $('.amount').text().replace('£', ''),
             };
-
 
             products.push(product);
         });
@@ -357,186 +405,43 @@ $(document).ready(function () {
 
             console.log(productsJson);
             var sender = $("#actionForm").serialize();
-
             $.ajax({
-			url: '@Url.Action("ActionProducts", "Adjustment")',
+			url: '@Url.Action("Action", "InventoryIn")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+            {
+                $.ajax({
+			url: '@Url.Action("ActionProducts", "InventoryIn")',
 			type: "post",
             data: { products: productsJson}, // Send serialized string as parameter
         })
             .done(function (response) {
 			if(response.success)
 			{
-                 $.ajax({
-			url: '@Url.Action("Action", "Adjustment")',
-			type: "post",
-			data: $("#actionForm").serialize()
-		})
-            .done(function (response) {
-			if(response.success)
-			{
-				window.location.href = "@Url.Action("Index", "Adjustment")";
+                				window.location.href = "@Url.Action("Index", "InventoryIn")";
+
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
 
 			}
 			else {
 				$(".errorDiv").html(response.Message);
 			}
             });
-			}
-			else {
-				$(".errorDiv").html(response.Message);
-			}
-		});
-            $("#_Store").change(function () {
-                var selectedStore = $(this).val();
-                $.getJSON("/InventoryIn/GetItems", { store: selectedStore }, function (data) {
-                    var itemDropdown = $("#_ProductId");
-                    itemDropdown.empty();
-                    $.each(data, function (i, item) {
-                        var option = $("<option></option>").attr("value", item._Id);
-                        var image = item._Photo; // Convert image to string
-                        var text = item._Name + " | " + item._SKU + " | Qty: " + item._Quantity;
-
-                        // Append the image and text to the option
-                        option.append('<img class="dropdownimg" src="' + image + '"/>');
-                        option.append(text);
-
-                        // Append the option to the dropdown
-                        itemDropdown.append(option);
-                    });
-                });
-            });
 
 
         })
-   //$(function () {
-   //     $("#autocomplete").autocomplete({
-   //         source: function (request, response) {
-   //             $.ajax({
-                    @*url: "@Url.Action("Autocomplete", "Country")",*@
-    //                type: "GET",
-    //                dataType: "json",
-    //                data: { term: request.term },
-    //                success: function (data) {
-    //                    response(data);
-    //                }
-    //            });
-    //        },
-    //        minLength: 1,
-    //    });
-    //});
-            //function dropdownfiller() {
-            //    var selectedLocation = $("#_Store").val();
-            //$.ajax({
-            //    type: "GET",
-                @*url: '@Url.Action("GetProductInventoryInJson", "InventoryIn")',*@
-        //        data: { location: selectedLocation },
-        //        success: function (response) {
-        //            populateProductsDropdown(response);
-        //            console.log("Location updated on the server.");
-        //        },
-        //        error: function (xhr, status, error) {
-        //            console.error("Error updating location: " + error);
-        //        }
-        //    });
-        //}
-
-    function populateProductsDropdown(products) {
-        var productsDropdown = $("#_ProductId");
-        productsDropdown.empty();
-
-        // Add options to the dropdown based on the products data
-        products.forEach(function (product) {
-            var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Cost: £${product._Cost} | Retail: £${product._RetailPrice} | Available Units: ${product._Quantity}`;
-
-            productsDropdown.append($("<option>", { value: product._ProductId, text: optionText }));
-        });
-    }
-    function appendProductToTable(product,quantityin,store,Notes) {
-        var row = `
-                <tr>
-                    <td>${product._Id}</td>
-                    <td>${product._SKU}</td>
-                    <td>${product._Size}</td>
-                    <td>${product._Color}</td>
-                    <td>£${product._Cost}</td>
-                    <td>£${product._RetailPrice}</td>
-                    <td>${quantityin}</td>
-                    <td>${product._QuantityOut}</td>
-                    <td>${Notes}</td>
-                    <td>${store}</td>
-                    <td hidden>${product._CategoryId}</td>
-                    <td></td>
-                </tr>
-            `;
-
-        $('#ProductsTable tbody').append(row);
-    }
 
 
 
-    $("#AdddToTableBtn").click(function () {
-        var ProductID = $("#_ProductId").val();
-        var QuantityIn = $("#_QuantityIn").val();
-        var Store = $("#_Store").val();
-        var Notes = $('#_Notes').val();
-
-        $.ajax({
-            url: '@Url.Action("GetProductJson", "InventoryIn")',  // Replace with the actual URL of your controller
-            method: 'GET',
-            data: { ID: ProductID },
-            success: function (data) {
-                appendProductToTable(data, QuantityIn,Store,Notes);
 
 
-            },
-            error: function () {
-                $('#productDetails').html('<p>Failed to fetch product details.</p>');
-            }
-        });
-
-
-    });
-
-    $("#actionButton").click(function () {
-        var products = [];
-
-        $('#ProductsTable tbody tr').each(function () {
-
-            var product = {
-                _ProductId: $(this).find('td:eq(0)').text(),
-                _Name: $(this).find('td:eq(1)').text(),
-                _Size: $(this).find('td:eq(2)').text(),
-                _Color: $(this).find('td:eq(3)').text(),
-                _Cost: $(this).find('td:eq(4)').text(),
-                _RetailPrice: $(this).find('td:eq(5)').text(),
-                _QuantityIn: $(this).find('td:eq(6)').text(),
-                _QuantityOut: $(this).find('td:eq(7)').text(),
-                _Notes: $(this).find('td:eq(8)').text(),
-                _Store: $(this).find('td:eq(9)').text(),
-                _CategoryId: $(this).find('td:eq(10)').text()
-            };
-
-
-            products.push(product);
-        });
-        var productsJson = JSON.stringify(products);
-
-
-		$.ajax({
-			url: '@Url.Action("Action", "InventoryIn")',
-			type: "post",
-            data: { products: productsJson }, // Send serialized string as parameter
-        })
-            .done(function (response) {
-			if(response.success)
-			{
-				window.location.href = "@Url.Action("Index", "InventoryIn")";
-			}
-			else {
-				$(".errorDiv").html(response.Message);
-			}
-		});
-    });
 
     $("#PhotoUpload").change(function () {
 

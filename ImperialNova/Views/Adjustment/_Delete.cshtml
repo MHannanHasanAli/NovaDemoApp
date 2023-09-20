@@ -1,4 +1,4 @@
-﻿@model ImperialNova.ViewModels.DocumentsActionViewModel
+﻿@model ImperialNova.ViewModels.AdjustmentActionViewModel
 
 @if (Model != null)
 {
@@ -29,14 +29,14 @@
 <script>
 	$("#actionButton").click(function () {
 		$.ajax({
-			url: '@Url.Action("Delete", "Documents")',
+			url: '@Url.Action("Delete", "Adjustment")',
 			type: "post",
 			data: $("#actionForm").serialize()
 		})
 		.done(function (response) {
-			if(response.Success)
+			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Documents")";
+				window.location.href = "@Url.Action("Index", "Adjustment")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

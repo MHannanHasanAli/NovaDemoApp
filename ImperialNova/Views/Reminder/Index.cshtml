@@ -85,13 +85,8 @@
                                                     <td>@item._CreatedAt</td>
                                                     <td>@item._CreatedBy</td>
                                                     <td>@item._Title</td>
-                                                    <td>@item._Description</td>
-                                                    @*<td>@item._File</td>*@
-                                                    @*<td>
-                                                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>*@
+                                                    <td>@Html.Raw(item._Description)</td>
+                                                   
                                                 </tr>
                                             }
                                         </tbody>

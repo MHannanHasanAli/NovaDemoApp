@@ -70,7 +70,14 @@
                           <div class="form-group">
                               <input type="hidden" value="@Model._Id" name="ID" />
                               <label for="_Date">Date:</label>
-                              <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />
+                              @if (Model._Id != 0)
+                              {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                          }
+                          else
+                          {
+                              @Html.TextBox("_Date", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                              @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                          }
                           </div>
                       </div>
 
@@ -81,17 +88,18 @@
                       </div>
 
                   </div>
-                  <div class="col-md-3">
-                      <div class="form-group">
-                          <label for="_StoreId">Store:</label>
-                          <select  class="form-control" name="_StoreId" id="_StoreId">
-                              @foreach (var item in Model.Locations)
-                              {
-                                  <option selected value="@item._Id">@item._LocationName</option>
-                              }
-                          </select>
+                  
+                      <div class="col-md-3">
+                          <div class="form-group">
+                              <label for="_StoreId">Store:</label>
+                              <select class="form-control" name="_StoreId" id="_StoreId">
+                                  @foreach (var item in Model.Locations)
+                                  {
+                                      <option selected value="@item._Id">@item._LocationName</option>
+                                  }
+                              </select>
+                          </div>
                       </div>
-                  </div>
                   <div class="setting">
                       <div class="col-md-6">
                           <div class="form-group">
@@ -129,24 +137,36 @@
                                       </th>
 
                                       @*@if (User.IsInRole("Admin"))
-        {
-            <th>
-                Cost Price
-            </th>
-            <th>
-                Retail Price
-            </th>
-        }*@
+                            {
+                                <th>
+                                    Cost Price
+                                </th>
+                                <th>
+                                    Retail Price
+                                </th>
+                            }*@
 
 
                                   </tr>
                               </thead>
                               <tbody>
+                                  @foreach (var item in Model.products)
+                                  {
+                                      <tr>
+                                          <td>@item._Id</td>
+                                          <td>
+                                              <img style="height:50px; width:50px;" src="@item._Photo" />
+                                          </td>
+                                          <td>@item._SKU</td>
+                                          <td>@item._Title</td>
+                                          <td>@item._Qty</td>
+                                      </tr>
+                                  }
                               </tbody>
-                              
+
                           </table>
                           <hr />
-                          <h6 id="output"></h6>
+                          <h6 id="output">Total Quantity: @Model._Quantity</h6>
                       </div>
                   </div>
               </form>

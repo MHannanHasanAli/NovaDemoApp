@@ -18,6 +18,7 @@ namespace ImperialNova.ViewModels
     public class AdjustmentActionViewModel
     {
        public List<Locations> Locations { get; set; }
+        public List<AdjustmentProduct> products { get; set; }
         public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _Remarks { get; set; }

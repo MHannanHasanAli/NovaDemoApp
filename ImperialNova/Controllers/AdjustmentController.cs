@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -35,6 +36,7 @@ namespace ImperialNova.Controllers
 
             }
             model.Locations = LocationsServices.Instance.GetLocations();
+            model.products = AdjustmentProductServices.Instance.GetAdjustmentProducts(model._Id);
             return View("Action", model);
         }
         [HttpGet]
@@ -83,13 +85,26 @@ namespace ImperialNova.Controllers
         public ActionResult ActionProducts(string products)
         {
             QuantityUpdate = 0;
+            var adjustmentid = AdjustmentServices.Instance.GetLastAdjustmentId();
             var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
+            var adjproduct = new AdjustmentProduct();
             foreach (var item in ListOfInventory)
             {
+                
                 var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
                 product._Quantity = int.Parse(item._Quantity);
                 QuantityUpdate = QuantityUpdate + product._Quantity;
                 ProductServices.Instance.UpdateProduct(product);
+
+               
+                adjproduct._Qty = product._Quantity;
+                adjproduct._SKU = product._SKU;
+                adjproduct._Title = product._Name;
+                adjproduct._Photo = product._Photo;
+                adjproduct._AdjustmentId = adjustmentid+1;
+               
+                AdjustmentProductServices.Instance.CreateAdjustmentProduct(adjproduct);
+
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }

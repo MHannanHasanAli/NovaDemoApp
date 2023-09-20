@@ -172,6 +172,14 @@
     <Compile Include="Migrations\202309171102474_coroorR.designer.cs">
       <DependentUpon>202309171102474_coroorR.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309200614426_NewDay.cs" />
+    <Compile Include="Migrations\202309200614426_NewDay.designer.cs">
+      <DependentUpon>202309200614426_NewDay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202309200822523_Lol.cs" />
+    <Compile Include="Migrations\202309200822523_Lol.designer.cs">
+      <DependentUpon>202309200822523_Lol.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -273,6 +281,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309171102474_coroorR.resx">
       <DependentUpon>202309171102474_coroorR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309200614426_NewDay.resx">
+      <DependentUpon>202309200614426_NewDay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309200822523_Lol.resx">
+      <DependentUpon>202309200822523_Lol.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

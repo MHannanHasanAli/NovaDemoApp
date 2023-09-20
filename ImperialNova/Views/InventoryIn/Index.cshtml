@@ -95,13 +95,18 @@
                                                             </div>
                                                         </div>
                                                     </td>
-
+                                                    <td>@item._Supplier</td>
+                                                    <td>@item._ShippingCompany</td>
+                                                    <td>@item._Tracking</td>
+                                                    <td>@item._Quantity</td>
+                                                    <td>£@item._Amount</td>
+                                                    <td>@item._Status</td>
                                                     @*<td>@item._Name</td>*@
                                                     @*<td>
-                                                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                            <i class="fa fa-download" aria-hidden="true"></i>
-                                                        </a>
-                                                    </td>*@
+            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                <i class="fa fa-download" aria-hidden="true"></i>
+            </a>
+        </td>*@
                                                 </tr>
                                             }
                                         </tbody>

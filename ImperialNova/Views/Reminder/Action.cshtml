@@ -79,7 +79,7 @@
                                     <div class="form-group">
                                         <label for="_Description">Description &nbsp;</label>
                                         <div id="_Description" class="form-control" style="height: 300px" value="@Model._Description">
-
+                                            @Html.Raw(@Model._Description)
                                         </div>
                                         <input name="_Description" id="MainDescription" class="form-control" type="hidden" />
                                     </div>
@@ -117,12 +117,14 @@
     $(function () {
         //Add text editor
         $('#_Description').summernote();
-        console.log();
     })
     $(document).ready(function () {
-            $("#actionButton").click(function () {
-        var string = $('.note-editable.card-block').html();
-        $('#MainDescription').val(string);
+       $("#actionButton").click(function () {
+       var string = $('.note-editable.card-block').html();
+       var encodedString = encodeURIComponent(string);
+
+       $('#MainDescription').val(encodedString);
+
         var id = $('#_Id').val();
         var title = $('#_Title').val();
         var description = $('#MainDescription').val();
@@ -137,14 +139,13 @@
             }
 		})
             .done(function (response) {
-                debugger
-			if(response.success)
-			{
-				window.location.href = "@Url.Action("Index", "Reminder")";
-			}
-			else {
-				$(".errorDiv").html(response.Message);
-			}
+
+                if (response.success) {
+                    window.location.href = "@Url.Action("Index", "Reminder")";
+                }
+                else {
+                    $(".errorDiv").html(response.Message);
+                }
 		});
     });
 

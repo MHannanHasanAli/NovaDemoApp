@@ -26,8 +26,21 @@ namespace ImperialNova.Services
         }
         #endregion
 
-        
 
+        public int GetLastEntryId()
+        {
+            using (var context = new DSContext())
+            {
+                var lastAdjustment = context.inventoryins.OrderByDescending(a => a._Id).FirstOrDefault();
+                if (lastAdjustment != null)
+                {
+                    return lastAdjustment._Id;
+                }
+                // Return a default value (e.g., -1) or throw an exception if there are no entries.
+                // You can decide the appropriate behavior based on your application requirements.
+                return -1; // Default value when there are no entries.
+            }
+        }
         public List<InventoryIn> GetInventoryIns()
         {
             using (var context = new DSContext())
