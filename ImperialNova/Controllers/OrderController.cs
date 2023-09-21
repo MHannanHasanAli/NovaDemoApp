@@ -1,6 +1,7 @@
 ﻿using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,24 +51,62 @@ namespace ImperialNova.Controllers
                 model._Record     = Order._Record;
                 model._Tracking   = Order._Tracking;
                 model._Status     = Order._Status;
-                model._CustomerId = Order._CustomerId;
+                model._Customer = Order._Customer;
                 model._Priority   = Order._Priority;
-                model._ProductId  = Order._ProductId;
-                model._Photo      = Order._Photo;
-                model._SKU        = Order._SKU;
-                model._Title      = Order._Title;
-                model._Qty        = Order._Qty;
-                model._Price      = Order._Price;
-                model._Amount     = Order._Amount;
-                model._IsPacked   = Order._IsPacked;
+                model._Quantity = Order._Quantity.ToString();
+                model._Amount = Order._Amount.ToString();
+                model._IsPacked = Order._IsPacked;
+                savedQuantity = Order._Quantity;
+                savedAmount = Order._Amount;
 
             }
             model.customers = CustomerServices.Instance.GetCustomers();
             model.locations = LocationsServices.Instance.GetLocations();
+            model.products = OrderProductServices.Instance.GetOrderProductsByInventoryInId(model._Id);
             return View("Action", model);
         }
+        public static int QuantityUpdate;
 
+        public ActionResult ActionProducts(string products)
+         {
 
+            QuantityUpdate = 0;
+            var Orderid = OrderServices.Instance.GetLastOrderId();
+            var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
+            var Orderproduct = new OrderProduct();
+            foreach (var item in ListOfInventory)
+            {
+                if (item._Quantity == null)
+                {
+                    break;
+                }
+                var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
+                product._Quantity = product._Quantity - int.Parse(item._Quantity);
+                QuantityUpdate = QuantityUpdate + int.Parse(item._Quantity);
+                ProductServices.Instance.UpdateProduct(product);
+
+                Orderproduct._Qty = int.Parse(item._Quantity);
+                Orderproduct._SKU = product._SKU;
+                Orderproduct._Title = product._Name;
+                Orderproduct._Photo = product._Photo;
+                Orderproduct._Price = product._Cost;             
+                Orderproduct._Amount = decimal.Parse(item._Amount);
+                Orderproduct._OrderId = Orderid;
+               
+               OrderProductServices.Instance.CreateOrderProducts(Orderproduct);
+
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetProductJson(int ID)
+        {
+            var product = ProductServices.Instance.GetProductById(ID);
+            return Json(product, JsonRequestBehavior.AllowGet);
+
+        }
+        public static decimal savedAmount = 0;
+        public static int savedQuantity = 0;
         [HttpPost]
         public ActionResult Action(OrderActionViewModel model)
         {
@@ -81,16 +120,19 @@ namespace ImperialNova.Controllers
                 Order._Record = model._Record;
                 Order._Tracking = model._Tracking;
                 Order._Status = model._Status;
-                Order._CustomerId = model._CustomerId;
+                Order._Customer = model._Customer;
                 Order._Priority = model._Priority;
-                Order._ProductId = model._ProductId;
-                Order._Photo = model._Photo;
-                Order._SKU = model._SKU;
-                Order._Title = model._Title;
-                Order._Qty = model._Qty;
-                Order._Price = model._Price;
-                Order._Amount = model._Amount;
                 Order._IsPacked = model._IsPacked;
+                Order._Amount = savedAmount;
+                Order._Quantity = savedQuantity;
+                //Order._ProductId = model._ProductId;
+                //Order._Photo = model._Photo;
+                //Order._SKU = model._SKU;
+                //Order._Title = model._Title;
+                //Order._Qty = model._Qty;
+                //Order._Price = model._Price;
+                //Order._Amount = model._Amount;
+                //Order._IsPacked = model._IsPacked;
 
                 OrderServices.Instance.UpdateOrder(Order);
 
@@ -103,16 +145,19 @@ namespace ImperialNova.Controllers
                 Order._Record = model._Record;
                 Order._Tracking = model._Tracking;
                 Order._Status = "Ready To Ship";
-                Order._CustomerId = model._CustomerId;
+                Order._Customer = model._Customer;
                 Order._Priority = model._Priority;
-                Order._ProductId = model._ProductId;
-                Order._Photo = model._Photo;
-                Order._SKU = model._SKU;
-                Order._Title = model._Title;
-                Order._Qty = model._Qty;
-                Order._Price = model._Price;
-                Order._Amount = model._Amount;
                 Order._IsPacked = model._IsPacked;
+                Order._Amount = decimal.Parse(model._Amount);
+                Order._Quantity = int.Parse(model._Quantity);
+                //Order._ProductId = model._ProductId;
+                //Order._Photo = model._Photo;
+                //Order._SKU = model._SKU;
+                //Order._Title = model._Title;
+                //Order._Qty = model._Qty;
+                //Order._Price = model._Price;
+                //Order._Amount = model._Amount;
+                //Order._IsPacked = model._IsPacked;
 
                 OrderServices.Instance.CreateOrder(Order);
             }

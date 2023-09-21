@@ -3907,10 +3907,10 @@
     <Content Include="Views\InventoryIn\CompletedOrder.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Order\Action.cshtml" />
-    <Content Include="Views\Order\_Delete.cshtml" />
     <Content Include="Views\Order\ReadyToShipOrder.cshtml" />
     <Content Include="Views\Order\Shipped.cshtml" />
     <Content Include="Views\InventoryIn\_Delete.cshtml" />
+    <Content Include="Views\Order\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

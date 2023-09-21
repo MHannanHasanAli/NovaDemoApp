@@ -136,7 +136,15 @@
 
                             <div class="form-group col-md-3">
                                 <label for="_Date">Date &nbsp;</label>
-                                <input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter name" />
+                                @if (Model._Id != 0)
+                                {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                            }
+                            else
+                            {
+                                @Html.TextBox("_Date", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                                @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                            }
+                                @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter name" />*@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="_Record">Record# &nbsp;</label>
@@ -144,43 +152,61 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="_ShipByDate">Ship By Date &nbsp;</label>
-                                <input value="@Model._ShipByDate" type="date" class="form-control" name="_ShipByDate" id="_ShipByDate" />
+                                @if (Model._Id != 0)
+                                {@Html.TextBox("_ShipByDate", Model._ShipByDate, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_ShipByDate", @class = "form-control", type = "date" })
+                            }
+                            else
+                            {
+                                @Html.TextBox("_ShipByDate", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_ShipByDate", @class = "form-control", type = "date" })
+                                @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                            }
+                                @*<input value="@Model._ShipByDate" type="date" class="form-control" name="_ShipByDate" id="_ShipByDate" />*@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="_Tracking">Tracking &nbsp;</label>
-                                <input value="@Model._Tracking" type="text" class="form-control" name="_Tracking" id="_Tracking" placeholder="Enter name" />
+                                <input value="@Model._Tracking" type="number" class="form-control" name="_Tracking" id="_Tracking" />
                             </div>
                         </div>
                         <div class="row setter">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="_CustomerId">Customer:</label>
-                                    <select class="form-control" name="_CustomerId" id="_CustomerId">
+                                    <label for="_Customer">Customer:</label>
+                                    <select class="form-control" name="_Customer" id="_Customer">
+                                        @if (!string.IsNullOrEmpty(Model._Customer))
+                                        {
+                                            <option selected value="@Model._Customer">@Model._Customer</option>
+                                        }
                                         @foreach (var item in Model.customers)
                                         {
-                                            if (item._Id == Model._CustomerId)
+                                            if (item._Name != Model._Customer)
                                             {
-                                                <option selected value="@item._Id">@item._Name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@item._Id">@item._Name</option>
-
+                                                <option value="@item._Name">@item._Name</option>
                                             }
                                         }
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-group col-md-3">
-                                <label for="_Priority">High Priority &nbsp;</label>
+                                <label>High Priority &nbsp;</label>
                                 <div class="radio-section">
-                                    <input type="radio" class="radio-one" id="_Priority" name="_Priority" /><h6 class="yes">Yes</h6>
-                                    <input type="radio" class="radio-two" id="_Priority" name="_Priority" /><h6 class="no">No</h6>
+                                    <input type="radio" class="radio-one" id="_PriorityYes" name="_Priority" value="Yes" @(Model._Priority == "Yes" ? "checked" : "") />
+                                    <label for="_PriorityYes" class="yes">Yes</label>
+                                    <input type="radio" class="radio-two" id="_PriorityNo" name="_Priority" value="No" @(Model._Priority == "No" ? "checked" : "") />
+                                    <label for="_PriorityNo" class="no">No</label>
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-3">
+                                <label for="_IsPacked">Is Packed &nbsp;</label>
+                                <select id="_IsPacked" name="_IsPacked" class="form-control">
+                                    <option value="Yes" @(Model._IsPacked == "Yes" ? "selected" : "")>Yes</option>
+                                    <option value="No" @(Model._IsPacked == "No" ? "selected" : "")>No</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="_StoreId">Store:</label>
@@ -207,59 +233,79 @@
         </div>
         <div id="selection"></div>*@
 
-                <div class="row">
-                    <div class="col-md-12 table-responsive">
-                        <table class="table" id="ProductsTable">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Id
-                                    </th>
-                                    <th>
-                                        Photo
-                                    </th>
-                                    <th>
-                                        SKU
-                                    </th>
-                                    <th>
-                                        Title
-                                    </th>
+                    <div class="row">
+                        <div class="col-md-12 table-responsive">
+                            <table class="table" id="ProductsTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Id
+                                        </th>
+                                        <th>
+                                            Photo
+                                        </th>
+                                        <th>
+                                            SKU
+                                        </th>
+                                        <th>
+                                            Title
+                                        </th>
 
 
-                                    @*@if (User.IsInRole("Admin"))
-                    {
-                        <th>
-                            Cost Price
-                        </th>
-                        <th>
-                            Retail Price
-                        </th>
-                    }*@
-                                    <th>Quantity</th>
-                                    <th>
-                                        Price
-                                    </th>
-                                    <th>
-                                        Amount
-                                    </th>
-                                    <th>
-                                        Is Packed
-                                    </th>
-                                    <th hidden>
-                                        Category
-                                    </th>
+                                        @*@if (User.IsInRole("Admin"))
+                            {
+                                <th>
+                                    Cost Price
+                                </th>
+                                <th>
+                                    Retail Price
+                                </th>
+                            }*@
+                                        <th>Quantity</th>
+                                        <th>
+                                            Price
+                                        </th>
+                                        <th>
+                                            Amount
+                                        </th>
+                                        <th>
+                                            Is Packed
+                                        </th>
+                                        <th hidden>
+                                            Category
+                                        </th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        <hr />
-                        <h6 id="output"></h6>
-                        <h6 id="totalAmount"></h6>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model._Id != 0)
+                                    {
+                                        foreach (var item in Model.products)
+                                        {
+                                            <tr>
+                                                <td>@item._Id</td>
+                                                <td>
+                                                    <img style="height:50px; width:50px;" src="@item._Photo" />
+                                                </td>
+                                                <td>@item._SKU</td>
+                                                <td>@item._Title</td>
+                                                <td>@item._Qty</td>                   
+                                                <td>£@item._Price</td>
+                                                <td>£@item._Amount</td>
+                                                <td>@item._IsPacked</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <hr />
+                            <h6 id="output">Total : @Model._Quantity</h6>
+                            <h6 id="totalAmount">Total Amount: £@Model._Amount</h6>
+                            <input name="_Quantity" id="_TotalQuantity" type="hidden" />
+                            <input name="_Amount" id="_TotalAmount" type="hidden" />
 
+                        </div>
                     </div>
-                </div>
 
                 </form>
 
@@ -287,6 +333,20 @@
 
 <script>
     $(document).ready(function () {
+        $("input[name='_Priority']").change(function () {
+            //var selectedValue = $("input[name='_Priority']:checked").val();
+
+            //if (selectedValue === "Yes") {
+            //    alert("High Priority is checked: Yes");
+            //    // Do something when "Yes" is selected
+            //} else if (selectedValue === "No") {
+            //    alert("High Priority is checked: No");
+            //    // Do something when "No" is selected
+            //} else {
+            //    alert("No option is selected");
+            //    // Handle the case where neither "Yes" nor "No" is selected
+            //}
+        });
         $('.QtyInput').on('change', function () {
             updateTotalQuantity();
 
@@ -296,7 +356,7 @@
             let sum = 0;
             let totalAmount = 0; // Initialize a variable to store the total amount
             const values = [];
-       
+
             // Loop through all input fields with the class "QtyInput"
             $('.QtyInput').each(function () {
                 const value = $(this).val();
@@ -315,9 +375,11 @@
 
             // Set the content of the <h6> tag to display the total quantity
             $('#output').text(`Total Quantity: ${sum}`);
-
+            $('#_TotalQuantity').val(sum);
             // Set the content of another <h6> tag to display the total amount
-            $('#totalAmount').text(`Total Amount: £${totalAmount}`); // Display the totalAmount with 2 decimal places
+            $('#totalAmount').text(`Total Amount: £${totalAmount}`);
+            $('#_TotalAmount').val(totalAmount);// Display the totalAmount with 2 decimal places
+// Display the totalAmount with 2 decimal places
         }
 
         $("#_StoreId").change(function () {
@@ -340,25 +402,12 @@
             });
         });
     });
-    var totalQuantity = 0;
-
-    // Function to update the total quantity and display it in the <h6> tag
-    function updateTotalQuantity() {
-        totalQuantity = 0; // Reset total quantity
-        // Loop through all input fields with class "QtyInput"
-        $('.QtyInput').each(function () {
-            var quantity = parseInt($(this).val()) || 0; // Parse quantity as an integer, default to 0
-            totalQuantity += quantity; // Add the quantity to the total
-        });
-        // Display the total quantity in the element with ID "totalQuantity"
-        $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
-    }
-    $("#AdddToTableBtn").click(function () {
+   $("#AdddToTableBtn").click(function () {
             var ProductID = $("#_ProductId").val();
 
 
         $.ajax({
-            url: '@Url.Action("GetProductJson", "Adjustment")',  // Replace with the actual URL of your controller
+            url: '@Url.Action("GetProductJson", "Order")',  // Replace with the actual URL of your controller
             method: 'GET',
             data: { ID: ProductID },
             success: function (data) {
@@ -373,42 +422,99 @@
         });
 
 
-    });
-    function appendProductToTable(product) {
-        var row = `
+        });
+    //, quantityin, store, Notes
+            function appendProductToTable(product) {
+                var row = `
                <tr>
-                     <td>${product._Id}</td>
-                     <td class="photo"><img src="${product._Photo}" style="width:50px;height:50px;"/></td>
-                     <td>${product._SKU}</td>
-                     <td>${product._Name}</td>
-                     <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
-                     <td class="price">£${product._Cost}</td>
-                     <td class="amount"></td>
-                     <td class="ispacked"><input class="packedchkbox" type="checkbox" id="_Packed"/></td>
-              </tr>
+  <td>${product._Id}</td>
+  <td class="photo"><img src="${product._Photo}" style="width:50px;height:50px;"/></td>
+  <td>${product._SKU}</td>
+  <td>${product._Name}</td>
+  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
+  <td class="price">£${product._Cost}</td>
+  <td class="amount"></td>
+</tr>
             `;
 
-        $('#ProductsTable tbody').append(row);
-    }
+                $('#ProductsTable tbody').append(row);
+            }
     
-    
+        var totalQuantity = 0;
 
+        // Function to update the total quantity and display it in the <h6> tag
+        function updateTotalQuantity() {
+            totalQuantity = 0; // Reset total quantity
+            // Loop through all input fields with class "QtyInput"
+            $('.QtyInput').each(function () {
+                var quantity = parseInt($(this).val()) || 0; // Parse quantity as an integer, default to 0
+                totalQuantity += quantity; // Add the quantity to the total
+            });
+            // Display the total quantity in the element with ID "totalQuantity"
+            $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
+        }
     $("#actionButton").click(function () {
-		$.ajax({
+        //var expiryDateInput = $("#_ExpiryDate");
+
+        //expiryDateInput.on("input", function () {
+        //    // Check if the value is empty
+        //    if ($(this).val() === "") {
+        //        // Show an alert
+        //        alert("Expiry Date is empty!");
+        //    }
+        var products = [];
+        $('#ProductsTable tbody tr').each(function () {
+
+            var product = {
+                _ProductId: $(this).find('td:eq(0)').text(),
+                _Photo: $(this).find('td:eq(1)').text(),
+                _SKU: $(this).find('td:eq(2)').text(),
+                _Name: $(this).find('td:eq(3)').text(),
+                _Quantity: $('#_Quantity').val(),
+                _Price: $(this).find('td:eq(5)').text().replace('£', ''),
+                _Amount: $('.amount').text().replace('£', ''),
+            };
+            console.log(product);
+            products.push(product);
+        });
+        var productsJson = JSON.stringify(products);
+
+            console.log(productsJson);
+        var sender = $("#actionForm").serialize();
+        console.log(sender);
+            $.ajax({
 			url: '@Url.Action("Action", "Order")',
 			type: "post",
 			data: $("#actionForm").serialize()
 		})
             .done(function (response) {
 			if(response.success)
+            {
+                $.ajax({
+			url: '@Url.Action("ActionProducts", "Order")',
+			type: "post",
+            data: { products: productsJson}, // Send serialized string as parameter
+        })
+            .done(function (response) {
+			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Order")";
+                				window.location.href = "@Url.Action("Index", "Order")";
+
 			}
 			else {
 				$(".errorDiv").html(response.Message);
 			}
 		});
-    });
+
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+            });
+
+
+        })
+
 
     $("#FileUpload").change(function () {
         var element = this;

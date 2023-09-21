@@ -369,7 +369,7 @@ $(document).ready(function () {
   <td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate"/></td>
   <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
   <td class="price">£${product._Cost}</td>
-  <td class="amount"></td>
+  <td class="amount"  id="_Amount"></td>
 </tr>
             `;
 
@@ -409,7 +409,7 @@ $(document).ready(function () {
                 _ExpiryDate: $('#_ExpiryDate').val(),
                 _Quantity: $('#_Quantity').val(),
                 _Price: $(this).find('td:eq(6)').text().replace('£', ''),
-                _Amount: $('.amount').text().replace('£', ''),
+                _Amount: $('#_Amount').text().replace('£', ''),
             };
 
             products.push(product);

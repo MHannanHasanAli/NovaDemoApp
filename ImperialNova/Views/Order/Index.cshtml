@@ -59,7 +59,6 @@
                                                 <th>Date</th>
                                                 <th>Record#</th>
                                                 <th>Ship By Date</th>
-                                                <th>Ship To</th>
                                                 <th>Tracking#</th>
                                                 <th>Customer</th>
                                                 <th>Qty</th>
@@ -90,8 +89,15 @@
                                                             </div>
                                                         </div>
                                                     </td>
-
-                                                   
+                                                    <td>@item._Date.ToString("yyyy-MM-dd")</td>
+                                                    <td>@item._Record</td>
+                                                    <td>@item._ShipByDate.ToString("yyyy-MM-dd")</td>
+                                                    <td>@item._Tracking</td>
+                                                    <td>@item._Customer</td>
+                                                    <td>@item._Quantity</td>
+                                                    <td>£@item._Amount</td>
+                                                    <td>@item._IsPacked</td>
+                                                    <td>@item._Status</td>
                                                 </tr>
                                             }
                                         </tbody>

@@ -15,14 +15,9 @@ namespace ImperialNova.Entities
         public DateTime _ShipByDate { get; set; }
         public string _Tracking { get; set; }
         public string _Status { get; set; }
-        public int _CustomerId { get; set; }
+        public string _Customer { get; set; }
         public string _Priority { get; set; }
-        public int _ProductId { get; set; }
-        public string _Photo { get; set; }
-        public string _SKU { get; set; }
-        public string _Title { get; set; }
-        public int _Qty { get; set; }
-        public decimal _Price { get; set; }
+        public int _Quantity { get; set; }
         public decimal _Amount { get; set; }
         public string _IsPacked { get; set; }
     }
