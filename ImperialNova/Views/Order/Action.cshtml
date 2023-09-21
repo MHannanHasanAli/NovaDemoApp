@@ -206,7 +206,22 @@
                             </div>
                         </div>
                     </div>
-                    
+                    @if (Model._Id != 0)
+                    {
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="_Status">Status:</label>
+                                <select class="form-control" name="_Status" id="_Status">
+                                    <option value="Ready To Ship">Ready To Ship</option>
+                                    <option value="Shipped">Shipped</option>
+                                </select>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+
+                    }
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="_StoreId">Store:</label>
@@ -268,9 +283,7 @@
                                         <th>
                                             Amount
                                         </th>
-                                        <th>
-                                            Is Packed
-                                        </th>
+
                                         <th hidden>
                                             Category
                                         </th>
@@ -289,7 +302,7 @@
                                                 </td>
                                                 <td>@item._SKU</td>
                                                 <td>@item._Title</td>
-                                                <td>@item._Qty</td>                   
+                                                <td>@item._Qty</td>
                                                 <td>£@item._Price</td>
                                                 <td>£@item._Amount</td>
                                                 <td>@item._IsPacked</td>

@@ -298,6 +298,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TodoListController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -3911,6 +3912,7 @@
     <Content Include="Views\Order\Shipped.cshtml" />
     <Content Include="Views\InventoryIn\_Delete.cshtml" />
     <Content Include="Views\Order\_Delete.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
