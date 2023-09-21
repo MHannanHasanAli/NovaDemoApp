@@ -25,7 +25,15 @@ namespace ImperialNova.Services
         {
         }
         #endregion
-
+        public List<Entities.InventoryInProduct> GetInventoryInProductsByInventoryInId(int inventoryInId)
+        {
+            using (var context = new DSContext())
+            {
+                return context.inventoryinproducts
+                    .Where(product => product._InventoryInId == inventoryInId)
+                    .ToList();
+            }
+        }
 
         public List<InventoryInProduct> GetInventoryInProducts()
         {

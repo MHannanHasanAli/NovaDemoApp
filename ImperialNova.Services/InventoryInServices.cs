@@ -50,7 +50,24 @@ namespace ImperialNova.Services
                 return data;
             }
         }
-
+        public List<InventoryIn> GetPendingOrderInventoryIns()
+        {
+            using (var context = new DSContext())
+            {
+                var data = context.inventoryins.Where(i => i._Status == "Pending Order").ToList();
+                data.Reverse();
+                return data;
+            }
+        }
+        public List<InventoryIn> GetCompletedOrderInventoryIns()
+        {
+            using (var context = new DSContext())
+            {
+                var data = context.inventoryins.Where(i => i._Status == "Completed").ToList();
+                data.Reverse();
+                return data;
+            }
+        }
         public Entities.InventoryIn GetInventoryInById(int id)
         {
             using (var context = new DSContext())

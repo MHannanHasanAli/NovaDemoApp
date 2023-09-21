@@ -24,16 +24,16 @@ namespace ImperialNova.Controllers
         public ActionResult PendingOrder()
         {
             InventoryInListingViewModel model = new InventoryInListingViewModel();
-            model.inventoryins = InventoryInServices.Instance.GetInventoryIns();
+            model.inventoryins = InventoryInServices.Instance.GetPendingOrderInventoryIns();
 
             return View("PendingOrder", model);
         }
         public ActionResult CompletedOrder()
         {
             InventoryInListingViewModel model = new InventoryInListingViewModel();
-            model.inventoryins = InventoryInServices.Instance.GetInventoryIns();
+            model.inventoryins = InventoryInServices.Instance.GetCompletedOrderInventoryIns();
 
-            return View("PendingOrder", model);
+            return View("CompletedOrder", model);
         }
         public static decimal savedAmount = 0;
         public static int savedQuantity = 0;
@@ -59,26 +59,30 @@ namespace ImperialNova.Controllers
 
             model.suppliers = SupplierServices.Instance.GetSuppliers();
             model.locations = LocationsServices.Instance.GetLocations();
-            model.products = InventoryInProductServices.Instance.GetInventoryInProducts();
+            model.products = InventoryInProductServices.Instance.GetInventoryInProductsByInventoryInId(model._Id);
             return View("Action", model);
         }
         public static int QuantityUpdate;
 
         public ActionResult ActionProducts(string products)
         {
+            
             QuantityUpdate = 0;
             var InventoryInid = InventoryInServices.Instance.GetLastEntryId();
             var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
             var Invproduct = new InventoryInProduct();
             foreach (var item in ListOfInventory)
             {
-
-                var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
+                if (item._Quantity == null)
+                {
+                    break;
+                }
+                    var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
                 product._Quantity = product._Quantity + int.Parse(item._Quantity);
                 QuantityUpdate = QuantityUpdate + int.Parse(item._Quantity);
                 ProductServices.Instance.UpdateProduct(product);
 
-                Invproduct._Qty = product._Quantity;
+                Invproduct._Qty = int.Parse(item._Quantity);
                 Invproduct._SKU = product._SKU;
                 Invproduct._Title = product._Name;
                 Invproduct._Photo = product._Photo;

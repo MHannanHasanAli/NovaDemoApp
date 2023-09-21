@@ -166,91 +166,97 @@
                           </select>
                       </div>
                   </div>
-                  <div class="setting">
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <label for="_ProductId">Products:</label>
-                              <select class="form-control" name="_ProductId" id="_ProductId">
-                              </select>
+                  @if (Model._Id != 0)
+                  {}
+else
+            {
+<div class="setting">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="_ProductId">Products:</label>
+            <select class="form-control" name="_ProductId" id="_ProductId">
+            </select>
+        </div>
+    </div>
+    <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+</div>
+            }
+                      
+                      <div class="row">
+                          <div class="col-md-12 table-responsive">
+                              <table class="table" id="ProductsTable">
+                                  <thead>
+                                      <tr>
+                                          <th>
+                                              Id
+                                          </th>
+                                          <th>
+                                              Photo
+                                          </th>
+                                          <th>
+                                              SKU
+                                          </th>
+                                          <th>
+                                              Title
+                                          </th>
+                                          <th>
+                                              Expiry Date
+                                          </th>
+
+                                          @*@if (User.IsInRole("Admin"))
+                                {
+                                    <th>
+                                        Cost Price
+                                    </th>
+                                    <th>
+                                        Retail Price
+                                    </th>
+                                }*@
+                                          <th>Quantity</th>
+                                          <th>
+                                              Price
+                                          </th>
+                                          <th>
+                                              Amount
+                                          </th>
+
+                                          <th hidden>
+                                              Category
+                                          </th>
+
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @if (Model._Id != 0)
+                                      {
+                                          foreach (var item in Model.products)
+                                          {
+                                              <tr>
+                                                  <td>@item._Id</td>
+                                                  <td>
+                                                      <img style="height:50px; width:50px;" src="@item._Photo" />
+                                                  </td>
+                                                  <td>@item._SKU</td>
+                                                  <td>@item._Title</td>
+                                                  <td>
+                                                      @Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                                                  </td>
+                                                  <td>@item._Qty</td>
+                                                  <td>£@item._Price</td>
+                                                  <td>£@item._Amount</td>
+                                              </tr>
+                                          }
+                                      }
+                                  </tbody>
+                              </table>
+                              <hr />
+                              <h6 id="output">Total : @Model._Quantity</h6>
+                              <h6 id="totalAmount">Total Amount: £@Model._Amount</h6>
+                              <input name="_Quantity" id="_TotalQuantity" type="hidden" />
+                              <input name="_Amount" id="_TotalAmount" type="hidden" />
                           </div>
                       </div>
-                      <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-12 table-responsive">
-                          <table class="table" id="ProductsTable">
-                              <thead>
-                                  <tr>
-                                      <th>
-                                          Id
-                                      </th>
-                                      <th>
-                                          Photo
-                                      </th>
-                                      <th>
-                                          SKU
-                                      </th>
-                                      <th>
-                                          Title
-                                      </th>
-                                      <th>
-                                          Expiry Date
-                                      </th>
-
-                                      @*@if (User.IsInRole("Admin"))
-                            {
-                                <th>
-                                    Cost Price
-                                </th>
-                                <th>
-                                    Retail Price
-                                </th>
-                            }*@
-                                      <th>Quantity</th>
-                                      <th>
-                                          Price
-                                      </th>
-                                      <th>
-                                          Amount
-                                      </th>
-
-                                      <th hidden>
-                                          Category
-                                      </th>
-
-                                  </tr>
-                              </thead>
-                              <tbody>
-                                  @if (Model._Id != 0)
-                                  {
-                                      foreach (var item in Model.products)
-                                      {
-                                          <tr>
-                                              <td>@item._Id</td>
-                                              <td>
-                                                  <img style="height:50px; width:50px;" src="@item._Photo" />
-                                              </td>
-                                              <td>@item._SKU</td>
-                                              <td>@item._Title</td>
-                                              <td>
-                                                  @Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
-                                              </td>
-                                              <td>@item._Qty</td>
-                                              <td>£@item._Price</td>
-                                              <td>£@item._Amount</td>
-                                          </tr>
-                                      }
-                                  }
-                                  </tbody>
-                          </table>
-                          <hr />
-                          <h6 id="output">Total : @Model._Quantity</h6>
-                          <h6 id="totalAmount">Total Amount: £@Model._Amount</h6>
-                          <input name="_Quantity" id="_TotalQuantity" type="hidden" />
-                          <input name="_Amount" id="_TotalAmount" type="hidden" />
-                      </div>
-                  </div>
-              </form>
+                  </form>
 
     </div>
 
@@ -383,9 +389,16 @@ $(document).ready(function () {
             // Display the total quantity in the element with ID "totalQuantity"
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
-        $("#actionButton").click(function () {
+    $("#actionButton").click(function () {
+        //var expiryDateInput = $("#_ExpiryDate");
+       
+        //expiryDateInput.on("input", function () {
+        //    // Check if the value is empty
+        //    if ($(this).val() === "") {
+        //        // Show an alert
+        //        alert("Expiry Date is empty!");
+        //    }
         var products = [];
-
         $('#ProductsTable tbody tr').each(function () {
 
             var product = {
