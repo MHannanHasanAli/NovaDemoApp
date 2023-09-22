@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         public ActionResult Index()
@@ -153,16 +154,13 @@ namespace ImperialNova.Controllers
                 Order._IsPacked = model._IsPacked;
                 Order._Amount = decimal.Parse(model._Amount);
                 Order._Quantity = int.Parse(model._Quantity);
-                //Order._ProductId = model._ProductId;
-                //Order._Photo = model._Photo;
-                //Order._SKU = model._SKU;
-                //Order._Title = model._Title;
-                //Order._Qty = model._Qty;
-                //Order._Price = model._Price;
-                //Order._Amount = model._Amount;
-                //Order._IsPacked = model._IsPacked;
+                
 
                 OrderServices.Instance.CreateOrder(Order);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Order has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

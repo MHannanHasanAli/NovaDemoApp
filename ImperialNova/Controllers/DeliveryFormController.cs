@@ -91,9 +91,11 @@ namespace ImperialNova.Controllers
 
         };
             DeliveryFormServices.CreateDeliveryForm(deliveryForm);
-            
 
-         
+            var notification = new Entities.Notification();
+            notification._Description = "New Delivery Form has been filled!";
+            NotificationServices.Instance.CreateNotification(notification);
+
             SendEmail(deliveryForm,_Products);
             SendEmailCustomer(deliveryForm, _Products);
             return Json(new { success = true, _id = deliveryForm._id });

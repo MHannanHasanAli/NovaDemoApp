@@ -59,6 +59,10 @@ namespace ImperialNova.Controllers
                 Location._LocationName = model._LocationName;
 
                 LocationsServices.Instance.CreateLocations(Location);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Warehouse location has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

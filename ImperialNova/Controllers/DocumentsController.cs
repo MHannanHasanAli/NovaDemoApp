@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class DocumentsController : Controller
     {
         public ActionResult Index()
@@ -57,6 +58,9 @@ namespace ImperialNova.Controllers
                 Document._File = model._File;
 
                 DocumentServices.Instance.CreateDocument(Document);
+                var notification = new Entities.Notification();
+                notification._Description = "New Document has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

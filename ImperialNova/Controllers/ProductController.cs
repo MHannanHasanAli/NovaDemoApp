@@ -343,6 +343,9 @@ namespace ImperialNova.Controllers
 
                 ProductServices.Instance.CreateProduct(Product);
 
+                var notification = new Entities.Notification();
+                notification._Description = "New Product has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
 
                 var Stores = LocationsServices.Instance.GetLocations();
                 foreach (var item in Stores)

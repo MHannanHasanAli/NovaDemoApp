@@ -11,6 +11,7 @@ using static ImperialNova.ViewModels.AdjustmentViewModel;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class AdjustmentController : Controller
     {
         public ActionResult Index()
@@ -90,7 +91,10 @@ namespace ImperialNova.Controllers
             var adjproduct = new AdjustmentProduct();
             foreach (var item in ListOfInventory)
             {
-                
+                if (item._Quantity == null)
+                {
+                    break;
+                }
                 var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
                 product._Quantity = int.Parse(item._Quantity);
                 QuantityUpdate = QuantityUpdate + product._Quantity;
@@ -122,6 +126,8 @@ namespace ImperialNova.Controllers
 
                 AdjustmentServices.Instance.UpdateAdjustment(Adjustment);
 
+            
+
             }
             else
             {
@@ -131,6 +137,10 @@ namespace ImperialNova.Controllers
                 Adjustment._Remarks = model._Remarks;
 
                 AdjustmentServices.Instance.CreateAdjustment(Adjustment);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Adjustment has been made!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class InventoryInController : Controller
     {
         public ActionResult Index()
@@ -138,6 +139,10 @@ namespace ImperialNova.Controllers
                 InventoryIn._Date = model._Date;
                 InventoryIn._Supplier = model._Supplier;
                 InventoryInServices.Instance.CreateInventoryIn(InventoryIn);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Inventory has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

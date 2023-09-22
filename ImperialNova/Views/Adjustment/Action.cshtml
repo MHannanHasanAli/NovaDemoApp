@@ -68,7 +68,7 @@
                   <div class="row">
                       <div class="col-md-3">
                           <div class="form-group">
-                              <input type="hidden" value="@Model._Id" name="ID" />
+                              <input type="hidden" value="@Model._Id" name="_Id" />
                               <label for="_Date">Date:</label>
                               @if (Model._Id != 0)
                               {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })

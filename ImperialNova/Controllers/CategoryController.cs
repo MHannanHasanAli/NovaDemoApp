@@ -62,6 +62,10 @@ namespace ImperialNova.Controllers
                 Category._Description = model._Description;
                
                 CategoryServices.Instance.CreateCategory(Category);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Category has been made!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

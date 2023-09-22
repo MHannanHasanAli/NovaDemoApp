@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class NotificationsController : Controller
     {
         public ActionResult Index()
@@ -19,27 +20,30 @@ namespace ImperialNova.Controllers
 
 
 
-        [HttpGet]
-        public ActionResult Delete(int ID)
-        {
-            NotificationActionViewModel model = new NotificationActionViewModel();
-            var Notification = NotificationServices.Instance.GetNotificationById(ID);
-            model._Id = Notification._Id;
-            return View("Delete", model);
-        }
+        //[HttpGet]
+        //public ActionResult Delete(int ID)
+        //{
+        //    NotificationActionViewModel model = new NotificationActionViewModel();
+        //    var Notification = NotificationServices.Instance.GetNotificationById(ID);
+        //    model._Id = Notification._Id;
+        //    model._Description = Notification._Description;
 
-        [HttpPost]
-        public ActionResult Delete(NotificationActionViewModel model)
-        {
-            if (model._Id != 0)
-            {
-                var Notification = NotificationServices.Instance.GetNotificationById(model._Id);
+        //    NotificationServices.Instance.DeleteNotification(ID);
+        //    RedirectToAction("Index");
+        //}
 
-                NotificationServices.Instance.DeleteNotification(Notification._Id);
-            }
+        //[HttpGet]
+        //public ActionResult Delete(int ID)
+        //{
+        //    if (ID != 0)
+        //    {
+        //        var Notification = NotificationServices.Instance.GetNotificationById(ID);
 
-            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
-        }
+        //        NotificationServices.Instance.DeleteNotification(Notification._Id);
+        //    }
+
+            
+        //}
 
         [HttpPost]
         public ActionResult DeleteAll()

@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private AMSignInManager _signInManager;

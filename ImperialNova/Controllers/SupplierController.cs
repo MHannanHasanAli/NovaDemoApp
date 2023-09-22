@@ -9,6 +9,7 @@ using static ImperialNova.ViewModels.SupplierViewModel;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class SupplierController : Controller
     {
         public ActionResult Index(string SearchTerm = "")
@@ -73,6 +74,10 @@ namespace ImperialNova.Controllers
                 Supplier._Country = model._Country;
 
                 SupplierServices.Instance.CreateSupplier(Supplier);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Supplier has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

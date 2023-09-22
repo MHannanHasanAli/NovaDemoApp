@@ -9,6 +9,7 @@ using static ImperialNova.ViewModels.PaymentViewModel;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class PaymentController : Controller
     {
         public ActionResult Index()
@@ -67,6 +68,10 @@ namespace ImperialNova.Controllers
                 Payment._Remarks = model._Remarks;
 
                 PaymentServices.Instance.CreatePayment(Payment);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Payment has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

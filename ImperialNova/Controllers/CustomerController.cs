@@ -9,6 +9,7 @@ using static ImperialNova.ViewModels.CustomerViewModel;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
     {
         public ActionResult Index(string SearchTerm = "")
@@ -73,6 +74,9 @@ namespace ImperialNova.Controllers
                 Customer._Country = model._Country;
 
                 CustomerServices.Instance.CreateCustomer(Customer);
+                var notification = new Entities.Notification();
+                notification._Description = "New Customer has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

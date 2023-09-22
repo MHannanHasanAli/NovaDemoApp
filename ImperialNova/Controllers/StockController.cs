@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class StockController : Controller
     {
         // GET: Stock

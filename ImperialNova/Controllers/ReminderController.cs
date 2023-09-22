@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ReminderController : Controller
     {
         private AMSignInManager _signInManager;
@@ -115,6 +116,10 @@ namespace ImperialNova.Controllers
                 Reminder._Description = decodedDescription;
 
                 ReminderServices.Instance.CreateReminder(Reminder);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Reminder has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

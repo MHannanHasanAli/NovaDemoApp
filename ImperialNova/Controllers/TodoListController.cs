@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TodoListController : Controller
     {
         public ActionResult Index()
@@ -61,6 +62,10 @@ namespace ImperialNova.Controllers
                 TodoList._Ticked = model._Ticked;
 
                 TodoListServices.Instance.CreateTodoList(TodoList);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New Task has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 

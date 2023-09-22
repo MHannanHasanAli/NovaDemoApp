@@ -9,6 +9,7 @@ using static ImperialNova.ViewModels.CSVViewModel;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class CSVController : Controller
     {
         public ActionResult Index()
@@ -60,6 +61,10 @@ namespace ImperialNova.Controllers
                 CSV._File = model._File;
 
                 CSVServices.Instance.CreateCSV(CSV);
+
+                var notification = new Entities.Notification();
+                notification._Description = "New CSV has been Added!";
+                NotificationServices.Instance.CreateNotification(notification);
             }
 
 
