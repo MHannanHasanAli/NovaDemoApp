@@ -82,9 +82,12 @@ namespace ImperialNova.Controllers
                 }
                 var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
                 product._Quantity = product._Quantity - int.Parse(item._Quantity);
+                product._QuantityOut = product._QuantityOut + int.Parse(item._Quantity);
+                product._ExportDate = DateTime.Now;
                 QuantityUpdate = QuantityUpdate + int.Parse(item._Quantity);
                 ProductServices.Instance.UpdateProduct(product);
-
+                
+                Orderproduct._ProductId = product._Id;
                 Orderproduct._Qty = int.Parse(item._Quantity);
                 Orderproduct._SKU = product._SKU;
                 Orderproduct._Title = product._Name;

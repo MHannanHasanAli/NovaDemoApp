@@ -15,6 +15,7 @@ namespace ImperialNova.ViewModels
         }
         public class PaymentActionViewModel
         {
+            public List<Customer> customers { get; set; }
             public int _Id { get; set; }
             public int _Record { get; set; }
             public DateTime _Date { get; set; }

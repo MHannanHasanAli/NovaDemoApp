@@ -15,6 +15,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Order = ImperialNova.Entities.Order;
 
 namespace ImperialNova.Controllers
 {
@@ -407,6 +408,33 @@ namespace ImperialNova.Controllers
         {
             ProductServices.Instance.UpdateProduct(product);
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Preview(int ID)
+        {
+            ProductListingViewModel model = new ProductListingViewModel();
+
+            var product = ProductServices.Instance.GetProductById(ID);
+            var ProductList = new ProductPreviewModel();
+
+                var warehouse = LocationsServices.Instance.GetLocationsById(product._WarehouseId);
+                var category = CategoryServices.Instance.GetCategoryById(product._CategoryId);
+            ProductList.Product = product;
+            ProductList.Warehouse = warehouse;
+            ProductList.Category = category;
+            var orderlist = new List<Order>();
+            ProductList.orderProducts = OrderProductServices.Instance.GetOrderProductsByProductId(ID);
+            foreach (var item in ProductList.orderProducts)
+            {
+               var orderinfo= OrderServices.Instance.GetOrderById(item._OrderId);
+                orderlist.Add(orderinfo);
+            }
+            model.Product = ProductList;
+            model.Product.order = orderlist;
+            return View("Preview", model);
+
+            
         }
     }
 }

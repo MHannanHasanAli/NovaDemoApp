@@ -1,11 +1,11 @@
-﻿@model ImperialNova.ViewModels.CustomerViewModel.CustomerActionViewModel
+﻿@model ImperialNova.ViewModels.CustomerActionViewModel
 
 @if (Model != null)
 {
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title">
-                <span>Delete Customer</span>
+                <span>Delete Document</span>
             </h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -34,7 +34,7 @@
 			data: $("#actionForm").serialize()
 		})
 		.done(function (response) {
-			if(response.Success)
+			if(response.success)
 			{
 				window.location.href = "@Url.Action("Index", "Customer")";
 			}

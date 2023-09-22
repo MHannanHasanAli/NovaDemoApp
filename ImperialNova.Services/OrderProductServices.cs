@@ -34,7 +34,15 @@ namespace ImperialNova.Services
                     .ToList();
             }
         }
-
+        public List<Entities.OrderProduct> GetOrderProductsByProductId(int inventoryInId)
+        {
+            using (var context = new DSContext())
+            {
+                return context.orderproducts
+                    .Where(product => product._ProductId == inventoryInId)
+                    .ToList();
+            }
+        }
         public List<OrderProduct> GetOrderProducts()
         {
             using (var context = new DSContext())

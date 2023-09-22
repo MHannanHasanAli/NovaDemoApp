@@ -28,7 +28,17 @@
     .remark{
 
     }
-  
+    .setter {
+        position: relative;
+        left: -415px;
+    }
+    .datesetter {
+        margin-left: -13px;
+        margin-right: 22px;
+    }
+    #_Individual{
+        width: 200px;
+    }
 </style>
 @if (Model != null)
 {
@@ -56,29 +66,49 @@
 
                             <div class="form-group col-md-3">
                                 <label for="_Name">Record# &nbsp;</label>
-                                <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record"/>
+                                <input value="@Model._Record" type="text" class="form-control" name="_Record" id="_Record" />
                             </div>
                             <div class="form-group col-md-2 datesetter">
                                 <label for="_Date">Date &nbsp;</label>
-                                <input value="@Model._Date.ToString("yyyy-MM-dd")" type="date" class="form-control" name="_Date" id="_Date" />
+                                @if (Model._Id != 0)
+                                {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                            }
+                            else
+                            {
+                                @Html.TextBox("_Date", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                                @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                            }
                             </div>
 
+
                             <div class="form-group col-md-3">
-                                <label for="_Individual">Individual &nbsp;</label>
-                                <input value="@Model._Individual" type="text" class="form-control" name="_Individual" id="_Name"  />
+                                <label for="_Individual">Customer/Supplier:</label>
+                                <select class="form-control" name="_Individual" id="_Individual">
+                                    @if (!string.IsNullOrEmpty(Model._Individual))
+                                    {
+                                        <option selected value="@Model._Individual">@Model._Individual</option>
+                                    }
+                                    @foreach (var item in Model.customers)
+                                    {
+                                        if (item._Name != Model._Individual)
+                                        {
+                                            <option value="@item._Name">@item._Name</option>
+                                        }
+                                    }
+                                </select>
                             </div>
+
                             <div class="form-group col-md-3">
                                 <label for="_Amount">Amount &nbsp;</label>
                                 <input value="@Model._Amount" type="number" class="form-control" name="_Amount" id="_Amount" placeholder="Enter name" />
                             </div>
+
                         </div>
-                       
                         <br />
-                        <div class="form-group col-md-12 setter">
+                        <div class="form-group col-md-2 setter">
                             <label for="_Remarks">Remarks &nbsp;</label>
-                            <input value="@Model._Remarks" type="text" class="form-control remark" name="_Remarks" id="_Remarks" placeholder="Enter name" />
+                            <input value="@Model._Remarks" type="text" class="form-control remark" name="_Remarks" id="_Remarks" placeholder="Enter remarks" />
                         </div>
-                       
                     </div>
 
 </form>

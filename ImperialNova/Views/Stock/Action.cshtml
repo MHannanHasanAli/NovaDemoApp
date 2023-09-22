@@ -1,0 +1,192 @@
+﻿﻿@model ImperialNova.ViewModels.StockMovementActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .container-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .back{
+        margin-right: 10px;
+    }
+    .col-md-8{
+        display:flex;
+        justify-content: space-between;
+    }
+    input{
+        width: 400px;
+    }
+    .setter {
+        position: relative;
+        left: -108px;
+    }
+    .fast{
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 20px;
+    }
+    .slow {
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .inner-form-div{
+        width: 100%;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+
+            <h1>
+                Stock Movement Settings
+            </h1>
+
+
+            <div class="container">
+                <form id="actionForm">
+                    <div class="form-container container">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+                        <div class="container">
+                            <div class="fast">
+                                <h3>Fast Moving Stock</h3><br />
+
+                                <div class="row">
+
+                                    <div class="form-group col-md-3">
+                                        <label for="_Fdays">Start From Days &nbsp;</label>
+                                        <input value="@Model._Fdays" type="number" class="form-control" name="_Fdays" id="_Fdays" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Ffrom">In Stock% from &nbsp;</label>
+                                        <input value="@Model._Ffrom" type="number" class="form-control" name="_Ffrom" id="_Ffrom" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Fto">In Stock% to &nbsp;</label>
+                                        <input value="@Model._Fto" type="number" class="form-control" name="_Fto" id="_Fto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slow">
+                                <h3>Slow Moving Stock</h3>
+                                <div class="row">
+
+                                    <div class="form-group col-md-3">
+                                        <label for="_Sdays">Start From Days&nbsp;</label>
+                                        <input value="@Model._Sdays" type="number" class="form-control" name="_Sdays" id="_Sdays" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Sfrom">In Stock% from &nbsp;</label>
+                                        <input value="@Model._Sfrom" type="number" class="form-control" name="_Sfrom" id="_Sfrom" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Country">In Stock% to &nbsp;</label>
+                                        <input value="@Model._Sto" type="number" class="form-control" name="_Sto" id="_Sto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+            <div style="background-color:white;" class="card-footer container-bottom">
+                <a href="@Url.Action("Index","StockMovement")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                @if (Model._Id != 0)
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
+                }
+                else
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                }
+
+            </div>
+
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $("#actionButton").click(function () {
+        var fdays = $('#_Fdays').val();
+        var ffrom = $('#_Ffrom').val();
+        var fto = $('#_Fto').val();
+        var sdays = $('#_Sdays').val();
+        var sfrom = $('#_Sfrom').val();
+        var sto = $('#_Sto').val();
+        if (fdays === '' || ffrom === '' || fto === '' || sdays === '' || sfrom === '' || sto === '') {
+            alert('Please fill in all of the fields.');
+            return;
+        }
+		$.ajax({
+			url: '@Url.Action("Action", "Stock")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Dashboard", "Admin")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#FileUpload").change(function () {  
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("File", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#_File").val(response.DocURL);
+                    $("#FileImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>

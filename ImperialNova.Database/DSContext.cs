@@ -49,6 +49,7 @@ namespace ImperialNova.Database
         public DbSet<InventoryInProduct> inventoryinproducts { get; set; }
         public DbSet<OrderProduct> orderproducts { get; set; }
 
+        public DbSet<StockMovement> stockmovements { get; set; }
 
     }
 }

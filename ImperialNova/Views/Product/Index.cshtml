@@ -83,19 +83,32 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item" href="@Url.Action("Action", "Product", new { ID = item.Product._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                                                    <i class="mdi mdi-pencil"></i> EDIT
                                                                 </a>
                                                                 @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
                                                                 <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
                                                                     <i class="mdi mdi-delete"></i> DELETE
                                                                 </a>
+                                                                <a class="dropdown-item" href="@Url.Action("Preview", "Product", new { ID = item.Product._Id })">
+                                                                    <i class="mdi mdi-pencil"></i> PREVIEW
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
                                                     <td>
-    <img style="height:50px; width:50px;"  src="@item.Product._Photo" /></td>
+                                                        @if (item.Product._Photo != null)
+                                                        {
+                                                            <img style="height:50px; width:50px;" src="@item.Product._Photo" />
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <img style="height:50px; width:50px;" src="~/Images/download.png" />
+
+                                                        }
+                                                    </td>
                                                     <td>@item.Product._SKU</td>
                                                     <td>@item.Product._Name</td>
                                                     <td>@item.Category._CName</td>

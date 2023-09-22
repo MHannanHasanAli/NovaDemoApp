@@ -40,10 +40,13 @@
         align-items: start;
     }
     #_Title {
-        width: 79%;
+        width: 78%;
     }
     .backer {
         margin-left: -121px;
+    }
+    .margin-adder{
+        margin-left: 60px;
     }
 </style>
 @if (Model != null)
@@ -52,14 +55,14 @@
         <div class="card-body">
             @if (Model._Id != 0)
             {
-                <h2 class="card-title">
+                <h2 >
                     Edit Reminder
                 </h2>
 
             }
             else
             {
-                <h2 class="card-title">
+                <h2 >
                     Add Reminder
                 </h2>
 
@@ -70,8 +73,8 @@
                         <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
 
                         <div class="form-group col-md-12">
-                            <label for="_Title">Title &nbsp;</label>
-                            <input value="@Model._Title" type="text" class="form-control" name="_Title" id="_Title" placeholder="Enter name" />
+                            <label for="_Title">Title &nbsp;</label><br />
+                            <input value="@Model._Title" type="text" class="form-control margin-adder" name="_Title" id="_Title" placeholder="Enter name" />
                         </div>
 
                         <div class="col-md-11 backer">
@@ -128,7 +131,6 @@
         var id = $('#_Id').val();
         var title = $('#_Title').val();
         var description = $('#MainDescription').val();
-        debugger
 		$.ajax({
 			url: '@Url.Action("Action", "Reminder")',
 			type: 'POST',

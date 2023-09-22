@@ -318,6 +318,7 @@
     <Compile Include="ViewModels\CSVViewModel.cs" />
     <Compile Include="ViewModels\DeliveryFormViewModel.cs" />
     <Compile Include="ViewModels\DocumentsViewModel.cs" />
+    <Compile Include="ViewModels\StockMovementViewModel.cs" />
     <Compile Include="ViewModels\InventoryInViewModel.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="ViewModels\LocationViewModel.cs" />
@@ -3315,6 +3316,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\download.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="appsettings.json" />
@@ -3879,23 +3881,19 @@
     <Content Include="Views\User\_Action.cshtml" />
     <Content Include="Views\User\_Delete.cshtml" />
     <Content Include="Views\User\_Listing.cshtml" />
-    <Content Include="Views\User\_Register.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\_UserRoles.cshtml" />
-    <Content Include="Views\Documents\_Delete.cshtml" />
     <Content Include="Views\CSV\Index.cshtml" />
     <Content Include="Views\CSV\_Delete.cshtml" />
     <Content Include="Views\CSV\Action.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
-    <Content Include="Views\Supplier\_Delete.cshtml" />
     <Content Include="Views\Supplier\Action.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\_Delete.cshtml" />
     <Content Include="Views\Customer\Action.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
     <Content Include="Views\Payment\Action.cshtml" />
-    <Content Include="Views\Payment\_Delete.cshtml" />
     <Content Include="Views\Reminder\Index.cshtml" />
-    <Content Include="Views\Reminder\_Delete.cshtml" />
     <Content Include="Views\Reminder\Action.cshtml" />
     <Content Include="Views\Adjustment\Index.cshtml" />
     <Content Include="Views\Adjustment\Action.cshtml" />
@@ -3913,6 +3911,12 @@
     <Content Include="Views\InventoryIn\_Delete.cshtml" />
     <Content Include="Views\Order\_Delete.cshtml" />
     <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\Action.cshtml" />
+    <Content Include="Views\Product\Preview.cshtml" />
+    <Content Include="Views\Documents\_Delete.cshtml" />
+    <Content Include="Views\Reminder\_Delete.cshtml" />
+    <Content Include="Views\Payment\_Delete.cshtml" />
+    <Content Include="Views\Supplier\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

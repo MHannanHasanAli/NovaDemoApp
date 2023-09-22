@@ -34,7 +34,7 @@
 			data: $("#actionForm").serialize()
 		})
 		.done(function (response) {
-			if(response.Success)
+			if(response.success)
 			{
 				window.location.href = "@Url.Action("Index", "Documents")";
 			}

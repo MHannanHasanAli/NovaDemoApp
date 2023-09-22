@@ -27,6 +27,7 @@ namespace ImperialNova.Services
         #endregion
 
 
+        
         public List<TodoList> GetTodoLists()
         {
             using (var context = new DSContext())
@@ -36,7 +37,16 @@ namespace ImperialNova.Services
 
             }
         }
-
+        public List<TodoList> GetFilteredTodoLists()
+        {
+            using (var context = new DSContext())
+            {
+                return context.todolists
+                    .Where(x => x._Ticked == false)
+                    .OrderBy(x => x._DueDate) // Order by the Date property
+                    .ToList();
+            }
+        }
         public TodoList GetTodoListById(int id)
         {
             using (var context = new DSContext())

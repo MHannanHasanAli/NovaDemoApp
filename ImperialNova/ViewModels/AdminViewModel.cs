@@ -21,6 +21,7 @@ namespace ImperialNova.ViewModels
         public int CurrentStock { get; set; }
         public int ActiveProducts { get; set; }
         public int LowStockAlert { get; set; }
+        public int Customer { get; set; }
         public List<InventoryBackups> InventoriesForChart { get; set; }
         public List<Product> LowStockProducts { get; set; }
         public User SignedInUser { get; set; }
@@ -33,6 +34,12 @@ namespace ImperialNova.ViewModels
         public string Contact { get; set; }
         public string SearchTerm { get; set; }
 
+        public List<Order> Order { get; set; }
+        public List<InventoryIn> Inventory { get; set; }
+        public List<TodoList> TodoList { get; set; }
+        public List<Reminder> Reminders { get; set; }
+        public List<Product> Fastmoving { get; set; }
+        public List<Product> Slowmoving { get; set; }
     }
 
 

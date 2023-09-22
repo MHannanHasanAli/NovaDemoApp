@@ -87,7 +87,7 @@ namespace ImperialNova.Controllers
             SupplierActionViewModel model = new SupplierActionViewModel();
             var Supplier = SupplierServices.Instance.GetSupplierById(ID);
             model._Id = Supplier._Id;
-            return View("Delete", model);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]

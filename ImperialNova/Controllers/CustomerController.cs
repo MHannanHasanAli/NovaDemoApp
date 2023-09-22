@@ -87,7 +87,7 @@ namespace ImperialNova.Controllers
             CustomerActionViewModel model = new CustomerActionViewModel();
             var Customer = CustomerServices.Instance.GetCustomerById(ID);
             model._Id = Customer._Id;
-            return View("Delete", model);
+            return PartialView("_Delete", model);
         }
 
         [HttpPost]

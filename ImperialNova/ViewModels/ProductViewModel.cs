@@ -19,8 +19,23 @@ namespace ImperialNova.ViewModels
     }
     public class ProductListingViewModel
     {
+       
         public List<ProductsModel> Products { get; set; }
+        public ProductPreviewModel Product { get; set; }
+        public string Category { get; set; }
+        public string Warehouse { get; set; }
         public string SearchTerm { get; set; }
+
+        public List<Order> order { get; set; }
+    }
+    public class ProductPreviewModel
+    {
+        public Product Product { get; set; }
+        public Category Category { get; set; }
+
+        public Locations Warehouse { get; set; }
+        public List<Order> order { get; set; }
+        public List<OrderProduct> orderProducts { get; set; }
     }
     public class ProductsModel
     {

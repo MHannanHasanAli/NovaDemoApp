@@ -35,6 +35,7 @@ namespace ImperialNova.Controllers
                 model._Remarks = Payment._Remarks;
 
             }
+            model.customers = CustomerServices.Instance.GetCustomers();
             return View("Action", model);
         }
 

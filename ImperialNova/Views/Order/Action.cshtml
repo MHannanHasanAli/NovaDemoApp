@@ -222,27 +222,31 @@
                     {
 
                     }
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="_StoreId">Store:</label>
-                            <select class="form-control" name="_StoreId" id="_StoreId">
-                                @foreach (var item in Model.locations)
-                                {
-                                    <option selected value="@item._Id">@item._LocationName</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <div class="setting">
-                        <div class="col-md-6">
+                    @if (Model._Id != 0)
+                    { }
+                    else
+                    {<div class="col-md-3">
                             <div class="form-group">
-                                <label for="_ProductId">Products:</label>
-                                <select class="form-control" name="_ProductId" id="_ProductId">
+                                <label for="_StoreId">Store:</label>
+                                <select class="form-control" name="_StoreId" id="_StoreId">
+                                    @foreach (var item in Model.locations)
+                                    {
+                                        <option selected value="@item._Id">@item._LocationName</option>
+                                    }
                                 </select>
                             </div>
                         </div>
-                        <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
-                    </div>
+                        <div class="setting">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="_ProductId">Products:</label>
+                                    <select class="form-control" name="_ProductId" id="_ProductId">
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+                        </div>}
+
                     @*<div class="product-box">
             <input type="text" name="country" id="autocomplete" class="autocomplete" placeholder="Search Product here" />
         </div>
@@ -256,9 +260,7 @@
                                         <th>
                                             Id
                                         </th>
-                                        <th>
-                                            Photo
-                                        </th>
+
                                         <th>
                                             SKU
                                         </th>
@@ -297,9 +299,7 @@
                                         {
                                             <tr>
                                                 <td>@item._Id</td>
-                                                <td>
-                                                    <img style="height:50px; width:50px;" src="@item._Photo" />
-                                                </td>
+
                                                 <td>@item._SKU</td>
                                                 <td>@item._Title</td>
                                                 <td>@item._Qty</td>
@@ -441,7 +441,6 @@
                 var row = `
                <tr>
   <td>${product._Id}</td>
-  <td class="photo"><img src="${product._Photo}" style="width:50px;height:50px;"/></td>
   <td>${product._SKU}</td>
   <td>${product._Name}</td>
   <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
@@ -467,25 +466,17 @@
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
     $("#actionButton").click(function () {
-        //var expiryDateInput = $("#_ExpiryDate");
 
-        //expiryDateInput.on("input", function () {
-        //    // Check if the value is empty
-        //    if ($(this).val() === "") {
-        //        // Show an alert
-        //        alert("Expiry Date is empty!");
-        //    }
         var products = [];
         $('#ProductsTable tbody tr').each(function () {
 
             var product = {
                 _ProductId: $(this).find('td:eq(0)').text(),
-                _Photo: $(this).find('td:eq(1)').text(),
-                _SKU: $(this).find('td:eq(2)').text(),
-                _Name: $(this).find('td:eq(3)').text(),
-                _Quantity: $('#_Quantity').val(),
-                _Price: $(this).find('td:eq(5)').text().replace('£', ''),
-                _Amount: $('.amount').text().replace('£', ''),
+                _SKU: $(this).find('td:eq(1)').text(),
+                _Name: $(this).find('td:eq(2)').text(),
+                _Quantity: $(this).find('td:eq(3) input').val(),
+                _Price: $(this).find('td:eq(4)').text().replace('£', ''),
+                _Amount: $(this).find('td:eq(5)').text().replace('£', ''),
             };
             console.log(product);
             products.push(product);
