@@ -10,8 +10,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class ReminderController : Controller
+    [Authorize(Roles = "Admin")]    public class ReminderController : Controller
     {
         private AMSignInManager _signInManager;
         private AMUserManager _userManager;
