@@ -56,7 +56,9 @@
       <Private>True</Private>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="netstandard" />
+    <Reference Include="netstandard">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.102.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.102.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
     </Reference>
@@ -1841,7 +1843,6 @@
     <Content Include="Content\adminTemplate\plugins\jqvmap\maps\jquery.vmap.usa.districts.js" />
     <Content Include="Content\adminTemplate\plugins\jqvmap\maps\jquery.vmap.usa.js" />
     <Content Include="Content\adminTemplate\plugins\jqvmap\maps\jquery.vmap.world.js" />
-    <Content Include="Content\adminTemplate\plugins\jsgrid\demos\db.js" />
     <Content Include="Content\adminTemplate\plugins\jsgrid\i18n\jsgrid-de.js" />
     <Content Include="Content\adminTemplate\plugins\jsgrid\i18n\jsgrid-es.js" />
     <Content Include="Content\adminTemplate\plugins\jsgrid\i18n\jsgrid-fr.js" />
@@ -3920,6 +3921,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\adminTemplate\plugins\jsgrid\demos\" />
     <Folder Include="Photos\" />
     <Folder Include="Views\Manager\" />
   </ItemGroup>

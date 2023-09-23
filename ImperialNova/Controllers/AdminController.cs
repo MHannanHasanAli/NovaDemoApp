@@ -87,7 +87,7 @@ namespace ImperialNova.Controllers
             {
                 readytoshiporders.Add(item);
             }
-            
+
             var inventorydata = InventoryInServices.Instance.GetInventoryIns();
             foreach (var item in inventorydata)
             {
@@ -107,48 +107,55 @@ namespace ImperialNova.Controllers
             }
 
             var stockmovementdata = StockMovementServices.Instance.GetStockMovementById(1);
-
-            var fast_products = GetProductsWithinDateRange(stockmovementdata._Fdays);
-            var slow_products = GetProductsWithinDateRange(stockmovementdata._Sdays);
-
-            var products = OrderProductServices.Instance.GetOrderProducts();
-
-            foreach (var fastproduct in fast_products)
+            if (stockmovementdata != null)
             {
-                int totalnumber = products.Count();
-                int fastcount = 0;
-                foreach (var product in products)
+                var fast_products = GetProductsWithinDateRange(stockmovementdata._Fdays);
+                var slow_products = GetProductsWithinDateRange(stockmovementdata._Sdays);
+
+                var products = OrderProductServices.Instance.GetOrderProducts();
+
+                foreach (var fastproduct in fast_products)
                 {
-                    if (fastproduct._Id == product._ProductId)
+                    int totalnumber = products.Count();
+                    int fastcount = 0;
+                    foreach (var product in products)
                     {
-                        fastcount++;
+                        if (fastproduct._Id == product._ProductId)
+                        {
+                            fastcount++;
+                        }
+                    }
+                    if (((fastcount / totalnumber) * 100) >= stockmovementdata._Ffrom && ((fastcount / totalnumber) * 100) <= stockmovementdata._Fto)
+                    {
+                        fast_moving_products.Add(fastproduct);
                     }
                 }
-                if (((fastcount / totalnumber) * 100) >= stockmovementdata._Ffrom && ((fastcount / totalnumber) * 100) <= stockmovementdata._Fto)
+                foreach (var slowproduct in slow_products)
                 {
-                    fast_moving_products.Add(fastproduct);
-                }
-            }
-            foreach (var slowproduct in slow_products)
-            {
-                int totalnumber = products.Count();
-                int slowcount = 0;
-                foreach (var product in products)
-                {
-                    if (slowproduct._Id == product._ProductId)
+                    int totalnumber = products.Count();
+                    int slowcount = 0;
+                    foreach (var product in products)
                     {
-                        slowcount++;
+                        if (slowproduct._Id == product._ProductId)
+                        {
+                            slowcount++;
+                        }
+                    }
+                    if (((slowcount / totalnumber) * 100) >= stockmovementdata._Sfrom && ((slowcount / totalnumber) * 100) <= stockmovementdata._Sto)
+                    {
+                        slow_moving_products.Add(slowproduct);
                     }
                 }
-                if (((slowcount / totalnumber) * 100) >= stockmovementdata._Sfrom && ((slowcount / totalnumber) * 100) <= stockmovementdata._Sto)
+
+                int stock = 0;
+                var totalstock = ProductServices.Instance.GetProducts();
+                foreach (var item in products)
                 {
-                    slow_moving_products.Add(slowproduct);
+                    stock = stock + item._Qty;
                 }
             }
-
             int inventoryIn = 0;
             int inventoryOut = 0;
-            int stock = 0;
             var inventoryins = InventoryInServices.Instance.GetInventoryIns();
             foreach (var item in inventoryins)
             {
@@ -161,11 +168,6 @@ namespace ImperialNova.Controllers
                 inventoryOut = inventoryOut + item._Quantity;
             }
 
-            var totalstock = ProductServices.Instance.GetProducts();
-            foreach (var item in products)
-            {
-                stock = stock + item._Qty;
-            }
 
             var customers = CustomerServices.Instance.GetCustomers();
             

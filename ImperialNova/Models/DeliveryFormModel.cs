@@ -6,6 +6,7 @@ namespace ImperialNova.Models
     public class DeliveryFormModel
     {
         public int _id { get; set; }
+        public string productData { get; set; }
         public string _SlaesPerson { get; set; }
         public DateTime _Date { get; set; }
         public string _CustomerName { get; set; }
@@ -33,8 +34,7 @@ namespace ImperialNova.Models
     {
         public string _ProductName { get; set; }
         public int _ProductQuantity { get; set; }
-        public decimal _CostPrice { get; set; }
-        public decimal _SalePrice { get; set; }
+   
     }
 }
 

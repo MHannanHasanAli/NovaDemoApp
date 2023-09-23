@@ -62,7 +62,7 @@ namespace ImperialNova.Controllers
         static DeliveryForm data2;
         List<DeliveryFormProductsDB> _Products = new List<DeliveryFormProductsDB>();
         [HttpPost]
-        public ActionResult SubmitDeliveryForm(DeliveryFormModel form)
+        public ActionResult SubmitDeliveryForm(DeliveryFormModel form, string signatureData, string productData)
         {
             var data = form;
 
@@ -87,7 +87,7 @@ namespace ImperialNova.Controllers
                 _FinanceCompany = form._FinanceCompany,
                 _AmountPaid = form._AmountPaid,
                 _AmountInBalance = form._AmountInBalance,
-                ProductsData = JsonConvert.SerializeObject(form._Products)
+                ProductsData = form.productData
 
         };
             DeliveryFormServices.CreateDeliveryForm(deliveryForm);
