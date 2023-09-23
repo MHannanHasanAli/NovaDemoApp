@@ -26,7 +26,9 @@
 }
 
 <script>
-	$("#actionButton").click(function () {
+    $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
 		$.ajax({
 			url: '@Url.Action("Delete", "CSV")',
 			type: "post",

@@ -287,7 +287,10 @@
             // Display the total quantity in the element with ID "totalQuantity"
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
-        $("#actionButton").click(function () {
+    $("#actionButton").click(function () {
+
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
         var products = [];
 
         $('#ProductsTable tbody tr').each(function () {
