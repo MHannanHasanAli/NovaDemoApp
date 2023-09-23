@@ -386,6 +386,8 @@ $(document).ready(function () {
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
     $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
         //var expiryDateInput = $("#_ExpiryDate");
        
         //expiryDateInput.on("input", function () {

@@ -122,7 +122,9 @@
         $('#_Description').summernote();
     })
     $(document).ready(function () {
-       $("#actionButton").click(function () {
+        $("#actionButton").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
        var string = $('.note-editable.card-block').html();
        var encodedString = encodeURIComponent(string);
 

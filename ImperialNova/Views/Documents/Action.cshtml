@@ -95,6 +95,8 @@
 <script>
 
     $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
 		$.ajax({
 			url: '@Url.Action("Action", "Documents")',
 			type: "post",

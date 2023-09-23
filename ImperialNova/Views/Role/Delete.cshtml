@@ -28,7 +28,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-	$("#actionButton").click(function () {
+    $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
 		$.ajax({
 			url: '@Url.Action("Delete", "Role")',
 			type: "post",

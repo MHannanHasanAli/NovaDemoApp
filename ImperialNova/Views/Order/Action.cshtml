@@ -466,7 +466,8 @@
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
     $("#actionButton").click(function () {
-
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
         var products = [];
         $('#ProductsTable tbody tr').each(function () {
 
