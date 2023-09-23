@@ -14,6 +14,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web;
 
 namespace ImperialNova.Controllers
 {
@@ -65,6 +66,7 @@ namespace ImperialNova.Controllers
         public ActionResult SubmitDeliveryForm(DeliveryFormModel form, string signatureData, string productData)
         {
             var data = form;
+            var productDataString = HttpUtility.UrlDecode(productData);
 
             var deliveryForm = new DeliveryForm()
             {
@@ -77,7 +79,7 @@ namespace ImperialNova.Controllers
                 _Country = form._Country,
                 _ContactNo = form._ContactNo,
                 _Email = form._Email,
-                _SignatureData = form._SignatureData,
+                _SignatureData = signatureData,
                 _Note = form._Note,
                 _RequestedDate = form._RequestedDate,
                 _TotalAmount = form._TotalAmount,
@@ -87,9 +89,9 @@ namespace ImperialNova.Controllers
                 _FinanceCompany = form._FinanceCompany,
                 _AmountPaid = form._AmountPaid,
                 _AmountInBalance = form._AmountInBalance,
-                ProductsData = form.productData
+                ProductsData = productDataString
 
-        };
+            };
             DeliveryFormServices.CreateDeliveryForm(deliveryForm);
 
             var notification = new Entities.Notification();
@@ -106,9 +108,17 @@ namespace ImperialNova.Controllers
         public byte[] Base64ToImage(string source)
         {
             string base64 = source.Substring(source.IndexOf(',') + 1);
-            base64 = base64.Trim('\0');
-            byte[] chartData = Convert.FromBase64String(base64);
-            return chartData;
+            int mod4 = base64.Length % 4;
+            if (mod4 > 0)
+            {
+                // Add padding characters to make it a valid length
+                base64 += new string('=', 4 - mod4);
+                byte[] chartData = Convert.FromBase64String(base64);
+                return chartData;
+
+            }
+            return null;
+
         }
         private bool SendEmail(DeliveryForm formdata, List<DeliveryFormProductsDB> products)
         {
@@ -204,34 +214,39 @@ namespace ImperialNova.Controllers
         {
 
             var data = DeliveryFormServices.GetFormById(id);
-            var newImage = Base64ToImage(data._SignatureData);
-            string base64Image = Convert.ToBase64String(newImage);
-
-            var deliveryForm = new DeliveryFormModel()
+            var model = new DeliveryFormModel();
+            if (data._SignatureData != null)
             {
+                var newImage = Base64ToImage(data._SignatureData);
+                if (newImage != null)
+                {
+                    string base64Image = Convert.ToBase64String(newImage);
+                    model._SignatureData = base64Image;
+                }
 
-                _id = id,
-                _SlaesPerson = data._SlaesPerson,
-                _Date = data._Date,
-                _CustomerName = data._CustomerName,
-                _Address = data._Address,
-                _Country = data._Country,
-                _ContactNo = data._ContactNo,
-                _Email = data._Email,
-                _Note = data._Note,
-                _RequestedDate = data._RequestedDate,
-                _TotalAmount = data._TotalAmount,
-                _CashPaid = data._CashPaid,
-                
-                _CardPaid = data._CardPaid,
-                _SignatureData = base64Image,
-                _FinancePaid = data._FinancePaid,
-                _FinanceCompany = data._FinanceCompany,
-                _AmountPaid = data._AmountPaid,
-                _AmountInBalance = data._AmountInBalance
+            }
 
-            };
-            deliveryForm.Products = JsonConvert.DeserializeObject<List<ProductData>>(data.ProductsData);
+
+            model._id = id;
+                model._SlaesPerson = data._SlaesPerson;
+                model._Date = data._Date;
+                model._CustomerName = data._CustomerName;
+                model._Address = data._Address;
+                model._Country = data._Country;
+                model._ContactNo = data._ContactNo;
+                model._Email = data._Email;
+                model._Note = data._Note;
+                model._RequestedDate = data._RequestedDate;
+                model._TotalAmount = data._TotalAmount;
+                model._CashPaid = data._CashPaid;
+                model._CardPaid = data._CardPaid;
+                model._FinancePaid = data._FinancePaid;
+                model._FinanceCompany = data._FinanceCompany;
+                model._AmountPaid = data._AmountPaid;
+            model._AmountInBalance = data._AmountInBalance;
+
+            
+            model.Products = JsonConvert.DeserializeObject<List<ProductData>>(data.ProductsData).Where(x=>x._ProductName != null).ToList();
             //Yaha Products Ni arhe
             //foreach (var item in data2._Products)
             //{
@@ -244,7 +259,7 @@ namespace ImperialNova.Controllers
             //}
             //// Ya
 
-            return View(deliveryForm);
+            return View(model);
          
         }
 

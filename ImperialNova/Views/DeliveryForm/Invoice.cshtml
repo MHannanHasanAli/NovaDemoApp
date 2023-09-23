@@ -122,8 +122,11 @@
                 </div>
             </div>
             <div style="float:right;" class="row">
-                <p>Customer Signature:</p>
-                <img src="data:image/jpeg;base64,@Model._SignatureData" alt="Image">
+                @if (Model._SignatureData != null)
+                {
+                    <p>Customer Signature:</p>
+                    <img src="data:image/jpeg;base64,@Model._SignatureData" alt="Image">
+                }
             </div>
          
 

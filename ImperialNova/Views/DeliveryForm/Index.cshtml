@@ -28,6 +28,40 @@
         justify-content: flex-start;
     }
 
+    .loading-spinner-overlay {
+        display: none; /* Initially hidden */
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 9999; /* Ensure it appears above all other content */
+        background-color: rgba(0,0,0,0.5); /* Transparent black */
+    }
+
+
+    .spinner {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        100% {
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+    }
     #clear-button {
         width: 50%;
         transform: rotate(-90deg);
@@ -61,6 +95,9 @@
 
 </style>
 <div class="container">
+    <div id="loadingSpinner" class="loading-spinner-overlay">
+        <div class="spinner"></div>
+    </div>
     <br />
     <div class="row">
         <div class="col-md-6">
@@ -394,9 +431,9 @@
             <div class="form-group product-row">
                 <div class="input-group mb-3 ng-scope">
                     <span style="height:35px;" class="input-group-text ng-binding"> a) </span>
-                    <input autocomplete="off" type="number" min="1" placeholder="Quantity" pattern="[0-9]+([\.,][0-9]+)?" class="form-control" aria-label="Quantity">
+                    <input id="QuantityFirst" autocomplete="off" type="number" min="1" placeholder="Quantity" pattern="[0-9]+([\.,][0-9]+)?" class="form-control" aria-label="Quantity">
                     <span style="height:35px;" class="input-group-text"> X </span>
-                    <input type="text" class="form-control w-50 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" placeholder="Product Name" aria-label="Product Name" aria-describedby="button-addon2" required="">
+                    <input id="ProductNameFirst" type="text" class="form-control w-50 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" placeholder="Product Name" aria-label="Product Name" aria-describedby="button-addon2" required="">
                     <button type="button" class="btn btn-sm btn-danger remove-product">Remove</button>
                 </div>
 
@@ -458,7 +495,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div style="display:none" id="FinanceRow" class="row">
             <div class="col-md-12">
                 <div class="input-group mb-3 ng-scope">
@@ -467,7 +504,7 @@
                 </div>
             </div>
         </div>
-      
+
 
         <div class="row">
             <div class="col-md-6">
@@ -478,7 +515,7 @@
                         <input type="number" class="form-control" id="_AmountPaid" name="_AmountPaid">
                     </div>
                 </div>
-               
+
             </div>
             <div class="col-md-6">
                 <div class="form-group">
@@ -488,14 +525,14 @@
                         <input type="number" class="form-control" id="_AmountInBalance" name="_AmountInBalance">
                     </div>
                 </div>
-            
+
             </div>
         </div>
 
         <br />
         <div class="row">
             <div class="col-md-6">
-                <div style="border: solid 0.3px lightgreen;"  class="card">
+                <div style="border: solid 0.3px lightgreen;" class="card">
                     <div class="card-body">
                         <div class="col-md-12 py-4">
                             <p style="font-size:18px; background-color:white;">
@@ -547,18 +584,18 @@
 
                     </div>
                 </div>
-              
+
             </div>
             <div class="col-md-6">
                 <label class="text-center">Customer Signature</label>
-                <div  id="signature-pad">
+                <div id="signature-pad">
                     <canvas style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
                     <button type="button" class="btn btn-success btn-sm btn-block" id="clear-button">Clear</button>
                 </div>
             </div>
 
         </div>
-      
+
 
         <hr />
         <button type="button" class="btn btn-success" id="SubmitForm">Submit</button>
@@ -593,7 +630,7 @@
                     <input type="text" name="_Products[${currentIndex}]._ProductName" class="form-control w-50 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" placeholder="Product Name" aria-label="Product Name" aria-describedby="button-addon2" required="">
                     <button type="button" class="btn btn-sm btn-danger remove-product">Remove</button>
                 </div>
-                    
+
                 </div>
             `;
 
@@ -605,24 +642,34 @@
         });
 
         $("#SubmitForm").click(function () {
-
-            var formData = $('#deliveryForm').serialize();
+             $("#SubmitForm").attr("disabled", "disabled");
+            showLoadingSpinner();
             var signatureData = signaturePad.toDataURL();
             var productDataArray = [];
 
+            var ProductNameFirst = $("#ProductNameFirst").val();
+            var QuantityFirst = $("#QuantityFirst").val();
             // Iterate through all product rows
+            var productFirst = {
+                _ProductQuantity: QuantityFirst,
+                _ProductName: ProductNameFirst
+            }
+            productDataArray.push(productFirst);
             $('.product-row').each(function () {
                 var productData = {
                     _ProductQuantity: $(this).find('input[name^="_Products"]').val(),
                     _ProductName: $(this).find('input[name^="_Products"]').siblings('input[name$="_ProductName"]').val()
                 };
                 productDataArray.push(productData);
+
             });
+            
+          
+
 
             // Serialize the product data array as JSON
             var productDataString = JSON.stringify(productDataArray);
             // Iterate through all product rows
-            var formData = $('#deliveryForm').serialize();
             var signatureData = signaturePad.toDataURL();
 
             // Serialize the product data array as JSON
@@ -633,13 +680,8 @@
             $.ajax({
                 url: '@Url.Action("SubmitDeliveryForm", "DeliveryForm")',
                 type: 'POST',
-                data: {
-                    form: formData,
-                    productData: encodedProductData,
-                    signatureData: signatureData
-                },
+                data: $("#deliveryForm").serialize() + "&productData=" + encodedProductData + "&signatureData=" + signatureData,
                 success: function (response) {
-
                     if (response.success) {
                         var orderId = response._id; // Assuming you receive the order ID in the JSON response
                         window.location.href = '@Url.Action("Invoice", "DeliveryForm")' + '?id=' + orderId;
@@ -664,7 +706,7 @@
         const $financePaid = $("#_FinancePaid");
         const $amountPaid = $("#_AmountPaid");
 
-        
+
 
 
         $totalAmount.on("input", function () {
@@ -724,6 +766,6 @@
 
 
 
-     
+
 
 </script>
