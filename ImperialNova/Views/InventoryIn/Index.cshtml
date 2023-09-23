@@ -95,7 +95,14 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td>@item._Supplier</td>
+                                                    @if (item._Supplier != null)
+                                                    {
+                                                        <td>@item._Supplier</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Supplier not available</td>
+                                                    }
                                                     <td>@item._ShippingCompany</td>
                                                     <td>@item._Tracking</td>
                                                     <td>@item._Quantity</td>

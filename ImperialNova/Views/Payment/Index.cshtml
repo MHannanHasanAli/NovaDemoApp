@@ -85,10 +85,17 @@
 
                                                     <td>@item._Record</td>
                                                     <td>@item._Date.ToString("yyyy-MM-dd")</td>
-                                                    <td>@item._Individual</td>
+                                                    @if (item._Individual != null)
+                                                    {
+                                                        <td>@item._Individual</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Individual not available</td>
+                                                    }
                                                     <td>£@item._Amount</td>
                                                     <td>@item._Remarks</td>
-                                                   
+
                                                 </tr>
                                             }
                                         </tbody>

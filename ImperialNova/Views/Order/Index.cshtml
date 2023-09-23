@@ -93,7 +93,14 @@
                                                     <td>@item._Record</td>
                                                     <td>@item._ShipByDate.ToString("yyyy-MM-dd")</td>
                                                     <td>@item._Tracking</td>
-                                                    <td>@item._Customer</td>
+                                                    @if (item._Customer != null)
+                                                    {
+                                                        <td>@item._Customer</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>Customer not available</td>
+                                                    }
                                                     <td>@item._Quantity</td>
                                                     <td>£@item._Amount</td>
                                                     <td>@item._IsPacked</td>

@@ -111,10 +111,25 @@
                                                     </td>
                                                     <td>@item.Product._SKU</td>
                                                     <td>@item.Product._Name</td>
-                                                    <td>@item.Category._CName</td>
+                                                    @if (item.Category != null && item.Category._CName != null)
+                                                    {
+                                                        <td>@item.Category._CName</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td> No Category available</td>
+                                                    }
                                                     <td>@item.Product._LowStockAlert</td>
-                                                    <td>@item.Warehouse._LocationName</td>
-                                                   
+                                                    @if (item.Warehouse != null && item.Warehouse._LocationName != null)
+                                                    {
+                                                        <td>@item.Warehouse._LocationName</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>No warehouse Available</td>
+                                                    }
+
+
                                                 </tr>
                                             }
                                         </tbody>
