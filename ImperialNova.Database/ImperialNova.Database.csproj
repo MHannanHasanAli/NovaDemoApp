@@ -204,6 +204,10 @@
     <Compile Include="Migrations\202309211658082_Tien.designer.cs">
       <DependentUpon>202309211658082_Tien.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309240522319_Aflatoon.cs" />
+    <Compile Include="Migrations\202309240522319_Aflatoon.designer.cs">
+      <DependentUpon>202309240522319_Aflatoon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -329,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309211658082_Tien.resx">
       <DependentUpon>202309211658082_Tien.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309240522319_Aflatoon.resx">
+      <DependentUpon>202309240522319_Aflatoon.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

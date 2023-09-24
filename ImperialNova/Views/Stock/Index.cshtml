@@ -85,7 +85,7 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="table-body">
                                             @foreach (var item in Model.Products)
                                             {
                                                 <tr>
@@ -178,6 +178,8 @@
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
         $("#date-button").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
             const startDate = $("#date-start").val();
             const endDate = $("#date-end").val();
 
@@ -186,13 +188,38 @@
                 return; // Stop the process
             }
 
-            // Send an AJAX request to the controller action with selected dates
+            // Clear the table rows
+            $("#table-body").empty();
+
+            // Send an AJAX request to retrieve filtered data
             $.ajax({
-                url: `/Product/Index?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`,
+                url: `/Product/GetFilteredData`, // Replace with the actual URL
+                data: { startDate: startDate, endDate: endDate },
                 method: "GET",
                 success: function (data) {
-                    // Replace the content of the product list with the updated data
-                    $("#product-list").html(data);
+                    // Iterate through the returned data and create table rows
+                    $.each(data, function (index, item) {
+                        // Create a new table row and append it to the table body
+                        var row = $("<tr>");
+             
+                        if (item._Photo !== null && item._Photo !== '') {
+                            row.append("<td><img style='height:50px; width:50px;' src='" + item._Photo + "' /></td>");
+                        } else {
+                            row.append("<td><img style='height:50px; width:50px;' src='/Images/download.png' /></td>");
+                        }
+                       row.append("<td>" + item._SKU + "</td>");
+                        row.append("<td>" + item._Name + "</td>");
+                        row.append("<td>" + (item && item._Warehouse !== undefined && item._Warehouse !== '' ? item._Warehouse : 'No warehouse Available') + "</td>");
+                        row.append("<td>" + item._Notes + "</td>");
+                        row.append("<td>" + item._QuantityIn + "</td>");
+                        row.append("<td>" + item._QuantityOut + "</td>");
+                        row.append("<td>" + item._Quantity + "</td>");
+                        row.append("<td>" + item._LowStockAlert + "</td></tr>");
+
+                        // Append the created row to the table body
+                        $("#table-body").append(row);
+                    });
+                    hideLoadingSpinner();
                 },
                 error: function (error) {
                     console.error("Error:", error);

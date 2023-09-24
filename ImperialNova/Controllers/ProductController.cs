@@ -50,7 +50,23 @@ namespace ImperialNova.Controllers
             return View("Index", model);
         }
 
+        [HttpGet]
+        public ActionResult GetFilteredData(DateTime? startDate, DateTime? endDate)
+        {
+            // Implement your filtering logic based on the startDate and endDate parameters
+            // Retrieve the filtered data, for example:
 
+            var filteredProducts = ProductServices.Instance.GetProductByFilter(startDate, endDate); // Replace with your actual filtering logic
+
+            foreach (var item in filteredProducts)
+            {
+                var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
+                var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
+                item._Warehouse = warehouse._LocationName;
+            }
+            // Return the filtered data as JSON
+            return Json(filteredProducts, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet]
         public ActionResult Import()

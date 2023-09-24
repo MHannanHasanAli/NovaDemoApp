@@ -130,6 +130,8 @@
 <script>
 
     $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
         var fdays = $('#_Fdays').val();
         var ffrom = $('#_Ffrom').val();
         var fto = $('#_Fto').val();
