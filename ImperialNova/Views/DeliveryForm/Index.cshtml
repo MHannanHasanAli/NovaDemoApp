@@ -5,14 +5,14 @@
     <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="~/Content/template/vendors/mdi/css/materialdesignicons.min.css" />
 
-     endinject 
+     @*endinject 
      plugin css for this page 
      End plugin css for this page 
-     inject:css 
+     inject:css*@ 
     <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-     endinject 
+     @*endinject*@ 
     <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -83,6 +83,7 @@
     }
     body {
         background-color: #F8F9FA;
+        margin-left: -238px;
     }
     .vertical-line {
         width: 5px;
@@ -703,8 +704,6 @@
         const $financeCheckbox = $("#_FinancePaidCB");
         const $financePaid = $("#_FinancePaid");
         const $amountPaid = $("#_AmountPaid");
-
-
 
 
         $totalAmount.on("input", function () {
