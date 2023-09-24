@@ -60,7 +60,14 @@
 
                         <div class="form-group col-md-8">
                             <label for="_DueDate" style=" width: 75px;">Due Date &nbsp;</label>
-                            <input value="@Model._DueDate" type="date" class="form-control" name="_DueDate" id="_DueDate"/>
+                            @if (Model._Id != 0)
+                            {@Html.TextBox("_DueDate", Model._DueDate, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_DueDate", @class = "form-control", type = "date" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("_DueDate", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_DueDate", @class = "form-control", type = "date" })
+                            @*<input value="@Model._Date" type="date" class="form-control" name="_Date" id="_Date" placeholder="Enter cost" />*@
+                        }
                         </div>
                         <div class="form-group col-md-8">
                             <label>File &nbsp;</label>

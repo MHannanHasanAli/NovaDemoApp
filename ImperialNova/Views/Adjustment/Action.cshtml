@@ -157,16 +157,19 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  @foreach (var item in Model.products)
+                                  @if (Model._Id != 0)
                                   {
-                                      <tr>
-                                          <td>@item._Id</td>
-                                          <td>@item._SKU</td>
-                                          <td>@item._Title</td>
-                                          <td>@item._Qty</td>
-                                      </tr>
+                                      @foreach (var item in Model.products)
+                                      {
+                                          <tr>
+                                              <td>@item._Id</td>
+                                              <td>@item._SKU</td>
+                                              <td>@item._Title</td>
+                                              <td>@item._Qty</td>
+                                          </tr>
+                                      }
                                   }
-                              </tbody>
+                                  </tbody>
 
                           </table>
                           <hr />

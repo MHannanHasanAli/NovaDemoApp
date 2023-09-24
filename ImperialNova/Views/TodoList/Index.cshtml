@@ -134,7 +134,7 @@
                                                     <tr>
                                                         <td class="chkbox">
                                                             @Html.CheckBoxFor(model => @item._Ticked)
-                                                            <input type="hidden" name="id" value="@item._Id" />
+                                                            <input type="hidden" name="_Id" id="_Id" value="@item._Id" />
                                                         </td>
                                                         <td class="tab-attr mover-date @((item._Ticked) ? "completed" : "")">@item._DueDate.ToString("yyyy-MM-dd") -</td>
                                                         <td class="tab-attr mover-description @((item._Ticked) ? "completed" : "")">
@@ -208,24 +208,25 @@
                     url: "@Url.Action("UpdateData", "TodoList")",
                     data: { id: id, checkboxState: checkboxState },
                     success: function (response) {
-                        alert(response);
+                        //alert(response);
                         if (response.Success) {
-                            alert(response.Message);
+                        //    alert(response.Message);
                         } else {
-                            alert("Error: " + response.Message);
+                        //    alert("Error: " + response.Message);
                         }
                     },
                     error: function (err) {
                         alert(err);
-                        alert("An error occurred.");
+                    //    alert("An error occurred.");
                     }
                 });
             }
       
-            $("input[type=checkbox]").change(function () {
-                var isChecked = $(this).prop("checked");
+        $("input[type=checkbox]").change(function () {
+            var isChecked = $(this).prop("checked");
+            var id = $('#_Id').val();
                 $(this).closest("tr").find(".tab-attr.mover-date, .tab-attr.mover-description").toggleClass("completed", isChecked);
-                sendAjaxRequest(id, checkboxState);
+            sendAjaxRequest(id, isChecked);
             });
         
         $("#example1").DataTable({
