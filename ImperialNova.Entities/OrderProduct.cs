@@ -17,6 +17,7 @@ namespace ImperialNova.Entities
         public string _Title { get; set; }
         public int _Qty { get; set; }
         public decimal _Price { get; set; }
+        public decimal _Cost { get; set; }
         public decimal _Amount { get; set; }
         public string _IsPacked { get; set; }
     }

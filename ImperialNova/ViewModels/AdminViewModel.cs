@@ -21,6 +21,9 @@ namespace ImperialNova.ViewModels
         public int CurrentStock { get; set; }
         public int ActiveProducts { get; set; }
         public int LowStockAlert { get; set; }
+        public decimal TotalSales { get; set; }
+        public decimal TotalCost { get; set; }
+        public decimal Profit { get; set; }
         public int Customer { get; set; }
         public List<InventoryBackups> InventoriesForChart { get; set; }
         public List<Product> LowStockProducts { get; set; }

@@ -3,6 +3,7 @@ using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -149,8 +150,136 @@ namespace ImperialNova.Controllers
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult Import()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Import(HttpPostedFileBase excelfile)
+        {
+            if (excelfile == null || excelfile.ContentLength == 0)
+            {
+                ViewBag.Error = "Please Select Excel File";
+                return View();
+            }
+            else
+            {
+                bool isPresent = false;
+                var ProductAddedList = new List<InventoryInProduct>();
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // or LicenseContext.Commercial
+
+                if (excelfile != null && excelfile.ContentLength > 0)
+                {
+                    using (var package = new ExcelPackage(excelfile.InputStream))
+                    {
+                        var worksheet = package.Workbook.Worksheets[0];
+                        var rowCount = worksheet.Dimension.Rows;
+
+                        for (int row = 2; row <= rowCount; row++) // Assuming the first row is header
+                        {
+                            var inventory = new InventoryInProduct();
+                            string name = worksheet.Cells[row, 1].Value.ToString();
+                            inventory._Title = worksheet.Cells[row, 1].Value.ToString(); //ProductName
+                            var CategoryName = worksheet.Cells[row, 2].Value.ToString();//Category Name
+                            var Category = CategoryServices.Instance.GetCategorys(CategoryName).FirstOrDefault();
+                            var location = worksheet.Cells[row, 3].Value.ToString();
+                            var Warehouse = LocationsServices.Instance.GetLocations(location).FirstOrDefault();
+
+                            inventory._CategoryId = Category._Id;
+                            inventory._WarehouseId = Warehouse._Id;
+
+                            inventory._SKU = worksheet.Cells[row, 4].Value.ToString(); //Size
+                            inventory._Qty = int.Parse(worksheet.Cells[row, 5].Value.ToString()); //Color
+                            inventory._Price = decimal.Parse(worksheet.Cells[row, 6].Value.ToString()); //Cost
+                            inventory._Amount = decimal.Parse(worksheet.Cells[row, 7].Value.ToString());
+                            inventory._ExpiryDate = DateTime.Now;
+                            var List = ProductServices.Instance.GetProduct();
 
 
+                            if (List.Count != 0)
+                            {
+                                foreach (var item in List)
+                                {
+                                    if (item._Name == inventory._Title && item._CategoryId == inventory._CategoryId)
+                                    {
+                                        isPresent = true;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        isPresent = false;
+                                    }
+
+
+
+
+                                }
+                                if (isPresent == false)
+                                {
+                                    ProductAddedList.Add(inventory);
+                                    InventoryInProductServices.Instance.CreateInventoryInProducts(inventory);
+                                }
+                            }
+                            else
+                            {
+                                ProductAddedList.Add(inventory);
+
+                                InventoryInProductServices.Instance.CreateInventoryInProducts(inventory);
+                                //var Stores = LocationsServices.Instance.GetLocations();
+                                //foreach (var item in Stores)
+                                //{
+                                //    var inventorybkp = new InventoryBackups();
+                                //    inventorybkp._ProductId = product._Id;
+                                //    inventorybkp._Name = product._Name;
+                                //    inventorybkp._Size = product._Size;
+                                //    inventorybkp._Color = product._Color;
+                                //    inventorybkp._Store = item._LocationName;
+                                //    inventorybkp._SKU = product._SKU;
+                                //    inventorybkp._Weight = product._Weight;
+                                //    inventorybkp._Thickness = product._Thickness;
+                                //    inventorybkp._Variations = product._Variations;
+                                //    inventorybkp._Cost = product._Cost;
+                                //    inventorybkp._RetailPrice = product._RetailPrice;
+
+                                //    if (product._OpeningStock == 0)
+                                //    {
+                                //        inventorybkp._QuantityIn = 0;
+
+                                //    }
+                                //    else
+                                //    {
+                                //        inventorybkp._QuantityIn = product._OpeningStock;
+                                //    }
+                                //    inventorybkp._QuantityOut = 0;
+                                //    inventorybkp._Notes = product._Notes;
+                                //    inventorybkp.JustAdded = true;
+                                //    InventoryBackupsServices.Instance.CreateInventoryBackup(inventorybkp);
+                                //}
+
+                            }
+                        }
+
+                    }
+                    ViewBag.Products = ProductAddedList;
+                    return View();
+
+                }
+
+
+
+                else
+                {
+                    ViewBag.Error = "Incorrect File";
+
+                    return View();
+                }
+            }
+
+            //var Prcoess = Process.GetProcessesByName("EXCEL.EXE").FirstOrDefault();
+            //Prcoess.Kill();
+
+        }
         [HttpGet]
         public ActionResult Delete(int ID)
         {

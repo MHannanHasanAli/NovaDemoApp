@@ -393,6 +393,12 @@
                                     <p>All Records</p>
                                 </a>
                             </li>
+                             <li class="nav-item">
+                                <a href="~/InventoryIn/Import" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Import Inventory In</p>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="~/InventoryIn/PendingOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
@@ -514,6 +520,12 @@
                                 <a href="~/Product/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Product</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="~/Product/Import" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Import Products</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -820,6 +832,26 @@
     <script src="~/Content/adminTemplate/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="~/Content/adminTemplate/dist/js/adminlte.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.nav-item').has('.nav-treeview').each(function () {
+                const $this = $(this);
+                const $navTreeview = $this.find('.nav-treeview');
+                const $navLink = $this.find('.nav-link');
+
+                $navLink.click(function (e) {
+                    // Toggle the dropdown state
+                    const isOpen = $navTreeview.is(':visible');
+
+                    // Close all other open dropdowns except the clicked one
+                    $('.nav-treeview').not($navTreeview).slideUp();
+
+                    // Toggle the current dropdown based on its state
+                    if (!isOpen) {
+                        $navTreeview.slideDown();
+                    }
+                });
+            });
+        });
         function showLoadingSpinner() {
             document.getElementById('loadingSpinner').style.display = 'block';
         }

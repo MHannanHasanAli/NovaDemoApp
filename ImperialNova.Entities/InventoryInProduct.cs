@@ -19,5 +19,7 @@ namespace ImperialNova.Entities
         public int _Qty { get; set; }
         public decimal _Price { get; set; }
         public decimal _Amount { get; set; }
+        public int _CategoryId { get; set; }
+        public int _WarehouseId { get; set; }
     }
 }

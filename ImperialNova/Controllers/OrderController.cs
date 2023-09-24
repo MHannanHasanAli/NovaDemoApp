@@ -93,9 +93,10 @@ namespace ImperialNova.Controllers
                 Orderproduct._SKU = product._SKU;
                 Orderproduct._Title = product._Name;
                 Orderproduct._Photo = product._Photo;
-                Orderproduct._Price = product._Cost;             
+                Orderproduct._Price = product._RetailPrice;             
                 Orderproduct._Amount = decimal.Parse(item._Amount);
                 Orderproduct._OrderId = Orderid;
+                Orderproduct._Cost = product._Cost;
                
                OrderProductServices.Instance.CreateOrderProducts(Orderproduct);
 

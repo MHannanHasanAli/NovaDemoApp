@@ -167,7 +167,16 @@ namespace ImperialNova.Controllers
             {
                 inventoryOut = inventoryOut + item._Quantity;
             }
-
+            decimal price=0;
+            decimal cost = 0;
+            decimal profit = 0;
+            var ordersproducts = OrderProductServices.Instance.GetOrderProducts();
+            foreach(var item in ordersproducts)
+            {
+                price = price + (item._Price * item._Qty);
+                cost = cost + (item._Cost * item._Qty);
+                profit = profit + ((item._Price - item._Cost)*item._Qty);
+            }
 
             var customers = CustomerServices.Instance.GetCustomers();
             
@@ -177,7 +186,9 @@ namespace ImperialNova.Controllers
             model.Reminders = reminders;
             model.Fastmoving = fast_moving_products;
             model.Slowmoving = slow_moving_products;
-
+            model.TotalSales = price;
+            model.TotalCost = cost;
+            model.Profit = profit;
             model.InventoryIn = InventoryInServices.Instance.GetInventoryIns().Select(x => x._Quantity).Sum();
            
             model.InventoryOut = OrderServices.Instance.GetOrders().Select(x => x._Quantity).Sum();

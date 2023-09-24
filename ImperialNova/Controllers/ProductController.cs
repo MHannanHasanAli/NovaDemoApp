@@ -23,7 +23,6 @@ namespace ImperialNova.Controllers
     [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
-        //CategoryServices CategoryServices = new CategoryServices();
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             List<Product> products;
@@ -53,8 +52,7 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult GetFilteredData(DateTime? startDate, DateTime? endDate)
         {
-            // Implement your filtering logic based on the startDate and endDate parameters
-            // Retrieve the filtered data, for example:
+      
 
             var filteredProducts = ProductServices.Instance.GetProductByFilter(startDate, endDate); // Replace with your actual filtering logic
 
