@@ -24,21 +24,32 @@ namespace ImperialNova.Controllers
     public class ProductController : Controller
     {
         //CategoryServices CategoryServices = new CategoryServices();
-        public ActionResult Index(string SearchTerm = "")
+        public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
+            List<Product> products;
             ProductListingViewModel model = new ProductListingViewModel();
-            model.SearchTerm = SearchTerm;
-            var products= ProductServices.Instance.GetProduct(SearchTerm);
+            if(startDate ==  null && endDate == null)
+            {
+                products = ProductServices.Instance.GetProduct();
+            }
+            else
+            {
+                products = ProductServices.Instance.GetProductByFilter(startDate, endDate);
+
+            }
             var ProductList = new List<ProductsModel>();
+
             foreach (var item in products)
             {
                 var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
                 var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
+
             model.Products = ProductList;
             return View("Index", model);
         }
+
 
 
         [HttpGet]
@@ -287,6 +298,7 @@ namespace ImperialNova.Controllers
                 model._WarehouseId = Product._WarehouseId;
                 model._LowStockAlert = Product._LowStockAlert;
                 model._Photo = Product._Photo;
+                model._OpeningStock = Product._OpeningStock;
             }
             return View("Action", model);
         }
@@ -310,6 +322,7 @@ namespace ImperialNova.Controllers
                 Product._Variations = model._Variations;
                 Product._RetailPrice = model._RetailPrice;
                 Product._QuantityIn = model._QuantityIn;
+                Product._Quantity = model._OpeningStock;
                 Product._QuantityOut = model._QuantityOut;
                 Product._Notes = model._Notes;
                 Product._ExportDate = model._ExportDate;
@@ -317,6 +330,7 @@ namespace ImperialNova.Controllers
                 Product._WarehouseId = model._WarehouseId;
                 Product._LowStockAlert = model._LowStockAlert;
                 Product._Photo = model._Photo;
+                Product._OpeningStock = model._OpeningStock;
                 ProductServices.Instance.UpdateProduct(Product);
 
             }
@@ -333,6 +347,7 @@ namespace ImperialNova.Controllers
                 Product._Variations = model._Variations;
                 Product._RetailPrice = model._RetailPrice;
                 Product._QuantityIn = model._QuantityIn;
+                Product._Quantity = model._OpeningStock;
                 Product._QuantityOut = model._QuantityOut;
                 Product._Notes = model._Notes;
                 Product._ExportDate = model._ExportDate;
@@ -340,6 +355,7 @@ namespace ImperialNova.Controllers
                 Product._WarehouseId = model._WarehouseId;
                 Product._LowStockAlert = model._LowStockAlert;
                 Product._Photo = model._Photo;
+                Product._OpeningStock = model._OpeningStock;
 
                 ProductServices.Instance.CreateProduct(Product);
 

@@ -51,6 +51,16 @@ namespace ImperialNova.Services
                 }
             }
         }
+        public List<Product> GetProductByFilter(DateTime? startDate, DateTime? endDate)
+        {
+            // Implement your logic to filter products by startDate and endDate
+            // Example: return a filtered list of products
+            var allProducts = GetProduct(); // You can call your existing method to get all products
+
+            allProducts = allProducts.Where(p => p._ExportDate >= startDate && p._ExportDate <= endDate).ToList();
+
+            return allProducts;
+        }
         public List<Product> GetProducts()
         {
             using (var context = new DSContext())

@@ -27,6 +27,9 @@
     .dataTables_filter {
         float: right;
     }
+    #date-start{
+        margin-left: 20px;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -46,6 +49,13 @@
                 </form>
             </div>
         </div>
+        <div class="filter">
+            <input type="date" class="Filter-date" id="date-start" />&nbsp;
+            To&nbsp;
+            <input type="date" class="Filter-date" id="date-end" />
+            <button type="button" class="filter-button btn btn-primary" id="date-button">Apply</button>
+        </div>
+        <br />
         @if (Model.Products != null)
         {
             <section class="content">
@@ -167,6 +177,28 @@
             "buttons": ["csv", "colvis"]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+        $("#date-button").click(function () {
+            const startDate = $("#date-start").val();
+            const endDate = $("#date-end").val();
+
+            if (!startDate || !endDate) {
+                alert("Please select both start and end dates.");
+                return; // Stop the process
+            }
+
+            // Send an AJAX request to the controller action with selected dates
+            $.ajax({
+                url: `/Product/Index?startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`,
+                method: "GET",
+                success: function (data) {
+                    // Replace the content of the product list with the updated data
+                    $("#product-list").html(data);
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        });
     });
     $(".data-btn").click(function () {
 

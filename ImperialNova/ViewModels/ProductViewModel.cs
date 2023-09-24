@@ -59,6 +59,7 @@ namespace ImperialNova.ViewModels
         public int _Variations { get; set; }
         public decimal _RetailPrice { get; set; }
         public int _QuantityIn { get; set; }
+        public int _Quantity { get; set; }
         public int _QuantityOut { get; set; } = 0;
         public int _OpeningStock { get; set; }
         public string _Notes { get; set; }
