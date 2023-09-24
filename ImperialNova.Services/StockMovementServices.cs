@@ -27,11 +27,31 @@ namespace ImperialNova.Services
         }
         #endregion
 
+        public void CreateStockMovement(StockMovement StockMovement)
+        {
+            using (var context = new DSContext())
+            {
+                context.stockmovements.Add(StockMovement);
+                context.SaveChanges();
+            }
+        }
+        public StockMovement GetStockMovement()
+        {
+            using (var context = new DSContext())
+            {
+                var dta = context.stockmovements;
+                dta.Reverse();
+
+                return dta.FirstOrDefault();
+
+            }
+        }
         public Entities.StockMovement GetStockMovementById(int id)
         {
             using (var context = new DSContext())
             {
-                return context.stockmovements.Find(id);
+                var dta = context.stockmovements.Find(id);
+                return dta;
 
             }
         }
