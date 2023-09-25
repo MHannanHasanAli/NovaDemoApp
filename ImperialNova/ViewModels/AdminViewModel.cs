@@ -41,6 +41,7 @@ namespace ImperialNova.ViewModels
         public List<InventoryIn> Inventory { get; set; }
         public List<TodoList> TodoList { get; set; }
         public List<Reminder> Reminders { get; set; }
+        public List<Expenses> Expenses { get; set; }
         public List<Product> Fastmoving { get; set; }
         public List<Product> Slowmoving { get; set; }
     }
@@ -50,7 +51,14 @@ namespace ImperialNova.ViewModels
     {
         public User SignedInUser { get; set; }
     }
+    public class UpdateExpenseAdmin
+    {
+        public string price { get; set; }
+        public string cost { get; set; }
+        public string profit { get; set; }
+        public string expenses { get; set; }
 
+    }
 
 }
 

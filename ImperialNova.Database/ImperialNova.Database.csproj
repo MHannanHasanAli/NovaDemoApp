@@ -224,6 +224,10 @@
     <Compile Include="Migrations\202309250750507_Jiren.designer.cs">
       <DependentUpon>202309250750507_Jiren.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309251258446_Turles.cs" />
+    <Compile Include="Migrations\202309251258446_Turles.designer.cs">
+      <DependentUpon>202309251258446_Turles.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -364,6 +368,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309250750507_Jiren.resx">
       <DependentUpon>202309250750507_Jiren.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309251258446_Turles.resx">
+      <DependentUpon>202309251258446_Turles.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

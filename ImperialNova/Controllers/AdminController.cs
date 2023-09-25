@@ -59,10 +59,110 @@ namespace ImperialNova.Controllers
             //model.Name = user.Name;
             return View();
         }
+        [HttpGet]
+        public ActionResult FetchTotalSales(DateTime startDate, DateTime endDate)
+        {
+            //var orderlist = new List<int>();
+            //var orders = OrderServices.Instance.GetOrders();
+            //foreach (var item in orders)
+            //{
+            //    if (item._Date >= startDate && item._Date <= endDate)
+            //    {
+            //        orderlist.Add(item._Id);
+            //    }
+            //}
 
+            //var products = new List<OrderProduct>();
+            //foreach (var item in orderlist)
+            //{
+            //    var productset = OrderProductServices.Instance.GetOrderProductsByOrderId(item);
+            //    foreach (var product in productset)
+            //    {
+            //        products.Add(product);
+            //    }
+            //}
+            UpdateExpenseAdmin model = new UpdateExpenseAdmin();
 
+            //foreach (var item in products)
+            //{
+            //    model.price = model.price + item._Price;
+            //    model.cost = model.cost + item._Cost;
+            //}
 
+            var Expenses = new List<Expenses>();
+            var ExpenseData = ExpenseServices.Instance.GetExpenses();
 
+            foreach (var item in ExpenseData)
+            {
+                if (item._Date >= startDate && item._Date <= endDate)
+                {
+                    //model.expenses = model.expenses + item._TotalExpenses;
+                    Expenses.Add(item);
+                }
+            }
+           
+            //model.profit = model.price - (model.cost + model.expenses);
+            //model.startdate = startDate;
+            //model.enddate = endDate;
+            //model.Expenses = Expenses;
+
+            return Json(Expenses, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult FetchTotalSaleExtra(DateTime startDate, DateTime endDate)
+        {
+            var orderlist = new List<int>();
+            var orders = OrderServices.Instance.GetOrders();
+            foreach (var item in orders)
+            {
+                if (item._Date >= startDate && item._Date <= endDate)
+                {
+                    orderlist.Add(item._Id);
+                }
+            }
+
+            var products = new List<OrderProduct>();
+            foreach (var item in orderlist)
+            {
+                var productset = OrderProductServices.Instance.GetOrderProductsByOrderId(item);
+                foreach (var product in productset)
+                {
+                    products.Add(product);
+                }
+            }
+            UpdateExpenseAdmin model = new UpdateExpenseAdmin();
+            decimal price = 0;
+            decimal cost = 0;
+            decimal expenses = 0;
+            decimal profit = 0;
+            foreach (var item in products)
+            {
+                price = price + item._Price;
+                cost = cost + item._Cost;
+            }
+
+            var Expenses = new List<Expenses>();
+            var ExpenseData = ExpenseServices.Instance.GetExpenses();
+
+            foreach (var item in ExpenseData)
+            {
+                if (item._Date >= startDate && item._Date <= endDate)
+                {
+                    expenses = expenses + item._TotalExpenses;
+                    Expenses.Add(item);
+                }
+            }
+            string test = price.ToString();
+            profit = price - (cost + expenses);
+            model.price = price.ToString();
+            model.cost = cost.ToString();
+            model.profit = profit.ToString();
+            model.expenses = expenses.ToString();
+            //model.Expenses = Expenses;
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Dashboard()
         {
             AdminViewModel model = new AdminViewModel();

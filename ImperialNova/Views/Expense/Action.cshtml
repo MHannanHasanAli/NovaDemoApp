@@ -72,11 +72,11 @@
                             <label for="_Title">Title &nbsp;</label>
                             <input value="@Model._Title" type="text" class="form-control" name="_Title" id="_Title" />
                         </div>
-                        <div class="form-group col-md-3">
+                        @*<div class="form-group col-md-3">
                             <label for="_TotalSales">Total Sales &nbsp;</label>
                             <input value="@Model._TotalSales" type="number" class="form-control" name="_TotalSales" id="_TotalSales" />
-                        </div>
-                        <div class="form-group col-md-3">
+                        </div>*@
+                        @*<div class="form-group col-md-3">
                             <label for="_ProductCost">Product Cost &nbsp;</label>
                             <input value="@Model._ProductCost" type="number" class="form-control" name="_ProductCost" id="_ProductCost" />
                         </div>
@@ -115,12 +115,12 @@
                         <div class="form-group col-md-3">
                             <label for="_Utilities">Utilities(Amex)&nbsp;</label>
                             <input value="@Model._Utilities" type="number" class="form-control" name="_Utilities" id="_Utilities" />
-                        </div>
+                        </div>*@
                         <div class="form-group col-md-3">
                             <label for="_TotalExpenses">Total Expenses&nbsp;</label>
                             <input value="@Model._TotalExpenses" type="number" class="form-control" name="_TotalExpenses" id="_TotalExpenses" />
                         </div>
-                        <div class="form-group col-md-3">
+                        @*<div class="form-group col-md-3">
                             <label for="_Left">Left&nbsp;</label>
                             <input value="@Model._Left" type="number" class="form-control" name="_Left" id="_Left" />
                         </div>
@@ -131,7 +131,7 @@
                         <div class="form-group col-md-3">
                             <label for="_Bank">Bank&nbsp;</label>
                             <input value="@Model._Bank" type="number" class="form-control" name="_Bank" id="_Bank" />
-                        </div>
+                        </div>*@
                     </div>
                 </form>
             </div>
@@ -156,7 +156,7 @@
 
 <script>
     $(document).ready(function () {
-        $("input[type='number']").on("change", calculateTotalExpenses);
+        //$("input[type='number']").on("change", calculateTotalExpenses);
         function updateTotalSales() {
             var selectedDate = $("#_Date").val(); // Get the selected date value
             $.ajax({
@@ -165,9 +165,9 @@
                 data: { date: selectedDate }, // Pass the selected date as a parameter
                 success: function (data) {
                     // Update the Total Sales input field with the received value
-                    $("#_TotalSales").val(data.price);
-                    $("#_ProductCost").val(data.cost);
-                    $("#_Vat").val(data.vat);
+                   /* $("#_TotalSales").val(data.price);*/
+                    //$("#_ProductCost").val(data.cost);
+                    //$("#_Vat").val(data.vat);
                 },
                 error: function () {
                     // Handle errors if needed
@@ -179,9 +179,9 @@
         updateTotalSales();
 
         // Event listener for date input change
-        $("#_Date").change(function () {
-            updateTotalSales(); // Call the function when the date changes
-        });
+        //$("#_Date").change(function () {
+        //    updateTotalSales(); // Call the function when the date changes
+        //});
     });
    
     function calculateTotalExpenses() {
@@ -232,7 +232,7 @@
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Dashboard", "Admin")";
+				window.location.href = "@Url.Action("Index", "Expense")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

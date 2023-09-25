@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImperialNova.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -40,6 +41,11 @@ namespace ImperialNova.ViewModels
     {
        public decimal price { get; set; }
        public decimal cost { get; set; }
-       public decimal vat { get; set; }
+        public decimal profit { get; set; }
+        public decimal expenses { get; set; }
+        public DateTime startdate { get; set; }
+        public DateTime enddate { get; set; }
+        public List<Expenses> Expenses { get; set; }
+
     }
 }

@@ -54,11 +54,11 @@
                                                 <th>Actions</th>
                                                 <th>Date</th>
                                                 <th>Title</th>
-                                                <th>Total Sales</th>
-                                                <th>Total Cost</th>
+                                                @*<th>Total Sales</th>*@
+                                                @*<th>Total Cost</th>*@
                                                 <th>Total Expense</th>
-                                                <th>Tax</th>
-                                                <th>Download Report</th>
+                                                @*<th>Tax</th>
+                                                <th>Download Report</th>*@
 
                                             </tr>
                                         </thead>
@@ -88,13 +88,13 @@
 
                                                     <td>@item._Date.ToString("yyyy-MM-dd")</td>
                                                     <td>@item._Title</td>
-                                                    <td>£@item._TotalSales</td>
-                                                    <td>£@item._ProductCost</td>
+                                                    @*<td>£@item._TotalSales</td>*@
+                                                    @*<td>£@item._ProductCost</td>*@
                                                     <td>£@item._TotalExpenses</td>
-                                                    <td>£@item._Tax</td>
+                                                    @*<td>£@item._Tax</td>
                                                     <td>
                                                         <a href="@Url.Action("DownloadExcelFile","Expense", new { ID = item._Id })" class="back"> Download Report</a>
-                                                    </td>
+                                                    </td>*@
                                                     @*<td>@item._File</td>*@
                                                     @*<td>
             <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">

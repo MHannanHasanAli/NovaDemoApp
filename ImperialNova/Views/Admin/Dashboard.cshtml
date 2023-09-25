@@ -131,6 +131,22 @@
         max-height: 500px;
         overflow: scroll;
     }
+    .expensecontainer {
+        max-height: 500px;
+        overflow: scroll;
+    }
+    .remindercontainer {
+        max-height: 500px;
+        overflow: scroll;
+    }
+    .fastmover {
+        max-height: 500px;
+        overflow: scroll;
+    }
+    .slowmover {
+        max-height: 500px;
+        overflow: scroll;
+    }
     .bottomdiv {
         position: absolute;
         left: 270px;
@@ -173,6 +189,16 @@
     }
     .extra-class{
         margin-top:50px;
+    }
+    .label-container{
+        display: flex;
+        gap: 107px;
+    }
+    .filter{
+        margin-left: 40px;
+    }
+    #TotalSales{
+        margin-left: 40px;
     }
 /*    .lowstocksection{
         max-width: 100%;
@@ -274,7 +300,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                <!--<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
                     <div class="card red">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -310,14 +336,14 @@
                                 <div>
                                     <p class="mb-2 text-md-center text-lg-left">Profit</p>
                                     <h3 class="mb-0">£@Model.Profit</h3>
-                                </div>
+                                </div>-->
                                 @*<svg style="height: 50px; margin: 10px;" class="icon-xl text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
                         </svg>*@
-                            </div>
+                            <!--</div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
 
 
@@ -325,6 +351,74 @@
     </div>
 
 
+</div>
+<hr />
+<div class="row">
+    <div class="container">
+        <div class="card expensecontainer">
+            <div class="card-body  container-top">
+                <div class="card-header bg-gradient-danger sizer">
+                    <h2>Expenses</h2>
+                </div>
+
+            </div>
+
+            <div class="filter">
+                <input type="date" class="Filter-date" id="date-start" />&nbsp;
+                To&nbsp;
+                <input type="date" class="Filter-date" id="date-end" />
+                <button type="button" class="filter-button btn btn-danger" id="date-button">Apply</button><br /><br />
+
+            </div>
+            <br />
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Title</th>
+                                                <th>Cost</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.container-fluid -->
+            </section>
+
+
+        </div>
+        <div class="label-container">
+            <label id="TotalSales"></label>
+            <label id="ProductCost"></label>
+            <label id="Additional-Expenses-Sum"></label>
+            <label id="Profit"></label>
+        </div>
+    </div>
+    
 </div>
 <hr />
 <div class="row">
@@ -337,7 +431,7 @@
 <hr />
 <div class="row">
     
-        <div class="card col-md-6">
+        <div class="card col-md-6 fastmover">
             <div class="card-body  container-top">
                 <div class="card-header bg-gradient-success sizer">
                     <h2>Fast Moving Stock </h2>
@@ -404,7 +498,7 @@
         </div>
     
   
-        <div class="card col-md-6">
+        <div class="card col-md-6 slowmover">
             <div class="card-body  container-top">
                 <div class="card-header bg-gradient-warning sizer">
                     <h2>Slow Moving Stock</h2>
@@ -481,7 +575,7 @@
 </div>
 <div class="row">
     <div class="container">
-        <div class="card">
+        <div class="card remindercontainer">
             <div class="card-body  container-top">
                 <div class="card-header bg-gradient-primary sizer">
                     <h2>Reminders</h2>
@@ -884,6 +978,113 @@
 
 <script>
     $(document).ready(function () {
+        $("#date-button").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
+            const startDate = $("#date-start").val();
+            const endDate = $("#date-end").val();
+
+            if (!startDate || !endDate) {
+                alert("Please select both start and end dates.");
+                return; // Stop the process
+            }
+
+            // Clear the table rows
+            $("#table-body").empty();
+
+            // Send an AJAX request to retrieve filtered data
+            $.ajax({
+                url: `/Admin/FetchTotalSales`, // Replace with the actual URL
+                data: { startDate: startDate, endDate: endDate },
+                method: "GET",
+                success: function (data) {
+                    
+                    // Iterate through the returned data and create table rows
+                    $.each(data, function (index, item) {
+                       
+                        var timestampValue = item._Date;
+                        var timestampMatch = timestampValue.match(/\d+/);
+                        if (timestampMatch) {
+                            // Parse the numeric part as an integer (assuming it's in milliseconds)
+                            var timestampInMilliseconds = parseInt(timestampMatch[0]);
+
+                            // Create a Date object from the timestamp
+                            var date = new Date(timestampInMilliseconds);
+
+                            // Format the date as a string in your desired format (e.g., yyyy-MM-dd)
+                            var formattedDate = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0');
+
+                           /* console.log(formattedDate);*/
+                        }                        // Create a new table row and append it to the table body
+                        var row = $("<tr>");
+                        row.append("<td>" + formattedDate + "</td>");
+                        row.append("<td>" + item._Title + "</td>");
+                        row.append("<td>£" + item._TotalExpenses + "</td></tr>");
+                       
+                        
+
+                        // Append the created row to the table body
+                        $("#table-body").append(row);
+                    });
+
+                    hideLoadingSpinner();
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+
+                
+            });
+            $.ajax({
+                url: `/Admin/FetchTotalSaleExtra`, // Replace with the actual URL
+                data: { startDate: startDate, endDate: endDate },
+                method: "GET",
+                success: function (data) {
+                    /*console.log(test);*/
+                    console.log(data.price);
+                    if (data.price !== undefined) {
+                        // Use jQuery to set the text content of the label
+                        $("#TotalSales").text("| Total Sales: £" + data.price + " |");
+                        $("#ProductCost").text("  |   Product Cost: £" + data.cost + " |");
+                        $("#Additional-Expenses-Sum").text("| Additional Expenses Sum: £" + data.expenses + " |");
+                        $("#Profit").text("|Profit: £" + data.profit + " |");
+                        // Format the price with two decimal places
+                    }
+                    // Iterate through the returned data and create table rows
+                    //$.each(data, function (index, item) {
+                    //    var timestampValue = item._Date;
+                    //    var timestampMatch = timestampValue.match(/\d+/);
+                    //    if (timestampMatch) {
+                    //        // Parse the numeric part as an integer (assuming it's in milliseconds)
+                    //        var timestampInMilliseconds = parseInt(timestampMatch[0]);
+
+                    //        // Create a Date object from the timestamp
+                    //        var date = new Date(timestampInMilliseconds);
+
+                    //        // Format the date as a string in your desired format (e.g., yyyy-MM-dd)
+                    //        var formattedDate = date.getFullYear() + "-" + (date.getMonth() + 1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0');
+
+                    //        /* console.log(formattedDate);*/
+                    //    }                        // Create a new table row and append it to the table body
+                    //    var row = $("<tr>");
+                    //    row.append("<td>" + formattedDate + "</td>");
+                    //    row.append("<td>" + item._Title + "</td>");
+                    //    row.append("<td>£" + item._TotalExpenses + "</td></tr>");
+
+
+
+                    //    // Append the created row to the table body
+                    //    $("#table-body").append(row);
+                    /*});*/
+                //    hideLoadingSpinner();
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+
+
+            });
+        });
      const form = $("#myForm");
 
             // Function to send the AJAX request
