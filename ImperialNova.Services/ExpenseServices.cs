@@ -25,7 +25,17 @@ namespace ImperialNova.Services
         {
         }
         #endregion
+        public List<Expenses> GetExpenses()
+        {
+            using (var context = new DSContext())
+            {
+                var dta = context.expenses.ToList();
+                dta.Reverse();
 
+                return dta;
+
+            }
+        }
         public void CreateExpense(Expenses Expense)
         {
             using (var context = new DSContext())
@@ -34,14 +44,14 @@ namespace ImperialNova.Services
                 context.SaveChanges();
             }
         }
-        public Expenses GetExpense()
+        public Expenses GetExpense(int ID)
         {
             using (var context = new DSContext())
             {
-                var dta = context.expenses;
-                dta.Reverse();
+                var dta = context.expenses.Find(ID);
+                
 
-                return dta.FirstOrDefault();
+                return dta;
 
             }
         }
@@ -68,6 +78,16 @@ namespace ImperialNova.Services
             using (var context = new DSContext())
             {
                 context.Entry(Expense).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+        public void DeleteExpense(int ID)
+        {
+            using (var context = new DSContext())
+            {
+
+                var Product = context.expenses.Find(ID);
+                context.expenses.Remove(Product);
                 context.SaveChanges();
             }
         }

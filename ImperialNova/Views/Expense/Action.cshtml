@@ -52,12 +52,26 @@
             <h1>
                 Expense
             </h1>
-            <a href="@Url.Action("DownloadExcelFile","Expense")" class="btn btn-danger back"> Generate Expense Report</a><br /><br />
+            @*<a href="@Url.Action("DownloadExcelFile","Expense", new { ID = 4 })" class="btn btn-danger back"> Generate Expense Report</a><br /><br />*@
 
             <div class="container">
                 <form id="actionForm">
                     <div class="row">
                         <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+                        <div class="form-group col-md-6">
+                            <label for="_Date">Date &nbsp;</label>
+                            @if (Model._Id != 0)
+                            {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                        }
+                        else
+                        {
+                            @Html.TextBox("_Date", DateTime.Now, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
+                        }
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="_Title">Title &nbsp;</label>
+                            <input value="@Model._Title" type="text" class="form-control" name="_Title" id="_Title" />
+                        </div>
                         <div class="form-group col-md-3">
                             <label for="_TotalSales">Total Sales &nbsp;</label>
                             <input value="@Model._TotalSales" type="number" class="form-control" name="_TotalSales" id="_TotalSales" />
@@ -121,61 +135,7 @@
                     </div>
                 </form>
             </div>
-            @*<div class="container">
-                <form id="actionForm">
-                    <div class="form-container container">
-                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
-                        <div class="container">
-                            <div class="fast">
-                                <h3>Fast Moving Stock</h3><br />
-
-                                <div class="row">
-
-                                    <div class="form-group col-md-3">
-                                        <label for="_Fdays">Start From Days &nbsp;</label>
-                                        <input value="@Model._Fdays" type="number" class="form-control" name="_Fdays" id="_Fdays" />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="_Ffrom">In Stock% from &nbsp;</label>
-                                        <input value="@Model._Ffrom" type="number" class="form-control" name="_Ffrom" id="_Ffrom" />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="_Fto">In Stock% to &nbsp;</label>
-                                        <input value="@Model._Fto" type="number" class="form-control" name="_Fto" id="_Fto" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="slow">
-                                <h3>Slow Moving Stock</h3>
-                                <div class="row">
-
-                                    <div class="form-group col-md-3">
-                                        <label for="_Sdays">Start From Days&nbsp;</label>
-                                        <input value="@Model._Sdays" type="number" class="form-control" name="_Sdays" id="_Sdays" />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="_Sfrom">In Stock% from &nbsp;</label>
-                                        <input value="@Model._Sfrom" type="number" class="form-control" name="_Sfrom" id="_Sfrom" />
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="_Country">In Stock% to &nbsp;</label>
-                                        <input value="@Model._Sto" type="number" class="form-control" name="_Sto" id="_Sto" />
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        </div>
-
-            </form>
-
-
-
-            <div class="errorDiv">
-
-            </div>
-        </div>*@
+         
             <div style="background-color:white;" class="card-footer container-bottom">
                 <a href="@Url.Action("Dashboard","Admin")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
                 @if (Model._Id != 0)
@@ -197,8 +157,33 @@
 <script>
     $(document).ready(function () {
         $("input[type='number']").on("change", calculateTotalExpenses);
-       
+        function updateTotalSales() {
+            var selectedDate = $("#_Date").val(); // Get the selected date value
+            $.ajax({
+                url: "@Url.Action("FetchTotalSales", "Expense")", // Replace with your controller and action names
+                type: "GET",
+                data: { date: selectedDate }, // Pass the selected date as a parameter
+                success: function (data) {
+                    // Update the Total Sales input field with the received value
+                    $("#_TotalSales").val(data.price);
+                    $("#_ProductCost").val(data.cost);
+                    $("#_Vat").val(data.vat);
+                },
+                error: function () {
+                    // Handle errors if needed
+                }
+            });
+        }
+
+        // Initial call to populate Total Sales with default value
+        updateTotalSales();
+
+        // Event listener for date input change
+        $("#_Date").change(function () {
+            updateTotalSales(); // Call the function when the date changes
+        });
     });
+   
     function calculateTotalExpenses() {
         //var _TotalSales = parseFloat($("#_TotalSales").val()) || 0;
         var _ProductCost = parseFloat($("#_ProductCost").val()) || 0;
@@ -233,11 +218,11 @@
         //    alert('Please fill in all of the fields.');
         //    return;
         //}
-        
-        
+
+
 
         // Call the calculateTotalExpenses function whenever an input field changes
-        
+
 
 		$.ajax({
 			url: '@Url.Action("Action", "Expense")',
@@ -255,7 +240,7 @@
 		});
     });
 
-    $("#FileUpload").change(function () {  
+    $("#FileUpload").change(function () {
         var element = this;
         var formData = new FormData();
 

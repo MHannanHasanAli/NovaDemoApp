@@ -26,5 +26,8 @@ namespace ImperialNova.Entities
         public decimal _Left { get; set; }
         public decimal _Tax { get; set; }
         public decimal _Bank { get; set; }
+
+        public string _Title { get; set; }
+        public DateTime _Date { get; set; }
     }
 }
