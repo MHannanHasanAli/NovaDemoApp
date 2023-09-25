@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ImperialNova.Controllers
 {
+    [Authorize]
     public class ExpenseController : Controller
     {
         public ActionResult Index(string SearchTerm = "")
