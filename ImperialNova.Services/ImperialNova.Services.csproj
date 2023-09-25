@@ -85,6 +85,7 @@
     <Compile Include="CustomerServices.cs" />
     <Compile Include="DeliveryFormServices.cs" />
     <Compile Include="DocumentServices.cs" />
+    <Compile Include="ExpenseServices.cs" />
     <Compile Include="InventoryBackupsServices.cs" />
     <Compile Include="InventoryInProductServices.cs" />
     <Compile Include="InventoryInServices.cs" />

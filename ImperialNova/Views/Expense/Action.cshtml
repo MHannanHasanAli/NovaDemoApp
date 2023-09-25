@@ -1,0 +1,291 @@
+﻿﻿@model ImperialNova.ViewModels.ExpenseActionViewModel
+@{
+    ViewBag.Title = "Action";
+}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .container-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .back{
+        margin-right: 10px;
+    }
+    .col-md-8{
+        display:flex;
+        justify-content: space-between;
+    }
+    input{
+        width: 400px;
+    }
+    .setter {
+        position: relative;
+        left: -108px;
+    }
+    .fast{
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 20px;
+    }
+    .slow {
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 20px;
+        margin-top: 20px;
+    }
+    .inner-form-div{
+        width: 100%;
+    }
+</style>
+@if (Model != null)
+{
+    <div class="card">
+        <div class="card-body">
+
+            <h1>
+                Expense
+            </h1>
+            <a href="@Url.Action("DownloadExcelFile","Expense")" class="btn btn-danger back"> Generate Expense Report</a><br /><br />
+
+            <div class="container">
+                <form id="actionForm">
+                    <div class="row">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+                        <div class="form-group col-md-3">
+                            <label for="_TotalSales">Total Sales &nbsp;</label>
+                            <input value="@Model._TotalSales" type="number" class="form-control" name="_TotalSales" id="_TotalSales" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_ProductCost">Product Cost &nbsp;</label>
+                            <input value="@Model._ProductCost" type="number" class="form-control" name="_ProductCost" id="_ProductCost" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_VanExpenses">Van Expenses&nbsp;</label>
+                            <input value="@Model._VanExpenses" type="number" class="form-control" name="_VanExpenses" id="_VanExpenses" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Car">Car (Insurance + Petrol)&nbsp;</label>
+                            <input value="@Model._Car" type="number" class="form-control" name="_Car" id="_Car" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Logistic">Logistic&nbsp;</label>
+                            <input value="@Model._Logistic" type="number" class="form-control" name="_Logistic" id="_Logistic" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Storage">Storage&nbsp;</label>
+                            <input value="@Model._Storage" type="number" class="form-control" name="_Storage" id="_Storage" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Rent">Rent Shopping Center&nbsp;</label>
+                            <input value="@Model._Rent" type="number" class="form-control" name="_Rent" id="_Rent" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_SalesPerson">Sales Person&nbsp;</label>
+                            <input value="@Model._SalesPerson" type="number" class="form-control" name="_SalesPerson" id="_SalesPerson" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Vat">Vat&nbsp;</label>
+                            <input value="@Model._Vat" type="number" class="form-control" name="_Vat" id="_Vat" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_BusinessRate">Business Rate&nbsp;</label>
+                            <input value="@Model._BusinessRate" type="number" class="form-control" name="_BusinessRate" id="_BusinessRate" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Utilities">Utilities(Amex)&nbsp;</label>
+                            <input value="@Model._Utilities" type="number" class="form-control" name="_Utilities" id="_Utilities" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_TotalExpenses">Total Expenses&nbsp;</label>
+                            <input value="@Model._TotalExpenses" type="number" class="form-control" name="_TotalExpenses" id="_TotalExpenses" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Left">Left&nbsp;</label>
+                            <input value="@Model._Left" type="number" class="form-control" name="_Left" id="_Left" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Tax">Tax&nbsp;</label>
+                            <input value="@Model._Tax" type="number" class="form-control" name="_Tax" id="_Tax" />
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="_Bank">Bank&nbsp;</label>
+                            <input value="@Model._Bank" type="number" class="form-control" name="_Bank" id="_Bank" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            @*<div class="container">
+                <form id="actionForm">
+                    <div class="form-container container">
+                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+                        <div class="container">
+                            <div class="fast">
+                                <h3>Fast Moving Stock</h3><br />
+
+                                <div class="row">
+
+                                    <div class="form-group col-md-3">
+                                        <label for="_Fdays">Start From Days &nbsp;</label>
+                                        <input value="@Model._Fdays" type="number" class="form-control" name="_Fdays" id="_Fdays" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Ffrom">In Stock% from &nbsp;</label>
+                                        <input value="@Model._Ffrom" type="number" class="form-control" name="_Ffrom" id="_Ffrom" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Fto">In Stock% to &nbsp;</label>
+                                        <input value="@Model._Fto" type="number" class="form-control" name="_Fto" id="_Fto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="slow">
+                                <h3>Slow Moving Stock</h3>
+                                <div class="row">
+
+                                    <div class="form-group col-md-3">
+                                        <label for="_Sdays">Start From Days&nbsp;</label>
+                                        <input value="@Model._Sdays" type="number" class="form-control" name="_Sdays" id="_Sdays" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Sfrom">In Stock% from &nbsp;</label>
+                                        <input value="@Model._Sfrom" type="number" class="form-control" name="_Sfrom" id="_Sfrom" />
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="_Country">In Stock% to &nbsp;</label>
+                                        <input value="@Model._Sto" type="number" class="form-control" name="_Sto" id="_Sto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+
+            </form>
+
+
+
+            <div class="errorDiv">
+
+            </div>
+        </div>*@
+            <div style="background-color:white;" class="card-footer container-bottom">
+                <a href="@Url.Action("Dashboard","Admin")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
+                @if (Model._Id != 0)
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
+                }
+                else
+                {
+                    <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Save</button>
+                }
+
+            </div>
+
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("input[type='number']").on("change", calculateTotalExpenses);
+       
+    });
+    function calculateTotalExpenses() {
+        //var _TotalSales = parseFloat($("#_TotalSales").val()) || 0;
+        var _ProductCost = parseFloat($("#_ProductCost").val()) || 0;
+        var _VanExpenses = parseFloat($("#_VanExpenses").val()) || 0;
+        var _Car = parseFloat($("#_Car").val()) || 0;
+        var _Logistic = parseFloat($("#_Logistic").val()) || 0;
+        var _Storage = parseFloat($("#_Storage").val()) || 0;
+        var _Rent = parseFloat($("#_Rent").val()) || 0;
+        var _SalesPerson = parseFloat($("#_SalesPerson").val()) || 0;
+        var _Vat = parseFloat($("#_Vat").val()) || 0;
+        var _BusinessRate = parseFloat($("#_BusinessRate").val()) || 0;
+        var _Utilities = parseFloat($("#_Utilities").val()) || 0;
+        //var _Tax = parseFloat($("#_Tax").val()) || 0;
+        //var _Bank = parseFloat($("#_Bank").val()) || 0;
+
+        var totalExpenses = + _ProductCost + _VanExpenses + _Car + _Logistic + _Storage + _Rent + _SalesPerson + _Vat + _BusinessRate + _Utilities;
+
+        $("#_TotalExpenses").val(totalExpenses.toFixed(2)); // Display the total with 2 decimal places
+    }
+
+    $("#actionButton").click(function () {
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
+        //var fdays = $('#_TotalSales').val();
+        //var ffrom = $('#_ProductCost').val();
+        //var fto = $('#_VanExpenses').val();
+        //var sdays = $('#_Car').val();
+        //var sfrom = $('#_Logistic').val();
+        //var sto = $('#_Storage').val();
+        //var checker = $('#').val
+        //if (fdays === '' || ffrom === '' || fto === '' || sdays === '' || sfrom === '' || sto === '') {
+        //    alert('Please fill in all of the fields.');
+        //    return;
+        //}
+        
+        
+
+        // Call the calculateTotalExpenses function whenever an input field changes
+        
+
+		$.ajax({
+			url: '@Url.Action("Action", "Expense")',
+			type: "post",
+			data: $("#actionForm").serialize()
+		})
+            .done(function (response) {
+			if(response.success)
+			{
+				window.location.href = "@Url.Action("Dashboard", "Admin")";
+			}
+			else {
+				$(".errorDiv").html(response.Message);
+			}
+		});
+    });
+
+    $("#FileUpload").change(function () {  
+        var element = this;
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append("File", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UploadPhotos", "Shared")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+
+                console.log(response);
+                if (response.Success) {
+                    $("#_File").val(response.DocURL);
+                    $("#FileImg").attr("src", response.DocURL);
+
+                }
+
+            })
+            .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("FAIL");
+            })
+    });
+</script>
