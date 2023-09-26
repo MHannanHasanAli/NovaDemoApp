@@ -42,7 +42,7 @@
 			if(response.success)
             {
     //            alert("Deleted Successfully");
-				window.location.href = "@Url.Action("Index", "DeliveryForm")";
+				window.location.href = "@Url.Action("Listing", "DeliveryForm")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);
