@@ -17,6 +17,8 @@ namespace ImperialNova.Controllers
         //LocationServices LocationServices = new LocationServices();
         public ActionResult Index(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Warehouse Index";
+
             LocationListingViewModel model = new LocationListingViewModel();
             model.SearchTerm = SearchTerm;
             model.Locations = LocationsServices.Instance.GetLocations(SearchTerm);
@@ -27,6 +29,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Warehouse Edit";
+
+            }
+            else
+            {
+                Session["ACTIVER"] = "Warehouse Action";
+
+            }
 
             LocationActionViewModel model = new LocationActionViewModel();
             if (ID != 0)

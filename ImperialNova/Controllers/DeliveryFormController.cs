@@ -37,6 +37,8 @@ namespace ImperialNova.Controllers
         }
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Delivery Action";
+
             DeliveryFormViewModel model = new DeliveryFormViewModel();
             var DeliveryForm =  DeliveryFormServices.GetDeliveryFormInfo().LastOrDefault();
             string OrderNumber = "";
@@ -54,6 +56,8 @@ namespace ImperialNova.Controllers
         }
         public ActionResult Listing(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Delivery Index";
+
             DeliveryFormViewModel model = new DeliveryFormViewModel();
             model.forms=DeliveryFormServices.GetDeliveryFormInfo(SearchTerm);
             return View(model);

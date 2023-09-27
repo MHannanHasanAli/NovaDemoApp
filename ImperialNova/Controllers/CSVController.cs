@@ -14,6 +14,7 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "CSV Index";
             CSVListingViewModel model = new CSVListingViewModel();
             model.csvs = CSVServices.Instance.GetCSVs();
             return View("Index", model);
@@ -23,7 +24,14 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
-
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "CSV Edit";
+            }
+            else
+            {
+                Session["ACTIVER"] = "CSV Action";
+            }
             CSVActionViewModel model = new CSVActionViewModel();
             if (ID != 0)
             {
@@ -76,6 +84,7 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Delete(int ID)
         {
+            Session["ACTIVER"] = "CSV Edit";
             CSVActionViewModel model = new CSVActionViewModel();
             var CSV = CSVServices.Instance.GetCSVById(ID);
             model._Id = CSV._Id;

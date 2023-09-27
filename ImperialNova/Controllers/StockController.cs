@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using ImperialNova.Database.Migrations;
 using ImperialNova.Entities;
 using ImperialNova.Services;
@@ -19,6 +20,8 @@ namespace ImperialNova.Controllers
         // GET: Stock
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Stock Index";
+
             ProductListingViewModel model = new ProductListingViewModel();
          
             var products= ProductServices.Instance.GetProduct();
@@ -38,6 +41,7 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult Action(StockMovementActionViewModel model)
         {
+            
             if (model._Id != 0)
             {
                 var StockMovement = StockMovementServices.Instance.GetStockMovementById(model._Id);
@@ -71,7 +75,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Stock Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Stock Action";
+
+            }
             StockMovementActionViewModel model = new StockMovementActionViewModel();
             var stock = StockMovementServices.Instance.GetStockMovement();
             if(stock == null) {

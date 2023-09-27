@@ -13,6 +13,7 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Todo Index";
             TodoListListingViewModel model = new TodoListListingViewModel();
             model.todolists = TodoListServices.Instance.GetTodoLists();
             return View("Index", model);
@@ -22,6 +23,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Todo Edit";
+
+            }
+            else
+            {
+                Session["ACTIVER"] = "Todo Action";
+
+            }
 
             TodoListActionViewModel model = new TodoListActionViewModel();
             if (ID != 0)

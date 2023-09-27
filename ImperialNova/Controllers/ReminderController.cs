@@ -63,6 +63,8 @@ namespace ImperialNova.Controllers
 
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Reminder Index";
+
             ReminderListingViewModel model = new ReminderListingViewModel();
             model.Reminders = ReminderServices.Instance.GetReminders();
             return View("Index", model);
@@ -72,7 +74,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
-           
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Reminder Edit";
+
+            }
+            else
+            {
+                Session["ACTIVER"] = "Reminder Action";
+
+            }
             ReminderActionViewModel model = new ReminderActionViewModel();
             if (ID != 0)
             {

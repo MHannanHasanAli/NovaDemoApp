@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace ImperialNova.Controllers
 {
@@ -64,6 +65,10 @@ namespace ImperialNova.Controllers
         // GET: User
         public ActionResult Index(string searchterm)
         {
+           
+                Session["ACTIVER"] = "User Index";
+
+           
             UsersListingViewModel model = new UsersListingViewModel();
             model.Users = SearchUsers(searchterm);
             model.Roles = RolesManager.Roles.ToList();
@@ -85,6 +90,9 @@ namespace ImperialNova.Controllers
 
         public ActionResult Register(RegisterViewModel model)
         {
+           
+                Session["ACTIVER"] = "User Register";
+
             model.Roles = RolesManager.Roles.ToList();
             return View("Register", model);
         }

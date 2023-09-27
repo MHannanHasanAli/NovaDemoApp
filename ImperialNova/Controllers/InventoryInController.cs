@@ -17,6 +17,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Inventory Index";
+
             InventoryInListingViewModel model = new InventoryInListingViewModel();
             model.inventoryins = InventoryInServices.Instance.GetInventoryIns();
            
@@ -25,6 +27,8 @@ namespace ImperialNova.Controllers
 
         public ActionResult PendingOrder()
         {
+            Session["ACTIVER"] = "Inventory Pending";
+
             InventoryInListingViewModel model = new InventoryInListingViewModel();
             model.inventoryins = InventoryInServices.Instance.GetPendingOrderInventoryIns();
 
@@ -32,6 +36,8 @@ namespace ImperialNova.Controllers
         }
         public ActionResult CompletedOrder()
         {
+            Session["ACTIVER"] = "Inventory Completed";
+
             InventoryInListingViewModel model = new InventoryInListingViewModel();
             model.inventoryins = InventoryInServices.Instance.GetCompletedOrderInventoryIns();
 
@@ -43,7 +49,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Inventory Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Inventory Action";
+
+            }
             InventoryInActionViewModel model = new InventoryInActionViewModel();
             if (ID != 0)
             {
@@ -95,6 +110,8 @@ namespace ImperialNova.Controllers
                 Invproduct._ExpiryDate =DateTime.Parse(item._ExpiryDate);
                 Invproduct._Amount = decimal.Parse(item._Amount);
                 Invproduct._InventoryInId = InventoryInid;
+                var location = LocationsServices.Instance.GetLocationsById(product._WarehouseId);
+                Invproduct._Warehouse = location._LocationName;
                 
                 InventoryInProductServices.Instance.CreateInventoryInProducts(Invproduct);
 
@@ -154,6 +171,8 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Import()
         {
+            Session["ACTIVER"] = "Inventory Import";
+
             return View();
         }
         [HttpPost]

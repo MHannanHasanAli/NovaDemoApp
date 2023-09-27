@@ -14,6 +14,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Customer Index";
+
             CustomerListingViewModel model = new CustomerListingViewModel();
             model.customers = CustomerServices.Instance.GetCustomers();
             return View("Index", model);
@@ -23,7 +25,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Customer Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Customer Action";
+
+            }
             CustomerActionViewModel model = new CustomerActionViewModel();
             if (ID != 0)
             {

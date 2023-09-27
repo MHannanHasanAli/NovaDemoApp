@@ -19,6 +19,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Expense Index";
+
             ExpenseListingViewModel model = new ExpenseListingViewModel();
             model.expense = ExpenseServices.Instance.GetExpenses();
             return View("Index", model);
@@ -61,7 +63,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Expense Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Expense Action";
+
+            }
             ExpenseActionViewModel model = new ExpenseActionViewModel();
             if (ID != 0)
             {

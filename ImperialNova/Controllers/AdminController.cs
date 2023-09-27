@@ -163,8 +163,61 @@ namespace ImperialNova.Controllers
 
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult GetWarehouseData(string selectedWarehouse)
+        {
+            warehousedata model = new warehousedata();
+
+            var inventorycount = 0;
+
+            var inventories = InventoryInProductServices.Instance.GetInventoryInProducts();
+            foreach (var item in inventories)
+            {
+                if(item._Warehouse == selectedWarehouse)
+                {
+                    inventorycount = inventorycount + item._Qty;
+                }
+            }
+
+            var orderscount = 0;
+            var orders = OrderProductServices.Instance.GetOrderProducts();
+            foreach (var item in orders)
+            {
+                if (item._location == selectedWarehouse)
+                {
+                    orderscount = orderscount + item._Qty;
+                }
+            }
+
+            var stockcount = 0;
+            var lowstockcount = 0;
+            var products = ProductServices.Instance.GetProducts();
+            foreach (var item in products)
+            {
+                var location = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
+                if(location._LocationName == selectedWarehouse)
+                {
+                    stockcount = stockcount + item._Quantity;
+                    if( item._Quantity < item._LowStockAlert)
+                    {
+                        lowstockcount++;
+                    }
+                }
+                
+
+            }
+            model.inventorycount = inventorycount;
+            model.stockcount = stockcount;
+            model.orderscount = orderscount;
+            model.lowstockcount = lowstockcount;
+
+            // Return the response data as JSON
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Dashboard()
         {
+            Session["ACTIVER"] = "Dashboard";
+
             AdminViewModel model = new AdminViewModel();
             model.InventoriesForChart = InventoryBackupsServices.Instance.GetInventoryBackup().Where(x => x.JustAdded == false).ToList();
             List<DataPoint> dataPoints = new List<DataPoint>();
@@ -289,6 +342,7 @@ namespace ImperialNova.Controllers
             model.TotalSales = price;
             model.TotalCost = cost;
             model.Profit = profit;
+            model.warehouses = LocationsServices.Instance.GetLocations();
             model.InventoryIn = InventoryInServices.Instance.GetInventoryIns().Select(x => x._Quantity).Sum();
            
             model.InventoryOut = OrderServices.Instance.GetOrders().Select(x => x._Quantity).Sum();

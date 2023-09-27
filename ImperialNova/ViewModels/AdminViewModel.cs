@@ -44,6 +44,8 @@ namespace ImperialNova.ViewModels
         public List<Expenses> Expenses { get; set; }
         public List<Product> Fastmoving { get; set; }
         public List<Product> Slowmoving { get; set; }
+
+        public List<Locations> warehouses { get; set; }
     }
 
 
@@ -60,5 +62,12 @@ namespace ImperialNova.ViewModels
 
     }
 
+    public class warehousedata
+    {
+        public int inventorycount { get; set; }
+        public int orderscount { get; set; }
+        public int stockcount { get; set; }
+        public int lowstockcount { get; set; }
+    }
 }
 

@@ -14,6 +14,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Payment Index";
+
             PaymentListingViewModel model = new PaymentListingViewModel();
             model.Payments = PaymentServices.Instance.GetPayment();
             return View("Index", model);
@@ -23,7 +25,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Payment Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Payment Action";
+
+            }
             PaymentActionViewModel model = new PaymentActionViewModel();
             if (ID != 0)
             {

@@ -26,6 +26,14 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Adjustment Edit";
+            }
+            else
+            {
+                Session["ACTIVER"] = "Adjustment Action";
+            }
 
             AdjustmentActionViewModel model = new AdjustmentActionViewModel();
             if (ID != 0)
@@ -86,6 +94,8 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult ActionProducts(string products)
         {
+            
+
             QuantityUpdate = 0;
             var adjustmentid = AdjustmentServices.Instance.GetLastAdjustmentId();
             var ListOfInventory = JsonConvert.DeserializeObject<List<ProductModel>>(products);
@@ -152,6 +162,7 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Delete(int ID)
         {
+            Session["ACTIVER"] = "Adjustment Edit";
             AdjustmentActionViewModel model = new AdjustmentActionViewModel();
             var Adjustment = AdjustmentServices.Instance.GetAdjustmentById(ID);
             model._Id = Adjustment._Id;

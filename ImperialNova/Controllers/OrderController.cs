@@ -15,18 +15,22 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Order Index";
+
             OrderListingViewModel model = new OrderListingViewModel();
             model.orders = OrderServices.Instance.GetOrders();
             return View("Index", model);
         }
         public ActionResult ReadyToShipOrder()
         {
+            Session["ACTIVER"] = "Order Ready";
             OrderListingViewModel model = new OrderListingViewModel();
             model.orders = OrderServices.Instance.GetReadyToShipOrders();
             return View("ReadyToShipOrder", model);
         }
         public ActionResult Shipped()
         {
+            Session["ACTIVER"] = "Order Ship";
             OrderListingViewModel model = new OrderListingViewModel();
             model.orders = OrderServices.Instance.GetShippedOrders();
             return View("Shipped", model);
@@ -41,7 +45,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Order Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Order Action";
+
+            }
             OrderActionViewModel model = new OrderActionViewModel();
             if (ID != 0)
             {
@@ -97,7 +110,8 @@ namespace ImperialNova.Controllers
                 Orderproduct._Amount = decimal.Parse(item._Amount);
                 Orderproduct._OrderId = Orderid;
                 Orderproduct._Cost = product._Cost;
-               
+                var warehousedata = LocationsServices.Instance.GetLocationsById(product._WarehouseId);
+                Orderproduct._location = warehousedata._LocationName;
                OrderProductServices.Instance.CreateOrderProducts(Orderproduct);
 
             }

@@ -17,6 +17,7 @@ namespace ImperialNova.Controllers
         //CategoryServices CategoryServices = new CategoryServices();
         public ActionResult Index(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Category Index";
             CategoryListingViewModel model = new CategoryListingViewModel();
             model.SearchTerm = SearchTerm;
             model.Categories = CategoryServices.Instance.GetCategory(SearchTerm);
@@ -27,6 +28,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Category Edit";
+
+            }
+            else
+            {
+                Session["ACTIVER"] = "Category Action";
+
+            }
 
             CategoryActionViewModel model = new CategoryActionViewModel();
             if (ID != 0)
@@ -77,6 +88,7 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Delete(int ID)
         {
+            Session["ACTIVER"] = "Category Edit";
             CategoryActionViewModel model = new CategoryActionViewModel();
             var Category = CategoryServices.Instance.GetCategoryById(ID);
             model._Id = Category._Id;

@@ -14,6 +14,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Document Index";
+
             DocumentsListingViewModel model = new DocumentsListingViewModel();
             model.documents = DocumentServices.Instance.GetDocuments();
             return View("Index", model);
@@ -23,7 +25,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Document Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Document Action";
+
+            }
             DocumentsActionViewModel model = new DocumentsActionViewModel();
             if (ID != 0)
             {

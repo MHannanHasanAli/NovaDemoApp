@@ -272,7 +272,7 @@
                     @*menu-open*@
                     <li class="nav-item dashboard">
 
-                        <a href="~/Admin/Dashboard" class="nav-link">
+                        <a id="dashboard_tab" href="~/Admin/Dashboard" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt "></i>
                             <p>
                                 Dashboard
@@ -280,7 +280,7 @@
                         </a>
 
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="stock_tab">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-chart-line" aria-hidden="true"></i>
                             <p>
@@ -290,34 +290,34 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Stock/Index" class="nav-link">
+                                <a id="stockindex_tab" href="~/Stock/Index" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p>Stock Report</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="~/Stock/Action" class="nav-link">
+                                <a id="stockaction_tab" href="~/Stock/Action" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p>Stock Setting</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="~/DeliveryForm/Index" class="nav-link">
+                                <a id="deliveryindex_tab" href="~/DeliveryForm/Index" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Delivery Form</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/DeliveryForm/Listing" class="nav-link">
+                                <a id="deliveryaction_tab" href="~/DeliveryForm/Listing" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="order_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <p>
@@ -327,56 +327,56 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Order/Action" class="nav-link">
+                                <a id="orderaction_tab" href="~/Order/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Order/Index" class="nav-link">
+                                <a id="orderindex_tab" href="~/Order/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Orders</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Order/ReadyToShipOrder" class="nav-link">
+                                <a id="orderready_tab" href="~/Order/ReadyToShipOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p> Ready To Ship Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Order/Shipped" class="nav-link">
+                                <a id="ordership_tab" href="~/Order/Shipped" class="nav-link">
                                     <i class="far fa-circle nav-icon" aria-hidden="true"></i>
                                     <p>Shipped Orders</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/CSV/Action" class="nav-link">
+                                <a id="csvaction_tab" href="~/CSV/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add CSV File</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/CSV/Index" class="nav-link">
+                                <a id="csvindex_tab" href="~/CSV/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All CSV Files</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Customer/Action" class="nav-link">
+                                <a id="customeraction_tab" href="~/Customer/Action" class="nav-link">
                                     <i class="fas fa-user-edit nav-icon" aria-hidden="true"></i>
                                     <p> Add Customer</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Customer/Index" class="nav-link">
+                                <a id="customerindex_tab" href="~/Customer/Index" class="nav-link">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <p>All Customers</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="inventory_tab">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-warehouse" aria-hidden="true"></i>
                             <p>
@@ -386,55 +386,55 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/InventoryIn/Action" class="nav-link">
+                                <a id="inventoryaction_tab" href="~/InventoryIn/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Inventory In</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/InventoryIn/Index" class="nav-link">
+                                <a id="inventoryindex_tab" href="~/InventoryIn/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/InventoryIn/Import" class="nav-link">
+                                <a id="inventoryimport_tab" href="~/InventoryIn/Import" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Import Inventory In</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/InventoryIn/PendingOrder" class="nav-link">
+                                <a id="inventorypending_tab" href="~/InventoryIn/PendingOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p> Pending Order</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/InventoryIn/CompletedOrder" class="nav-link">
+                                <a id="inventorycompleted_tab" href="~/InventoryIn/CompletedOrder" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Completed</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Supplier/Action" class="nav-link">
+                                <a id="supplieraction_tab" href="~/Supplier/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p> Add Supplier</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Supplier/Index" class="nav-link">
+                                <a id="supplierindex_tab" href="~/Supplier/Index" class="nav-link">
                                     <i class="fa fa-users" aria-hidden="true"></i>
                                     <p>All Supplier</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Location/Action" class="nav-link">
+                                <a id="warehouseaction_tab" href="~/Location/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Warehouse</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Location/Index" class="nav-link">
+                                <a id="warehouseindex_tab" href="~/Location/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Warehouses</p>
                                 </a>
@@ -442,7 +442,7 @@
 
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="expense_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-bell" aria-hidden="true"></i>
                             <p>
@@ -452,13 +452,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Expense/Action" class="nav-link">
+                                <a id="expenseaction_tab" href="~/Expense/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Expense</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Expense/Index" class="nav-link">
+                                <a id="expenseindex_tab" href="~/Expense/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
@@ -475,7 +475,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Adjustment/Action" class="nav-link">
+                                <a id="adjustmentaction_tab" href="~/Adjustment/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Adjustments</p>
                                 </a>
@@ -488,7 +488,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"  id="payment_tab">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
                             <p>
@@ -498,20 +498,20 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Payment/Action" class="nav-link">
+                                <a id="paymentaction_tab" href="~/Payment/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Payment</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Payment/Index" class="nav-link">
+                                <a id="paymentindex_tab" href="~/Payment/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Payments</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"  id="reminder_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-bell" aria-hidden="true"></i>
                             <p>
@@ -521,20 +521,20 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Reminder/Action" class="nav-link">
+                                <a id="reminderaction_tab" href="~/Reminder/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Reminder</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Reminder/Index" class="nav-link">
+                                <a id="reminderindex_tab" href="~/Reminder/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Reminders</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="product_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <p>
@@ -544,31 +544,31 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/Product/Action" class="nav-link">
+                                <a id="productaction_tab" href="~/Product/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Product</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Product/Import" class="nav-link">
+                                <a id="productimport_tab" href="~/Product/Import" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Import Products</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Product/Index" class="nav-link">
+                                <a id="productindex_tab" href="~/Product/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Products</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Category/Action" class="nav-link">
+                                <a id="categoryaction_tab" href="~/Category/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add Category</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Category/Index" class="nav-link">
+                                <a id="categoryindex_tab" href="~/Category/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Categories</p>
                                 </a>
@@ -578,7 +578,7 @@
 
 
 
-                    <li class="nav-item">
+                    <li class="nav-item"  id="user_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <p>
@@ -588,32 +588,32 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="~/User/Register" class="nav-link">
+                                <a id="userregister_tab" href="~/User/Register" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p>Add User</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/User/Index" class="nav-link">
+                                <a id="userindex_tab" href="~/User/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>Users</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Action" class="nav-link">
+                                <a id="roleaction_tab" href="~/Role/Action" class="nav-link">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
                                     <p> Add Roles</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="~/Role/Index" class="nav-link">
+                                <a id="roleindex_tab" href="~/Role/Index" class="nav-link">
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     <p>Roles</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"  id="feature_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <p>
@@ -625,7 +625,7 @@
 
                             <li class="nav-item">
 
-                                <a href="~/TodoList/Index" class="nav-link">
+                                <a id="featuretodo_tab" href="~/TodoList/Index" class="nav-link">
                                     <i class="fa fa-clipboard" aria-hidden="true"></i>
                                     <p>
                                         To Do
@@ -635,7 +635,7 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="~/Notifications/Index" class="nav-link">
+                                <a id="featurenotification_tab" href="~/Notifications/Index" class="nav-link">
                                     <i class="fa fa-bell" aria-hidden="true"></i>
                                     <p>
                                         Notifications
@@ -645,7 +645,7 @@
                             </li>
                             <li class="nav-item">
 
-                                <a href="~/Documents/Index" class="nav-link">
+                                <a id="featuredocument_tab" href="~/Documents/Index" class="nav-link">
                                     <i class="fa fa-folder" aria-hidden="true"></i>
                                     <p>
                                         Documents
@@ -860,55 +860,393 @@
     <script src="~/Content/adminTemplate/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="~/Content/adminTemplate/dist/js/adminlte.js"></script>
     <script>
-       $(document).ready(function () {
-
+        $(document).ready(function () {
+            debugger
              var data = '@Session["ACTIVER"]';
-           $('.nav-item > a').removeClass('active');
-            // Manually add the 'active' class to the element you want to be marked as active
+            $('.nav-item > a').removeClass('active');
+            $('.nav-item').removeClass('menu-open');
+
+            if (data == 'Dashboard') {
+                var elem = document.getElementById("dashboard_tab");
+                elem.className += ' active';
+                
+            }
+            if (data == 'Stock Index') {
+                var elem = document.getElementById("stockindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("stock_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Stock Edit') {
+                var elem = document.getElementById("stockindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("stock_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Stock Action') {
+                var elem = document.getElementById("stockaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("stock_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Delivery Index') {
+                var elem = document.getElementById("deliveryaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("stock_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Delivery Action') {
+                var elem = document.getElementById("deliveryindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("stock_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Order Index') {
+                var elem = document.getElementById("orderindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Order Edit') {
+                var elem = document.getElementById("orderindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Order Action') {
+                var elem = document.getElementById("orderaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Order Ready') {
+                var elem = document.getElementById("orderready_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Order Ship') {
+                var elem = document.getElementById("ordership_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'CSV Index') {
+                var elem = document.getElementById("csvindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'CSV Edit') {
+                var elem = document.getElementById("csvindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'CSV Action') {
+                var elem = document.getElementById("csvaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Customer Index') {
+                var elem = document.getElementById("customerindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Customer Edit') {
+                var elem = document.getElementById("customerindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Customer Action') {
+                var elem = document.getElementById("customeraction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Index') {
+                var elem = document.getElementById("inventoryindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Edit') {
+                var elem = document.getElementById("inventoryindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Action') {
+                var elem = document.getElementById("inventoryaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Import') {
+                var elem = document.getElementById("inventoryimport_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Pending') {
+                var elem = document.getElementById("inventorypending_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Inventory Completed') {
+                var elem = document.getElementById("inventorycompleted_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Supplier Index') {
+                var elem = document.getElementById("supplierindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Supplier Edit') {
+                var elem = document.getElementById("supplierindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Supplier Action') {
+                var elem = document.getElementById("supplieraction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Warehouse Index') {
+                var elem = document.getElementById("warehouseindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Warehouse Edit') {
+                var elem = document.getElementById("warehouseindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Warehouse Action') {
+                var elem = document.getElementById("warehouseaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("inventory_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Expense Index') {
+                var elem = document.getElementById("expenseindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("expense_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Expense Edit') {
+                var elem = document.getElementById("expenseindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("expense_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Expense Action') {
+                var elem = document.getElementById("expenseaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("expense_tab");
+                elemm.className += ' menu-open';
+            }
             if (data == 'Adjustment Index') {
                 var elem = document.getElementById("adjustmentindex_tab");
                 elem.className += ' active';
                 var elemm = document.getElementById("adjustment_tab");
                 elemm.className += ' menu-open';
             }
-            if (data == 'News') {
-                var elem = document.getElementById("News");
+            if (data == 'Adjustment Edit') {
+                var elem = document.getElementById("adjustmentindex_tab");
                 elem.className += ' active';
+                var elemm = document.getElementById("adjustment_tab");
+                elemm.className += ' menu-open';
             }
-            if (data == 'Resource') {
-                var elem = document.getElementById("Resource");
+            if (data == 'Adjustment Action') {
+                var elem = document.getElementById("adjustmentaction_tab");
                 elem.className += ' active';
+                var elemm = document.getElementById("adjustment_tab");
+                elemm.className += ' menu-open';
             }
-            if (data == 'UserfulLink') {
-                var elem = document.getElementById("UserfulLink");
+            if (data == 'Payment Index') {
+                var elem = document.getElementById("paymentindex_tab");
                 elem.className += ' active';
+                var elemm = document.getElementById("payment_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Payment Edit') {
+                var elem = document.getElementById("paymentindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("payment_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Payment Action') {
+                var elem = document.getElementById("paymentaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("payment_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Reminder Index') {
+                var elem = document.getElementById("reminderindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("reminder_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Reminder Edit') {
+                var elem = document.getElementById("reminderindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("reminder_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Reminder Action') {
+                var elem = document.getElementById("reminderaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("reminder_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Product Index') {
+                var elem = document.getElementById("productindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Product Edit') {
+                var elem = document.getElementById("productindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Product Action') {
+                var elem = document.getElementById("productaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Product Import') {
+                var elem = document.getElementById("productimport_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Category Index') {
+                var elem = document.getElementById("categoryindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Category Edit') {
+                var elem = document.getElementById("categoryindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Category Action') {
+                var elem = document.getElementById("categoryaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("product_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Todo Index') {
+                var elem = document.getElementById("featuretodo_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Todo Edit') {
+                var elem = document.getElementById("featuretodo_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Todo Action') {
+                var elem = document.getElementById("featuretodo_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Notification Index') {
+                var elem = document.getElementById("featurenotification_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Notification Edit') {
+                var elem = document.getElementById("featurenotification_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Notification Action') {
+                var elem = document.getElementById("featurenotification_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Document Index') {
+                var elem = document.getElementById("featuredocument_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Document Edit') {
+                var elem = document.getElementById("featuredocument_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Document Action') {
+                var elem = document.getElementById("featuredocument_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
             }
 
-            if (data == 'Dashboard') {
-                var elem = document.getElementById("Dashboard");
-                elem.className += ' active';
-            }
-            if (data == 'Immigrant') {
-                var elem = document.getElementById("Immigrant");
-                elem.className += ' active';
-            }
-            if (data == 'Role') {
-                var elem = document.getElementById("Role");
-                elem.className += ' active';
-            }
-            if (data == 'HourlyRateCalculator') {
-                var elem = document.getElementById("HourlyRateCalculator");
-                elem.className += ' active';
-            }
 
-            if (data == 'Organization') {
-                var elem = document.getElementById("Organization");
+            if (data == 'User Index') {
+                var elem = document.getElementById("userindex_tab");
                 elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
             }
-            if (data == 'OrgUser') {
-                var elem = document.getElementById("OrgUser");
+            if (data == 'User Edit') {
+                var elem = document.getElementById("userindex_tab");
                 elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
             }
+            if (data == 'User Register') {
+                var elem = document.getElementById("userregister_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Role Index') {
+                var elem = document.getElementById("roleindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Role Edit') {
+                var elem = document.getElementById("roleindex_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Role Action') {
+                var elem = document.getElementById("roleaction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("user_tab");
+                elemm.className += ' menu-open';
+            }
+            
+           
 
         });
         function showLoadingSpinner() {

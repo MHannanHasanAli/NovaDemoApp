@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace ImperialNova.Controllers
 {
@@ -71,6 +72,8 @@ namespace ImperialNova.Controllers
 
         public ActionResult Index(string searchterm)
         {
+            Session["ACTIVER"] = "Role Index";
+
             RoleListingViewModel model = new RoleListingViewModel();
             model.Roles = SearchRoles(searchterm);
             return View(model);
@@ -91,12 +94,16 @@ namespace ImperialNova.Controllers
 
         public ActionResult Register(RegisterViewModel model)
         {
+            
+                Session["ACTIVER"] = "Role Register";
+
             return View(model);
         }
 
         [HttpGet]
         public async Task<ActionResult> Action(string ID)
         {
+            Session["ACTIVER"] = "Role Action";
             RoleActionViewModel model = new RoleActionViewModel();
             if (!string.IsNullOrEmpty(ID))
             {

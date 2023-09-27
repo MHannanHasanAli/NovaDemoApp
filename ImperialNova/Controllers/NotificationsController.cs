@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,10 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            
+                Session["ACTIVER"] = "Notification Index";
+
+            
             NotificationsListingViewModel model = new NotificationsListingViewModel();
             model.Notifications = NotificationServices.Instance.GetNotifications();
             return View("Index", model);

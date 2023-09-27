@@ -25,6 +25,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
+            Session["ACTIVER"] = "Product Index";
+
             List<Product> products;
             ProductListingViewModel model = new ProductListingViewModel();
             if(startDate ==  null && endDate == null)
@@ -70,6 +72,7 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Import()
         {
+            Session["ACTIVER"] = "Product Import";
             return View();
         }
         public ActionResult ExportToExcel()
@@ -288,7 +291,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Product Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Product Action";
+
+            }
             ProductActionViewModel model = new ProductActionViewModel();
             model.Categories = CategoryServices.Instance.GetCategorys();
             model.Warehouses = LocationsServices.Instance.GetLocations();

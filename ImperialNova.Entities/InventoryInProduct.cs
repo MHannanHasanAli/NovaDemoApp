@@ -21,5 +21,6 @@ namespace ImperialNova.Entities
         public decimal _Amount { get; set; }
         public int _CategoryId { get; set; }
         public int _WarehouseId { get; set; }
+        public string _Warehouse { get; set; }
     }
 }

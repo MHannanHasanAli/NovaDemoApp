@@ -14,6 +14,8 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index(string SearchTerm = "")
         {
+            Session["ACTIVER"] = "Supplier Index";
+
             SupplierListingViewModel model = new SupplierListingViewModel();
             model.suppliers = SupplierServices.Instance.GetSuppliers();
             return View("Index", model);
@@ -23,7 +25,16 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Action(int ID = 0)
         {
+            if (ID != 0)
+            {
+                Session["ACTIVER"] = "Supplier Edit";
 
+            }
+            else
+            {
+                Session["ACTIVER"] = "Supplier Action";
+
+            }
             SupplierActionViewModel model = new SupplierActionViewModel();
             if (ID != 0)
             {
