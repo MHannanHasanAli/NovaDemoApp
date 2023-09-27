@@ -565,79 +565,58 @@
 <div class="col-md-12">
     <div class="container">
         <div class="card remindercontainer">
-            <div class="card-body  container-top">
+            <div class="card-body  table-responsive">
                 <div class="card-header bg-gradient-primary sizer">
                     <h2>Reminders</h2>
                 </div>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>CreatedAt</th>
+                            <th>CreatedBy</th>
+                            <th>Title</th>
+                            <th>Description</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Reminders)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-list" aria-hidden="true"></i>
+
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="@Url.Action("Action", "Reminder", new { ID = item._Id })">
+                                                <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                            </a>
+                                            @*<button data-href="@Url.Action("Delete", "Reminder", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+
+                                            <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Reminder", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                <i class="mdi mdi-delete"></i> DELETE
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>@item._CreatedAt.ToString("yyyy-MM-dd")</td>
+                                <td>@item._CreatedBy</td>
+                                <td>@item._Title</td>
+                                <td>@Html.Raw(item._Description)</td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
 
             </div>
 
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Actions</th>
-                                                <th>CreatedAt</th>
-                                                <th>CreatedBy</th>
-                                                <th>Title</th>
-                                                <th>Description</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Reminders)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-list" aria-hidden="true"></i>
-
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Reminder", new { ID = item._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
-                                                                </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Reminder", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
-
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Reminder", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-                                                                    <i class="mdi mdi-delete"></i> DELETE
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>@item._CreatedAt.ToString("yyyy-MM-dd")</td>
-                                                    <td>@item._CreatedBy</td>
-                                                    <td>@item._Title</td>
-                                                    <td>@Html.Raw(item._Description)</td>
-
-                                                </tr>
-                                            }
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+           
 
 
         </div>
@@ -648,86 +627,65 @@
 <div class="row">
     <div class="container col-md-8">
         <div class="card shipmentcontainer">
-            <div class="card-body  container-top">
+            <div class="card-body table-responsive">
                 <div>
                     <h2>Incoming Shipments </h2>
                 </div>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>Supplier</th>
+                            <th>Shipping Company</th>
+                            <th>Tracking#</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Inventory)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-list" aria-hidden="true"></i>
+
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" href="@Url.Action("Action", "InventoryIn", new { ID = item._Id })">
+                                                <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                            </a>
+                                            @*<button data-href="@Url.Action("Delete", "InventoryIn", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+
+                                            <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "InventoryIn", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                <i class="mdi mdi-delete"></i> DELETE
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>@item._Supplier</td>
+                                <td>@item._ShippingCompany</td>
+                                <td>@item._Tracking</td>
+                                <td>@item._Quantity</td>
+                                <td>£@item._Amount</td>
+                                <td>@item._Status</td>
+                                @*<td>@item._Name</td>*@
+                                @*<td>
+                            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                            </a>
+                        </td>*@
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
 
             </div>
 
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card extra-class">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Actions</th>
-                                                <th>Supplier</th>
-                                                <th>Shipping Company</th>
-                                                <th>Tracking#</th>
-                                                <th>Qty</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Inventory)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-list" aria-hidden="true"></i>
-
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "InventoryIn", new { ID = item._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
-                                                                </a>
-                                                                @*<button data-href="@Url.Action("Delete", "InventoryIn", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
-
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "InventoryIn", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-                                                                    <i class="mdi mdi-delete"></i> DELETE
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>@item._Supplier</td>
-                                                    <td>@item._ShippingCompany</td>
-                                                    <td>@item._Tracking</td>
-                                                    <td>@item._Quantity</td>
-                                                    <td>£@item._Amount</td>
-                                                    <td>@item._Status</td>
-                                                    @*<td>@item._Name</td>*@
-                                                    @*<td>
-                                                            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                                                <i class="fa fa-download" aria-hidden="true"></i>
-                                                            </a>
-                                                        </td>*@
-                                                </tr>
-                                            }
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+          
 
 
         </div>
@@ -770,86 +728,65 @@
     <div class="container col-md-8">
         <div>
             <div class="card inventorycontainer">
-                <div class="card-body  container-top">
+                <div class="card-body  table-responsive">
                     <div>
                         <h2>Inventory Out (Ready To Ship Orders)</h2>
                     </div>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Actions</th>
+                                <th>Date</th>
+                                <th>Record#</th>
+                                <th>Ship By Date</th>
+                                <th>Tracking#</th>
+                                <th>Customer</th>
+                                <th>Qty</th>
+                                <th>Amount</th>
+                                @*<th>Packing</th>*@
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Order)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fa fa-list" aria-hidden="true"></i>
+
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="@Url.Action("Action", "Order", new { ID = item._Id })">
+                                                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                                </a>
+                                                @*<button data-href="@Url.Action("Delete", "Order", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+
+                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Order", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                    <i class="mdi mdi-delete"></i> DELETE
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>@item._Date.ToString("yyyy-MM-dd")</td>
+                                    <td>@item._Record</td>
+                                    <td>@item._ShipByDate.ToString("yyyy-MM-dd")</td>
+                                    <td>@item._Tracking</td>
+                                    <td>@item._Customer</td>
+                                    <td>@item._Quantity</td>
+                                    <td>£@item._Amount</td>
+                                    @*<td>@item._IsPacked</td>*@
+                                    <td>@item._Status</td>
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
                 </div>
 
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-12">
-
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title"></h3>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <div class="card-body">
-                                        <table id="example1" class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Actions</th>
-                                                    <th>Date</th>
-                                                    <th>Record#</th>
-                                                    <th>Ship By Date</th>
-                                                    <th>Tracking#</th>
-                                                    <th>Customer</th>
-                                                    <th>Qty</th>
-                                                    <th>Amount</th>
-                                                    @*<th>Packing</th>*@
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (var item in Model.Order)
-                                                {
-                                                    <tr>
-                                                        <td>
-                                                            <div class="dropdown">
-                                                                <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="fa fa-list" aria-hidden="true"></i>
-
-                                                                </button>
-                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                    <a class="dropdown-item" href="@Url.Action("Action", "Order", new { ID = item._Id })">
-                                                                        <i class="mdi mdi-pencil"></i> VIEW/EDIT
-                                                                    </a>
-                                                                    @*<button data-href="@Url.Action("Delete", "Order", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
-
-                                                                    <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Order", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
-                                                                        <i class="mdi mdi-delete"></i> DELETE
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>@item._Date.ToString("yyyy-MM-dd")</td>
-                                                        <td>@item._Record</td>
-                                                        <td>@item._ShipByDate.ToString("yyyy-MM-dd")</td>
-                                                        <td>@item._Tracking</td>
-                                                        <td>@item._Customer</td>
-                                                        <td>@item._Quantity</td>
-                                                        <td>£@item._Amount</td>
-                                                        @*<td>@item._IsPacked</td>*@
-                                                        <td>@item._Status</td>
-
-                                                    </tr>
-                                                }
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                    <!-- /.card-body -->
-                                </div>
-                                <!-- /.card -->
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.container-fluid -->
-                </section>
 
             </div>
         </div>
@@ -888,7 +825,6 @@
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <form id="myForm">
-                                        @Html.AntiForgeryToken()
 
                                         <table>
                                             <thead>
