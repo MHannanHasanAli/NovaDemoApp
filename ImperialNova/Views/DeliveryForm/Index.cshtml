@@ -124,7 +124,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="_Date">Date:</label>
-                    <input value="@DateTime.Now" type="date" class="form-control" id="_Date" name="_Date">
+                    <input value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control" id="_Date" name="_Date">
                 </div>
             </div>
             <div class="col-md-4">
@@ -648,12 +648,16 @@
 
             var ProductNameFirst = $("#ProductNameFirst").val();
             var QuantityFirst = $("#QuantityFirst").val();
-            // Iterate through all product rows
-            var productFirst = {
-                _ProductQuantity: QuantityFirst,
-                _ProductName: ProductNameFirst
+            if (ProductNameFirst != "") {
+                debugger
+                var productFirst = {
+                    _ProductQuantity: QuantityFirst,
+                    _ProductName: ProductNameFirst
+                }
+                productDataArray.push(productFirst);
+
             }
-            productDataArray.push(productFirst);
+
             $('.product-row').each(function () {
                 var productData = {
                     _ProductQuantity: $(this).find('input[name^="_Products"]').val(),
@@ -662,8 +666,8 @@
                 productDataArray.push(productData);
 
             });
-            
-          
+
+
 
 
             // Serialize the product data array as JSON
@@ -682,14 +686,16 @@
                 data: $("#deliveryForm").serialize() + "&productData=" + encodedProductData + "&signatureData=" + signatureData,
                 success: function (response) {
                     if (response.success) {
+                        hideLoadingSpinner();
                         var orderId = response._id; // Assuming you receive the order ID in the JSON response
-                        window.location.href = '@Url.Action("Invoice", "DeliveryForm")' + '?id=' + orderId;
+                        window.open('@Url.Action("Invoice", "DeliveryForm")' + '?id=' + orderId, '_blank');
+                        window.location.href = '@Url.Action("Listing", "DeliveryForm")';
                     } else {
-                        alert(response.message);
+                        hideLoadingSpinner();
                     }
                 },
                 error: function () {
-                    alert('An error occurred while submitting the form.');
+                    hideLoadingSpinner();
                 }
             });
         });

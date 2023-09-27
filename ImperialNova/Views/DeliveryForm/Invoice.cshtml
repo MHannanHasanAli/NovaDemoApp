@@ -85,13 +85,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var product in Model.Products)
+                                @if (Model.Products == null)
                                 {
-                                    <tr>
-                                        <td class="text-center">@product._ProductName</td>
-                                        <td class="text-center">@product._ProductQuantity</td>
 
-                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var product in Model.Products)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@product._ProductName</td>
+                                            <td class="text-center">@product._ProductQuantity</td>
+
+                                        </tr>
+                                    }
+
                                 }
 
 

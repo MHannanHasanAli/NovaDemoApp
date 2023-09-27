@@ -249,8 +249,11 @@ namespace ImperialNova.Controllers
                 model._AmountPaid = data._AmountPaid;
             model._AmountInBalance = data._AmountInBalance;
 
-            
-            model.Products = JsonConvert.DeserializeObject<List<ProductData>>(data.ProductsData).Where(x=>x._ProductName != null).ToList();
+            if(data.ProductsData != "[{}]")
+            {
+                model.Products = JsonConvert.DeserializeObject<List<ProductData>>(data.ProductsData).Where(x => x._ProductName != null).ToList();
+
+            }
             //Yaha Products Ni arhe
             //foreach (var item in data2._Products)
             //{
