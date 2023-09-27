@@ -3,15 +3,34 @@
     ViewBag.Title = "Import";
 }
 <script src="https://www.appelsiini.net/download/jquery.jeditable.js"></script>
-
+<style>
+    .top-page{
+        display: flex;
+        justify-content: space-between;
+    }
+    .mover{
+        margin-top: -30px;
+    }
+</style>
 <div class="card">
     <div class="card-body">
         @using (Html.BeginForm("Import", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.Raw(ViewBag.Error)
-            <span>
-                Excel File
-            </span>
+            <br />
+        <div class="top-page">
+            <div>
+                <span>
+                    Excel File
+                </span>
+            </div>
+            <div>
+                <a class="btn btn-success mover" href="@Url.Action("DownloadFile", "Shared", new { path = "~/Content/DemoFiles/DemoImportProducts.xlsx" })">
+                    <i class="fa fa-download" aria-hidden="true"></i>Demo File
+                </a>
+            </div>
+        </div>
+            
             <input class="form-control" type="file" name="excelfile" />
             <br />
             <input class="btn btn-block btn-outline-primary" type="submit" value="Import" />
