@@ -55,11 +55,12 @@ namespace ImperialNova.Controllers
                 model._Quantity = InventoryIn._Quantity.ToString();
                 model._Amount = InventoryIn._Amount.ToString();
                 model._Date = InventoryIn._Date;
+                model._Supplier = InventoryIn._Supplier;
                 savedQuantity = InventoryIn._Quantity;
                 savedAmount = InventoryIn._Amount;
             }
 
-            model.suppliers = SupplierServices.Instance.GetSuppliers();
+            //model.suppliers = SupplierServices.Instance.GetSuppliers();
             model.locations = LocationsServices.Instance.GetLocations();
             model.products = InventoryInProductServices.Instance.GetInventoryInProductsByInventoryInId(model._Id);
             return View("Action", model);
@@ -94,7 +95,7 @@ namespace ImperialNova.Controllers
                 Invproduct._ExpiryDate =DateTime.Parse(item._ExpiryDate);
                 Invproduct._Amount = decimal.Parse(item._Amount);
                 Invproduct._InventoryInId = InventoryInid;
-
+                
                 InventoryInProductServices.Instance.CreateInventoryInProducts(Invproduct);
 
             }

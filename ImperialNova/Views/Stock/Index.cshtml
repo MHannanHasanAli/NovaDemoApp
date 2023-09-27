@@ -30,6 +30,16 @@
     #date-start{
         margin-left: 20px;
     }
+    .filter{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .shifter {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
 </style>
 <div class="container">
     <div class="card">
@@ -42,19 +52,34 @@
 
                     @*<div class="input-group">
 
-                            @Html.ValidationSummary("", new { @class = "text-danger" })
-                            <a href="@Url.Action("Action", "Product")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <a href="@Url.Action("Action", "Product")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
 
-                        </div>*@
+                    </div>*@
                 </form>
             </div>
         </div>
         <div class="filter">
-            <input type="date" class="Filter-date" id="date-start" />&nbsp;
-            To&nbsp;
-            <input type="date" class="Filter-date" id="date-end" />
-            <button type="button" class="filter-button btn btn-primary" id="date-button">Apply</button>
+            <div>
+                <input type="date" class="Filter-date" id="date-start" />&nbsp;
+                To&nbsp;
+                <input type="date" class="Filter-date" id="date-end" />
+                <button type="button" class="filter-button btn btn-primary" id="date-button">Apply</button>
+            </div>
+            <div class="col-md-3 shifter">
+                <div class="form-group shifter">
+                    <label for="warehouseDropdown">Select Warehouse:</label>
+                    <select id="warehouseDropdown" name="selectedWarehouse">
+                        @foreach (var warehouse in Model.warehouses)
+                        {
+                            <option value="@warehouse._LocationName">@warehouse._LocationName</option>
+                        }
+                    </select>
+                </div>
+            </div>
         </div>
+       
+      
         <br />
         @if (Model.Products != null)
         {
@@ -79,7 +104,10 @@
                                                 <th>Notes</th>
                                                 <th>In</th>
                                                 <th>Out</th>
-                                                <th>Stock</th>
+                                                <th>Quantity</th>
+                                                <th>Cost</th>
+                                                <th>Retail</th>
+                                                <th>Date</th>
                                                 <th>Alert</th>
 
 
@@ -89,16 +117,17 @@
                                             @foreach (var item in Model.Products)
                                             {
                                                 <tr>
-                                                    <!--<td>
-        <div class="dropdown">
-            <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-list" aria-hidden="true"></i>
 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
-                    <i class="mdi mdi-pencil"></i> VIEW/EDIT
-                </a>-->
+                                                    <!--<td>
+    <div class="dropdown">
+        <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-list" aria-hidden="true"></i>
+
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
+                <i class="mdi mdi-pencil"></i> VIEW/EDIT
+            </a>-->
                                                     @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item.Product._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
                                                     <!--<a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
@@ -108,6 +137,7 @@
         </div>
     </td>-->
                                                     <td>
+
                                                         @if (item.Product._Photo != null)
                                                         {
                                                             <img style="height:50px; width:50px;" src="@item.Product._Photo" />
@@ -133,6 +163,9 @@
                                                     <td>@item.Product._QuantityIn</td>
                                                     <td>@item.Product._QuantityOut</td>
                                                     <td>@item.Product._Quantity</td>
+                                                    <td>@item.Product._Cost</td>
+                                                    <td>@item.Product._RetailPrice</td>
+                                                    <td>@item.Product._ExportDate.ToString("yyyy-MM-dd")</td>
                                                     <td>@item.Product._LowStockAlert</td>
 
 
@@ -170,6 +203,23 @@
 
 <script>
     $(document).ready(function () {
+        $("#warehouseDropdown").on("change", function () {
+            const selectedLocation = $(this).val();
+
+            // Show all table rows initially
+            $("#table-body tr").show();
+
+            // If a location is selected, hide rows with different locations
+            if (selectedLocation !== "") {
+                $("#table-body tr").each(function () {
+                    const rowLocation = $(this).find("td:eq(3)").text().trim(); // Assuming location is in the 4th column (index 3)
+
+                    if (rowLocation !== selectedLocation) {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
 
         $("#example1").DataTable({
 

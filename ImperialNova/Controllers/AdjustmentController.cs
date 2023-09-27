@@ -16,6 +16,7 @@ namespace ImperialNova.Controllers
     {
         public ActionResult Index()
         {
+            Session["ACTIVER"] = "Adjustment Index";
             AdjustmentListingViewModel model = new AdjustmentListingViewModel();
             model.Adjustments = AdjustmentServices.Instance.GetAdjustments();
             return View("Index", model);

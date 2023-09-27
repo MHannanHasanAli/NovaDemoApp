@@ -66,9 +66,12 @@
                                                 <th>SKU</th>
                                                 <th>Title</th>
                                                 <th>Category</th>
+                                                <th>Size</th>
+                                                <th>Purchase Price</th>
+                                                <th>Sell Price</th>
+                                                <th>Quantity</th>
                                                 <th>Stock Alert</th>
                                                 <th>Location</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -119,6 +122,10 @@
                                                     {
                                                         <td> No Category available</td>
                                                     }
+                                                    <td>@item.Product._Size</td>
+                                                    <td>@item.Product._Cost</td>
+                                                    <td>@item.Product._RetailPrice</td>
+                                                    <td>@item.Product._Quantity</td>
                                                     <td>@item.Product._LowStockAlert</td>
                                                     @if (item.Warehouse != null && item.Warehouse._LocationName != null)
                                                     {

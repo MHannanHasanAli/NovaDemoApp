@@ -25,7 +25,7 @@ namespace ImperialNova.ViewModels
         public string Category { get; set; }
         public string Warehouse { get; set; }
         public string SearchTerm { get; set; }
-
+        public List<Locations> warehouses { get; set; }
         public List<Order> order { get; set; }
     }
     public class ProductPreviewModel

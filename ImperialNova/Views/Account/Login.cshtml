@@ -64,7 +64,7 @@
      <hr />
                         <h6 class="signin">Sign in to start your session.</h6>
                         <div id="loginForm">
-                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", onsubmit = "return onSubmitForm(event)" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <div class="form-group">
@@ -80,9 +80,9 @@
 
 
                             }
-                        @*<a  href="@Url.Action("Register","Account")" class="forgotpassword"> I forgot my Password</a>*@
-                    </div>          
-
+                            @*<a  href="@Url.Action("Register","Account")" class="forgotpassword"> I forgot my Password</a>*@
+                        </div>          
+</div>
 <script src="~/Content/template/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- inject:js -->
@@ -91,3 +91,9 @@
 <script src="~/Content/template/js/template.js"></script>
 <script src="~/Content/template/js/settings.js"></script>
 <script src="~/Content/template/js/todolist.js"></script>
+<script>
+    function onSubmitForm(event) {
+        document.getElementById("signinbutton").disabled = true;
+        return true;
+    }
+</script>

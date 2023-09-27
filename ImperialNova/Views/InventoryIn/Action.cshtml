@@ -106,7 +106,7 @@
                       </div>
                       <div class="col-md-3">
                           <div class="form-group">
-                              <label for="_ShippingCompany">Supplier:</label>
+                              <label for="_ShippingCompany">Shipping Company:</label>
                               <select class="form-control" name="_ShippingCompany" id="_ShippingCompany">
                                   <option value="Fedex" @(Model._ShippingCompany == "Fedex" ? "selected" : "")>Fedex</option>
                                   <option value="UPS" @(Model._ShippingCompany == "UPS" ? "selected" : "")>UPS</option>
@@ -120,6 +120,11 @@
 
                       </div>
                       <div class="col-md-3">
+                          <label for="_Supplier">Supplier:</label>
+                          <input value="@Model._Supplier" type="text" class="form-control" name="_Supplier" id="_Supplier" />
+
+                      </div>
+                      @*<div class="col-md-3">
                           <div class="form-group">
                               <label for="_Supplier">Supplier:</label>
                               <select class="form-control" name="_Supplier" id="_Supplier">
@@ -137,7 +142,7 @@
                                   }
                               </select>
                           </div>
-                      </div>
+                      </div>*@
                   </div>
                   @if (Model._Id != 0)
                   {
@@ -356,14 +361,14 @@ $(document).ready(function () {
 
         });
     //, quantityin, store, Notes
-            function appendProductToTable(product) {
+    function appendProductToTable(product) {
+        var today = new Date().toISOString().split('T')[0];
                 var row = `
                <tr>
   <td>${product._Id}</td>
   <td>${product._SKU}</td>
   <td>${product._Name}</td>
-  <td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate"/></td>
-  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
+<td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate" value="${today}" /></td>  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
   <td class="price">£${product._Cost}</td>
   <td class="amount"  id="_Amount"></td>
 </tr>
@@ -386,8 +391,10 @@ $(document).ready(function () {
             $('#totalQuantity').text('Total Quantity: ' + totalQuantity);
         }
     $("#actionButton").click(function () {
-        $("#actionButton").attr("disabled", "disabled");
-        showLoadingSpinner();
+
+
+      
+       
         //var expiryDateInput = $("#_ExpiryDate");
        
         //expiryDateInput.on("input", function () {
@@ -397,6 +404,7 @@ $(document).ready(function () {
         //        alert("Expiry Date is empty!");
         //    }
         var products = [];
+
         $('#ProductsTable tbody tr').each(function () {
             var product = {
                 _ProductId: $(this).find('td:eq(0)').text(),
@@ -407,10 +415,12 @@ $(document).ready(function () {
                 _Price: $(this).find('td:eq(5)').text().replace('£', ''),
                 _Amount: $(this).find('td:eq(6)').text().replace('£', ''),
             };
-            debugger
+          
             products.push(product);
         });
-
+ 
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
         var productsJson = JSON.stringify(products);
 
             console.log(productsJson);

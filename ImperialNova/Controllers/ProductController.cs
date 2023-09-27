@@ -46,6 +46,7 @@ namespace ImperialNova.Controllers
             }
 
             model.Products = ProductList;
+            //model.warehouses = LocationsServices.Instance.GetLocations();
             return View("Index", model);
         }
 

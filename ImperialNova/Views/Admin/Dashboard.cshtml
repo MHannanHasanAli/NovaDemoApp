@@ -115,7 +115,7 @@
         width: 100%;
         padding: 10px 20px;
     }
-    .lowstocksection {
+ /*   .lowstocksection {
         max-height: 500px;
         overflow: scroll;
     }
@@ -130,8 +130,8 @@
     .inventorycontainer {
         max-height: 500px;
         overflow: scroll;
-    }
-    .expensecontainer {
+    }*/
+  /*  .expensecontainer {
         max-height: 500px;
         overflow: scroll;
     }
@@ -146,7 +146,7 @@
     .slowmover {
         max-height: 500px;
         overflow: scroll;
-    }
+    }*/
     .bottomdiv {
         position: absolute;
         left: 270px;
@@ -214,7 +214,7 @@
             </h4>
             <br />
             <div class="row">
-                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Action","Inventory")'" class="col-md-4 grid-margin stretch-card">
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Action","Inventory")'" class="col-md-3 grid-margin stretch-card">
                     <div class="card blue">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -228,7 +228,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 grid-margin stretch-card">
+                <div class="col-md-3 grid-margin stretch-card">
                     <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("ActionOut","Inventory")'" class="card red">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -242,7 +242,7 @@
                     </div>
                 </div>
 
-                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Inventory")'" class="col-md-4 grid-margin stretch-card">
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Inventory")'" class="col-md-3 grid-margin stretch-card">
                     <div class="card green">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -256,7 +256,7 @@
                     </div>
                 </div>
 
-                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                @*<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
                     <div class="card yellow">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -268,9 +268,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
-                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                @*<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
                     <div class="card pink">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -282,10 +282,10 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
 
 
-                <div class="col-md-4 grid-margin stretch-card">
+                <div class="col-md-3 grid-margin stretch-card">
                     <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="card gray">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
@@ -356,67 +356,57 @@
 <div class="row">
     <div class="container">
         <div class="card expensecontainer">
-            <div class="card-body  container-top">
-                <div class="card-header bg-gradient-danger sizer">
-                    <h2>Expenses</h2>
+            <div class="card-header bg-gradient-danger sizer">
+                <h2>Expenses</h2>
+            </div>
+            <div class="card-body">
+
+                <div class="filter">
+                    <input type="date" class="Filter-date" id="date-start" />&nbsp;
+                    To&nbsp;
+                    <input type="date" class="Filter-date" id="date-end" />
+                    <button type="button" class="filter-button btn btn-danger" id="date-button">Apply</button><br /><br />
+
                 </div>
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Cost</th>
 
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+
+                </table>
+                <div class="label-container">
+                    <label id="TotalSales"></label>
+                    <label id="ProductCost"></label>
+                    <label id="Additional-Expenses-Sum"></label>
+                    <label id="Profit"></label>
+                </div>
             </div>
 
-            <div class="filter">
-                <input type="date" class="Filter-date" id="date-start" />&nbsp;
-                To&nbsp;
-                <input type="date" class="Filter-date" id="date-end" />
-                <button type="button" class="filter-button btn btn-danger" id="date-button">Apply</button><br /><br />
 
-            </div>
+
             <br />
 
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
+            <!--<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
 
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Title</th>
-                                                <th>Cost</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody id="table-body">
-                                        </tbody>
-
-                                    </table>
-
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+                    </div>-->
+         
 
 
         </div>
-        <div class="label-container">
-            <label id="TotalSales"></label>
-            <label id="ProductCost"></label>
-            <label id="Additional-Expenses-Sum"></label>
-            <label id="Profit"></label>
-        </div>
+       
     </div>
     
 </div>
@@ -430,150 +420,120 @@
 </div>
 <hr />
 <div class="row">
-    
-        <div class="card col-md-6 fastmover">
-            <div class="card-body  container-top">
+
+    @*<div class="card col-md-6 fastmover">
+        <div class="card-body  container-top">
+
+            <div>
+
+            </div>
+        </div>*@
+
+
+    <div class="col-md-6">
+        <div class=" container">
+
+            <div class="card">
+
                 <div class="card-header bg-gradient-success sizer">
                     <h2>Fast Moving Stock </h2>
                 </div>
-                <div>
-                    
+
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Photo</th>
+                                <th>SKU</th>
+                                <th>Title</th>
+                                <th>Stock</th>
+                                <th>Stock Alert</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Fastmoving)
+                            {
+                                <tr>
+
+
+                                    <td>
+                                        <img style="height:50px; width:50px;" src="@item._Photo" />
+                                    </td>
+                                    <td>@item._SKU</td>
+                                    <td>@item._Name</td>
+                                    <td>@item._Quantity</td>
+                                    <td>@item._LowStockAlert</td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
                 </div>
+                <!-- /.card-body -->
             </div>
-
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-
-                                                <th>Photo</th>
-                                                <th>SKU</th>
-                                                <th>Title</th>
-                                                <th>Stock</th>
-                                                <th>Stock Alert</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Fastmoving)
-                                            {
-                                                <tr>
-
-
-                                                    <td>
-                                                        <img style="height:50px; width:50px;" src="@item._Photo" />
-                                                    </td>
-                                                    <td>@item._SKU</td>
-                                                    <td>@item._Name</td>
-                                                    <td>@item._Quantity</td>
-                                                    <td>@item._LowStockAlert</td>
-
-
-                                                </tr>
-                                            }
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+            <!-- /.card -->
         </div>
-    
-  
-        <div class="card col-md-6 slowmover">
-            <div class="card-body  container-top">
+        <!-- /.col -->
+    </div>
+   
+
+
+    <div class="col-md-6">
+        <div class="container">
+            <div class="card">
                 <div class="card-header bg-gradient-warning sizer">
                     <h2>Slow Moving Stock</h2>
                 </div>
-                <div>
-                    <form>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
 
-                        @*<div class="input-group">
+                                <th>Photo</th>
+                                <th>SKU</th>
+                                <th>Title</th>
+                                <th>Stock</th>
+                                <th>Stock Alert</th>
 
-                                @Html.ValidationSummary("", new { @class = "text-danger" })
-                                <a href="@Url.Action("Action", "Product")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Slowmoving)
+                            {
+                                <tr>
 
-                            </div>*@
-                    </form>
+
+                                    <td>
+                                        <img style="height:50px; width:50px;" src="@item._Photo" />
+                                    </td>
+                                    <td>@item._SKU</td>
+                                    <td>@item._Name</td>
+                                    <td>@item._Quantity</td>
+                                    <td>@item._LowStockAlert</td>
+
+
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
                 </div>
+                <!-- /.card-body -->
             </div>
-
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-
-                                                <th>Photo</th>
-                                                <th>SKU</th>
-                                                <th>Title</th>
-                                                <th>Stock</th>
-                                                <th>Stock Alert</th>
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Slowmoving)
-                                            {
-                                                <tr>
-
-
-                                                    <td>
-                                                        <img style="height:50px; width:50px;" src="@item._Photo" />
-                                                    </td>
-                                                    <td>@item._SKU</td>
-                                                    <td>@item._Name</td>
-                                                    <td>@item._Quantity</td>
-                                                    <td>@item._LowStockAlert</td>
-
-
-                                                </tr>
-                                            }
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
+            <!-- /.card -->
         </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>     
    
-</div>
-<div class="row">
+<div class="col-md-12">
     <div class="container">
         <div class="card remindercontainer">
             <div class="card-body  container-top">
@@ -758,7 +718,7 @@
                             Product
                         </th>
                         <th>
-                            Stock
+                            Quantity
                         </th>
                     </tr>
                 </thead>
@@ -809,7 +769,7 @@
                                                     <th>Customer</th>
                                                     <th>Qty</th>
                                                     <th>Amount</th>
-                                                    <th>Packing</th>
+                                                    @*<th>Packing</th>*@
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
@@ -842,7 +802,7 @@
                                                         <td>@item._Customer</td>
                                                         <td>@item._Quantity</td>
                                                         <td>£@item._Amount</td>
-                                                        <td>@item._IsPacked</td>
+                                                        @*<td>@item._IsPacked</td>*@
                                                         <td>@item._Status</td>
 
                                                     </tr>
@@ -979,16 +939,16 @@
 <script>
     $(document).ready(function () {
         $("#date-button").click(function () {
-            $("#actionButton").attr("disabled", "disabled");
-            showLoadingSpinner();
+           
             const startDate = $("#date-start").val();
             const endDate = $("#date-end").val();
 
             if (!startDate || !endDate) {
                 alert("Please select both start and end dates.");
-                return; // Stop the process
+                return false; // Stop the process
             }
-
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
             // Clear the table rows
             $("#table-body").empty();
 

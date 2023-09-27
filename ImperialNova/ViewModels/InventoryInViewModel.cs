@@ -20,7 +20,7 @@ namespace ImperialNova.ViewModels
 
     public class InventoryInActionViewModel
     {
-        public List<Entities.Supplier> suppliers { get; set; }
+        //public List<Entities.Supplier> suppliers { get; set; }
         public List<Locations> locations { get; set; }
         public List<InventoryInProduct> products { get; set; }
         public int _Id { get; set; }

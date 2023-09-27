@@ -30,6 +30,8 @@ namespace ImperialNova.Controllers
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
             model.Products = ProductList;
+            model.warehouses = LocationsServices.Instance.GetLocations();
+
             return View("Index", model);
         }
 
