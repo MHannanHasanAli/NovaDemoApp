@@ -36,7 +36,7 @@ namespace ImperialNova.Controllers
             if (ID != 0)
             {
                 var CSV = CSVServices.Instance.GetCSVById(ID);
-                model._Id = CSV._Id;
+                model.ID = CSV.ID;
                 model._Date = CSV._Date;
                 model._Description = CSV._Description;
                 model._File = CSV._File;
@@ -50,10 +50,10 @@ namespace ImperialNova.Controllers
         public ActionResult Action(CSVActionViewModel model)
         {
 
-            if (model._Id != 0)
+            if (model.ID != 0)
             {
-                var CSV = CSVServices.Instance.GetCSVById(model._Id);
-                CSV._Id = model._Id;
+                var CSV = CSVServices.Instance.GetCSVById(model.ID);
+                CSV.ID = model.ID;
                 CSV._Date = model._Date;
                 CSV._Description = model._Description;
                 CSV._File = model._File;
@@ -87,18 +87,18 @@ namespace ImperialNova.Controllers
             Session["ACTIVER"] = "CSV Edit";
             CSVActionViewModel model = new CSVActionViewModel();
             var CSV = CSVServices.Instance.GetCSVById(ID);
-            model._Id = CSV._Id;
+            model.ID = CSV.ID;
             return PartialView("_Delete", model);
         }
 
         [HttpPost]
         public ActionResult Delete(CSVActionViewModel model)
         {
-            if (model._Id != 0)
+            if (model.ID != 0)
             {
-                var CSV = CSVServices.Instance.GetCSVById(model._Id);
+                var CSV = CSVServices.Instance.GetCSVById(model.ID);
 
-                CSVServices.Instance.DeleteCSV(CSV._Id);
+                CSVServices.Instance.DeleteCSV(CSV.ID);
             }
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);

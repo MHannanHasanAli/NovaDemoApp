@@ -641,7 +641,7 @@
         });
 
         $("#SubmitForm").click(function () {
-             $("#SubmitForm").attr("disabled", "disabled");
+            $("#SubmitForm").attr("disabled", "disabled");
             showLoadingSpinner();
             var signatureData = signaturePad.toDataURL();
             var productDataArray = [];
@@ -724,21 +724,42 @@
             if ($financeCheckbox.is(":checked")) {
                 $financeCompany.show();
             } else {
+                $("#_FinancePaid").val("");
+
                 $financeCompany.hide();
             }
+            updateAmountPaid();
         }
-
+    
+        $cashCheckbox.on("change", function () {
+            if ($(this).is(':checked')) {
+                // Checkbox is checked
+                updateAmountPaid(); // You can pass true or false as an argument to updateAmountPaid based on the state
+            } else {
+                $("#_CashPaid").val("");
+                updateAmountPaid(); // You can pass true or false as an argument to updateAmountPaid based on the state
+            }
+        }); $cardCheckbox.on("change", function () {
+            if ($(this).is(':checked')) {
+                // Checkbox is checked
+                updateAmountPaid(); // You can pass true or false as an argument to updateAmountPaid based on the state
+            } else {
+                $("#_CardPaid").val("");
+                updateAmountPaid(); // You can pass true or false as an argument to updateAmountPaid based on the state
+            }
+        });
         $financeCheckbox.on("change", ShowFinanceCompany);
         $cashPaid.on("input", updateAmountPaid);
         $cardPaid.on("input", updateAmountPaid);
         $financePaid.on("input", updateAmountPaid);
 
         function updateAmountPaid() {
+            
             const totalAmount = parseFloat($totalAmount.val()) || 0;
             const cashPaid = $cashCheckbox.is(":checked") ? parseFloat($cashPaid.val()) || 0 : 0;
             const cardPaid = $cardCheckbox.is(":checked") ? parseFloat($cardPaid.val()) || 0 : 0;
             const financePaid = $financeCheckbox.is(":checked") ? parseFloat($financePaid.val()) || 0 : 0;
-
+            /*const totalPaid = cashPaid + cardPaid + financePaid;*/
             const totalPaid = cashPaid + cardPaid + financePaid;
             const balance = totalAmount - totalPaid;
 

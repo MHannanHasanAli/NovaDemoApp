@@ -33,7 +33,7 @@ namespace ImperialNova.Models
     public class ProductData
     {
         public string _ProductName { get; set; }
-        public int _ProductQuantity { get; set; }
+        public string _ProductQuantity { get; set; }
    
     }
 }
@@ -42,5 +42,5 @@ namespace ImperialNova.Models
 public class DeliveryFormProducts
 {
     public string _ProductName { get; set; }
-    public int _ProductQuantity { get; set;}
+    public string _ProductQuantity { get; set;}
 }

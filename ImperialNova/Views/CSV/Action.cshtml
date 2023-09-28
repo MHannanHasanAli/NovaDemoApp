@@ -41,7 +41,7 @@
 {
     <div class="card">
         <div class="card-body">
-            @if (Model._Id != 0)
+            @if (Model.ID != 0)
             {
                 <h2 class="card-title">
                     Edit CSV
@@ -59,11 +59,11 @@
                 <form id="actionForm">
                     <div class="row form-container">
 
-                        <input value="@Model._Id" type="hidden" class="form-control" name="_Id" id="_Id" />
+                        <input value="@Model.ID" type="hidden" class="form-control" name="ID id="ID" />
                         <div class="row setter">
                             <div class="form-group col-md-4">
                                 <label for="_Date">Date&nbsp;</label>
-                                @if (Model._Id != 0)
+                                @if (Model.ID != 0)
                                 {@Html.TextBox("_Date", Model._Date, "{0:yyyy-MM-dd}", new { @style = "width:100%", @id = "_Date", @class = "form-control", type = "date" })
                             }
                             else
@@ -96,7 +96,7 @@
             </div>
             <div style="background-color:white;" class="card-footer container-bottom">
                 <a href="@Url.Action("Index","CSV")" class="btn btn-danger back"><i class="fas fa-times mr-1"></i> Cancel</a>
-                @if (Model._Id != 0)
+                @if (Model.ID != 0)
                 {
                     <button id="actionButton" type="button" class="btn btn-success"><i class="fas fa-save mr-1"></i> Update</button>
                 }

@@ -16,7 +16,7 @@ namespace ImperialNova.ViewModels
 
     public class CSVActionViewModel
     {
-        public int _Id { get; set; }
+        public int ID { get; set; }
         public DateTime _Date { get; set; }
         public string _Description { get; set; }
         public string _File { get; set; }

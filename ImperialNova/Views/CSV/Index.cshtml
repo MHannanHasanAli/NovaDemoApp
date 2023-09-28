@@ -69,14 +69,14 @@
 
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "CSV", new { ID = item._Id })" data-toggle="modal" data-target="#actionModal">
+                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "CSV", new { ID = item.ID })" data-toggle="modal" data-target="#actionModal">
                                                                     <i class="mdi mdi-delete"></i> DELETE
                                                                 </a>
                                                             </div>
                                                         </div>
                                                     </td>
 
-                                                    <td>@item._Date</td>
+                                                    <td>@item._Date.ToShortDateString()</td>
                                                     <td>@item._Description</td>
                                                     <td>
                                                         <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">

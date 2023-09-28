@@ -1217,6 +1217,10 @@
                 console.log("Error:", error);
             }
         });
+        // Initialize variables for total price and cost
+        var totalPrice = 0;
+        var totalCost = 0;
+        var totalQuantity = 0;
         $.ajax({
             type: "GET",
             url: "/Admin/GetStock", // Replace with the actual URL of your controller action
@@ -1234,14 +1238,30 @@
                     row.append($("<td>").text(item._Quantity));
                     row.append($("<td>").text("£" + item._Cost));
                     row.append($("<td>").text("£" + item._RetailPrice));
+                    totalPrice += item._RetailPrice; // Calculate total price
+                    totalCost += item._Cost; // Calculate total cost
+                    totalQuantity += item._Quantity;
 
                     $("#table-bodystock").append(row);
                 });
+
+                // Add a row for total price and cost
+                var totalRow = $("<tr>");
+                totalRow.append($("<td>").text("Total"));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(totalQuantity)); // Display total quantity
+                totalRow.append($("<td>").text("£" + totalCost)); // Display total cost
+                totalRow.append($("<td>").text("£" + totalPrice)); // Display total price
+
+                $("#table-bodystock").append(totalRow);
             },
             error: function (error) {
                 console.log("Error:", error);
             }
         });
+
+        var totalQuantitylow = 0;
         $.ajax({
             type: "GET",
             url: "/Admin/GetLow", // Replace with the actual URL of your controller action
@@ -1257,8 +1277,19 @@
                     row.append($("<td>").text(item._Size));
                     row.append($("<td>").text(item._Color));
                     row.append($("<td>").text(item._Quantity));
+                    totalQuantitylow += item._Quantity;
                     $("#table-bodylow").append(row);
                 });
+
+                // Add a row for total price and cost
+                var totalRow = $("<tr>");
+                totalRow.append($("<td>").text("Total"));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(totalQuantitylow)); // Display total quantity
+
+
+                $("#table-bodylow").append(totalRow);
             },
             error: function (error) {
                 console.log("Error:", error);
@@ -1488,6 +1519,10 @@
                 // Clear the table body
                 $("#table-bodystock").empty();
 
+                // Initialize variables for total price and cost
+                var totalPrice = 0;
+                var totalCost = 0;
+                var totalQuantity = 0;
                 // Populate the table with the received data
                 $.each(data, function (index, item) {
                     var row = $("<tr>");
@@ -1498,8 +1533,22 @@
                     row.append($("<td>").text("£" + item._Cost));
                     row.append($("<td>").text("£" + item._RetailPrice));
 
+                    totalPrice += item._RetailPrice; // Calculate total price
+                    totalCost += item._Cost; // Calculate total cost
+                    totalQuantity += item._Quantity;
                     $("#table-bodystock").append(row);
                 });
+
+                // Add a row for total price and cost
+                var totalRow = $("<tr>");
+                totalRow.append($("<td>").text("Total"));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(""));
+                totalRow.append($("<td>").text(totalQuantity)); // Display total quantity
+                totalRow.append($("<td>").text("£" + totalCost)); // Display total cost
+                totalRow.append($("<td>").text("£" + totalPrice)); // Display total price
+
+                $("#table-bodystock").append(totalRow);
             },
             error: function (error) {
                 console.log("Error:", error);
@@ -1534,28 +1583,7 @@
         });
 
     });
-    @*$("#warehouseDropdown").change(function () {
-            // Get the selected warehouse name
-            var selectedWarehouse = $(this).val();
 
-            // Send an AJAX request to your controller action
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("GetWarehouseData", "Admin")", // Replace with your controller and action name
-                data: { selectedWarehouse: selectedWarehouse },
-                dataType: "json",
-                success: function (data) {
-                    $('.inventorydata').text(data.inventorycount);
-                    $('.orderdata').text(data.orderscount);
-                    $('.stockdata').text(data.stockcount);
-                    $('.lowstockdata').text(data.lowstockcount);
-                //    console.log("Received data:", data);
-                },
-                error: function (error) {
-                //    console.error("Error:", error);
-                }
-            });
-        });*@
 
     $(".data-btn").click(function () {
         $.ajax({

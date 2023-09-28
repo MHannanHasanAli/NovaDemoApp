@@ -120,6 +120,7 @@ namespace ImperialNova.Controllers
         public ActionResult GetStock(string selectedWarehouse)
         {
             StockModel model = new StockModel();
+
             List<Product> inventorydata = new List<Product>();
             var data = ProductServices.Instance.GetProducts();
 
@@ -132,6 +133,7 @@ namespace ImperialNova.Controllers
                         if (item._Warehouse == selectedWarehouse)
                         {
                             inventorydata.Add(item);
+                            
                         }
                     }
 
@@ -141,6 +143,7 @@ namespace ImperialNova.Controllers
             }
             else
             {
+                
                 return Json(data, JsonRequestBehavior.AllowGet);
 
             }
@@ -161,7 +164,10 @@ namespace ImperialNova.Controllers
                         if (item._Warehouse == selectedWarehouse)
                         {
                             if(item._Quantity <= item._LowStockAlert)
-                            inventorydata.Add(item);
+                            {
+                                inventorydata.Add(item);
+
+                            }
                         }
                     }
 
@@ -171,7 +177,16 @@ namespace ImperialNova.Controllers
             }
             else
             {
-                return Json(data, JsonRequestBehavior.AllowGet);
+
+                foreach (var item in data)
+                {               
+                    if (item._Quantity <= item._LowStockAlert)
+                    {
+                        inventorydata.Add(item);
+
+                    }
+                }
+                return Json(inventorydata, JsonRequestBehavior.AllowGet);
 
             }
 

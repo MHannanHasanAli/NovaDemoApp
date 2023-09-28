@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class CSV
+    public class CSV: BaseEntity
     {
-        [Key] public int _Id { get; set; }
         public DateTime _Date { get; set; }
         public string _Description { get; set; }
         public string _File { get; set; }

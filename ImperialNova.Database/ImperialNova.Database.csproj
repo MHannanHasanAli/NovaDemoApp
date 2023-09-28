@@ -240,6 +240,10 @@
     <Compile Include="Migrations\202309281202030_Babadi.designer.cs">
       <DependentUpon>202309281202030_Babadi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202309281628379_Uub.cs" />
+    <Compile Include="Migrations\202309281628379_Uub.designer.cs">
+      <DependentUpon>202309281628379_Uub.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -392,6 +396,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202309281202030_Babadi.resx">
       <DependentUpon>202309281202030_Babadi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202309281628379_Uub.resx">
+      <DependentUpon>202309281628379_Uub.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
