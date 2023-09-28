@@ -115,8 +115,7 @@
 <script>
 
     $("#actionButton").click(function () {
-        $("#actionButton").attr("disabled", "disabled");
-        showLoadingSpinner();
+      
         var name = $('#_Name').val();
         var email = $('#_Email').val();
         var phone = $('#_Phone').val();
@@ -124,6 +123,8 @@
             alert('Please fill in all of the required fields.');
             return;
         }
+        $("#actionButton").attr("disabled", "disabled");
+        showLoadingSpinner();
 		$.ajax({
 			url: '@Url.Action("Action", "Customer")',
 			type: "post",

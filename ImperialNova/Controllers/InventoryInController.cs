@@ -154,9 +154,17 @@ namespace ImperialNova.Controllers
                 var InventoryIn = new Entities.InventoryIn();
                 InventoryIn._ShippingCompany = model._ShippingCompany;
                 InventoryIn._Tracking = model._Tracking;
-                InventoryIn._Status = "Pending Order";            
-                InventoryIn._Quantity = int.Parse(model._Quantity);
-                InventoryIn._Amount = decimal.Parse(model._Amount);              
+                InventoryIn._Status = "Pending Order";  
+                if(model._Quantity != null)
+                {
+                    InventoryIn._Quantity = int.Parse(model._Quantity);
+
+                }
+                if(model._Amount != null)
+                {
+                    InventoryIn._Amount = decimal.Parse(model._Amount);
+
+                }
                 InventoryIn._Date = model._Date;
                 InventoryIn._Supplier = model._Supplier;
                 InventoryInServices.Instance.CreateInventoryIn(InventoryIn);
