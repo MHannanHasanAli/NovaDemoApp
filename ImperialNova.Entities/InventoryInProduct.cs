@@ -22,5 +22,8 @@ namespace ImperialNova.Entities
         public int _CategoryId { get; set; }
         public int _WarehouseId { get; set; }
         public string _Warehouse { get; set; }
+        public string _Size { get; set; }
+        public string _Color { get; set; }
+
     }
 }

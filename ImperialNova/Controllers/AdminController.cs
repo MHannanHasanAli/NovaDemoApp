@@ -59,6 +59,123 @@ namespace ImperialNova.Controllers
             //model.Name = user.Name;
             return View();
         }
+        public ActionResult GetInventories(string selectedWarehouse)
+        {
+            InventoriesModel model = new InventoriesModel();
+            List<InventoryInProduct> inventorydata = new List<InventoryInProduct>();
+            var data = InventoryInProductServices.Instance.GetInventoryInProducts();
+
+            if (selectedWarehouse != "")
+            {
+                foreach (var item in data)
+                {
+                    if(item._Warehouse != null)
+                    {
+                        if (item._Warehouse == selectedWarehouse)
+                        {
+                            inventorydata.Add(item);
+                        }
+                    }
+                    
+                }
+                return Json(inventorydata, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+        public ActionResult GetOrders(string selectedWarehouse)
+        {
+            OrdersModel model = new OrdersModel();
+            List<OrderProduct> inventorydata = new List<OrderProduct>();
+            var data = OrderProductServices.Instance.GetOrderProducts();
+
+            if (selectedWarehouse != "")
+            {
+                foreach (var item in data)
+                {
+                    if (item._location != null)
+                    {
+                        if (item._location == selectedWarehouse)
+                        {
+                            inventorydata.Add(item);
+                        }
+                    }
+
+                }
+                return Json(inventorydata, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+        public ActionResult GetStock(string selectedWarehouse)
+        {
+            StockModel model = new StockModel();
+            List<Product> inventorydata = new List<Product>();
+            var data = ProductServices.Instance.GetProducts();
+
+            if (selectedWarehouse != "")
+            {
+                foreach (var item in data)
+                {
+                    if (item._Warehouse != null)
+                    {
+                        if (item._Warehouse == selectedWarehouse)
+                        {
+                            inventorydata.Add(item);
+                        }
+                    }
+
+                }
+                return Json(inventorydata, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
+        public ActionResult GetLow(string selectedWarehouse)
+        {
+            StockModel model = new StockModel();
+            List<Product> inventorydata = new List<Product>();
+            var data = ProductServices.Instance.GetProducts();
+
+            if (selectedWarehouse != "")
+            {
+                foreach (var item in data)
+                {
+                    if (item._Warehouse != null)
+                    {
+                        if (item._Warehouse == selectedWarehouse)
+                        {
+                            if(item._Quantity <= item._LowStockAlert)
+                            inventorydata.Add(item);
+                        }
+                    }
+
+                }
+                return Json(inventorydata, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                return Json(data, JsonRequestBehavior.AllowGet);
+
+            }
+
+        }
         [HttpGet]
         public ActionResult FetchTotalSales(DateTime startDate, DateTime endDate)
         {

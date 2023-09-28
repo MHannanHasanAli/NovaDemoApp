@@ -355,6 +355,8 @@ namespace ImperialNova.Controllers
                 Product._ExportDate = model._ExportDate;
                 Product._CategoryId = model._CategoryId;
                 Product._WarehouseId = model._WarehouseId;
+                var data = LocationsServices.Instance.GetLocationsById(model._WarehouseId);
+                Product._Warehouse = data._LocationName;
                 Product._LowStockAlert = model._LowStockAlert;
                 Product._Photo = model._Photo;
                 Product._OpeningStock = model._OpeningStock;
@@ -383,7 +385,8 @@ namespace ImperialNova.Controllers
                 Product._LowStockAlert = model._LowStockAlert;
                 Product._Photo = model._Photo;
                 Product._OpeningStock = model._OpeningStock;
-
+                var data = LocationsServices.Instance.GetLocationsById(model._WarehouseId);
+                Product._Warehouse = data._LocationName;
                 ProductServices.Instance.CreateProduct(Product);
 
                 var notification = new Entities.Notification();

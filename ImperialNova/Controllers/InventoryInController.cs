@@ -110,6 +110,8 @@ namespace ImperialNova.Controllers
                 Invproduct._ExpiryDate =DateTime.Parse(item._ExpiryDate);
                 Invproduct._Amount = decimal.Parse(item._Amount);
                 Invproduct._InventoryInId = InventoryInid;
+                Invproduct._Size = product._Size;
+                Invproduct._Color = product._Color;
                 var location = LocationsServices.Instance.GetLocationsById(product._WarehouseId);
                 Invproduct._Warehouse = location._LocationName;
                 

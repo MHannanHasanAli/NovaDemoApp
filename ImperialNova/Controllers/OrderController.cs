@@ -110,6 +110,8 @@ namespace ImperialNova.Controllers
                 Orderproduct._Amount = decimal.Parse(item._Amount);
                 Orderproduct._OrderId = Orderid;
                 Orderproduct._Cost = product._Cost;
+                Orderproduct._Size = product._Size;
+                Orderproduct._Color = product._Color;
                 var warehousedata = LocationsServices.Instance.GetLocationsById(product._WarehouseId);
                 Orderproduct._location = warehousedata._LocationName;
                OrderProductServices.Instance.CreateOrderProducts(Orderproduct);
@@ -167,9 +169,15 @@ namespace ImperialNova.Controllers
                 Order._Customer = model._Customer;
                 Order._Priority = model._Priority;
                 Order._IsPacked = model._IsPacked;
-                Order._Amount = decimal.Parse(model._Amount);
-                Order._Quantity = int.Parse(model._Quantity);
-                
+                if(model._Amount != null)
+                {
+                    Order._Amount = decimal.Parse(model._Amount);
+                }
+                if(model._Quantity != null)
+                {
+                    Order._Quantity = int.Parse(model._Quantity);
+                }
+
 
                 OrderServices.Instance.CreateOrder(Order);
 

@@ -115,91 +115,105 @@
         width: 100%;
         padding: 10px 20px;
     }
- /*   .lowstocksection {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .shipmentcontainer {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .todocontainer {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .inventorycontainer {
-        max-height: 500px;
-        overflow: scroll;
-    }*/
-  /*  .expensecontainer {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .remindercontainer {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .fastmover {
-        max-height: 500px;
-        overflow: scroll;
-    }
-    .slowmover {
-        max-height: 500px;
-        overflow: scroll;
-    }*/
+    /*   .lowstocksection {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .shipmentcontainer {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .todocontainer {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .inventorycontainer {
+            max-height: 500px;
+            overflow: scroll;
+        }*/
+    /*  .expensecontainer {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .remindercontainer {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .fastmover {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        .slowmover {
+            max-height: 500px;
+            overflow: scroll;
+        }*/
     .bottomdiv {
         position: absolute;
         left: 270px;
         margin-top: -25px;
     }
-    .fast-title{
+
+    .fast-title {
         background: #4cff00;
         width: 100%;
     }
+
     .slow-title {
         background: #ffd800;
         width: 100%;
     }
-    .sizer{
+
+    .sizer {
         width: 100%;
     }
-    .blue{
+
+    .blue {
         background: #3542d5;
         color: white;
     }
-    .red{
+
+    .red {
         background: #ff0000;
         color: white;
     }
+
     .yellow {
         background: #98a51e;
         color: white;
     }
-    .green{
+
+    .green {
         background: #2b8b46;
         color: white;
     }
+
     .pink {
         background: #b339bd;
         color: white;
     }
+
     .gray {
         background: #808080;
         color: white;
     }
-    .extra-class{
-        margin-top:50px;
+
+    .extra-class {
+        margin-top: 50px;
     }
-    .label-container{
+
+    .label-container {
         display: flex;
         gap: 107px;
     }
+
     .filterdate {
         margin-left: 40px;
     }
-    #TotalSales{
+
+    #TotalSales {
         margin-left: 40px;
     }
+
     .filter {
         width: 100%;
         display: flex;
@@ -207,17 +221,19 @@
     }
 
     .shifter {
-        display: flex;      
+        display: flex;
         justify-content: flex-start;
-       margin-right: -104px;
+        /*       margin-right: -104px;
+    */ margin-top: 20px;
+        margin-left: 7px;
     }
-/*    .lowstocksection{
-        max-width: 100%;
-    }*/
+    /*    .lowstocksection{
+            max-width: 100%;
+        }*/
 </style>
 <h2>Dashboard</h2>
 <hr />
-<div class="row">
+<!--<div class="row">
     <div class="card  col-md-12">
         <div class="card-body">
             <div class="filter">
@@ -226,21 +242,22 @@
                         Hi, Admin
                     </h4>
                 </div>
-                <div class="col-md-3 shifter">
+                <!--<div class="col-md-3 shifter">
                     <div class="form-group shifter">
                         <select id="warehouseDropdown" name="selectedWarehouse">
-                            <option value="" disabled selected>Select Warehouse</option> <!-- Initial, unselectable option -->
-                            @foreach (var warehouse in Model.warehouses)
+                            <option value="" disabled selected>Select Warehouse</option>-->
+                <!-- Initial, unselectable option -->
+                <!--@foreach (var warehouse in Model.warehouses)
                             {
                                 <option value="@warehouse._LocationName">@warehouse._LocationName</option>
                             }
                         </select>
                     </div>
-                </div>
+                </div>-->
 
-                
-            </div>
-           
+
+            <!--</div>
+
             <br />
             <div class="row">
                 <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Action","Inventory")'" class="col-md-3 grid-margin stretch-card">
@@ -283,104 +300,354 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 @*<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
-                <div class="card yellow">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                            <div>
-                                <p class="mb-2 text-md-center text-lg-left">Active Product</p>
-                                <h3 class="mb-0">@Model.ActiveProducts</h3>
+                        <div class="card yellow">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                    <div>
+                                        <p class="mb-2 text-md-center text-lg-left">Active Product</p>
+                                        <h3 class="mb-0">@Model.ActiveProducts</h3>
+                                    </div>
+                                    <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
+                                </div>
                             </div>
-                            <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
                         </div>
-                    </div>
-                </div>
-            </div>*@
+                    </div>*@
 
                 @*<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
-                <div class="card pink">
-                    <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                            <div>
-                                <p class="mb-2 text-md-center text-lg-left">Active Product</p>
-                                <h3 class="mb-0">@Model.Customer</h3>
+                        <div class="card pink">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                    <div>
+                                        <p class="mb-2 text-md-center text-lg-left">Active Product</p>
+                                        <h3 class="mb-0">@Model.Customer</h3>
+                                    </div>
+                                    <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
+                                </div>
                             </div>
-                            <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
                         </div>
-                    </div>
-                </div>
-            </div>*@
+                    </div>*@
 
 
-                <div class="col-md-3 grid-margin stretch-card">
+                <!--<div class="col-md-3 grid-margin stretch-card">
                     <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="card gray">
                         <div class="card-body">
                             <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
                                 <div>
                                     <p class="mb-2 text-md-center text-lg-left">Low Stock Product</p>
                                     <h3 class="mb-0 lowstockdata">@Model.LowStockAlert</h3>
-                                </div>
+                                </div>-->
                                 @*<svg style="height: 50px; margin: 10px;" class="icon-xl text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
-                            </svg>*@
+                                        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
+                                    </svg>*@
+                            <!--</div>
+                        </div>
+                    </div>
+                </div>-->
+                <!--<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                    <div class="card red">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Total Sales</p>
+                                    <h3 class="mb-0">£@Model.TotalSales</h3>
+                                </div>
+                                <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--<div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
-            <div class="card red">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                        <div>
-                            <p class="mb-2 text-md-center text-lg-left">Total Sales</p>
-                            <h3 class="mb-0">£@Model.TotalSales</h3>
+
+                <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
+                    <div class="card gray">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Total Sales Cost</p>
+                                    <h3 class="mb-0">£@Model.TotalCost</h3>
+                                </div>
+                                <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
+                            </div>
                         </div>
-                        <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="col-md-4 grid-margin stretch-card">
-            <div class="card gray">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                        <div>
-                            <p class="mb-2 text-md-center text-lg-left">Total Sales Cost</p>
-                            <h3 class="mb-0">£@Model.TotalCost</h3>
-                        </div>
-                        <i class="mdi mdi-chart-areaspline icon-xl text-secondary"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
-        <div class="col-md-4 grid-margin stretch-card">
-            <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="card blue">
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
-                        <div>
-                            <p class="mb-2 text-md-center text-lg-left">Profit</p>
-                            <h3 class="mb-0">£@Model.Profit</h3>
-                        </div>-->
-                @*<svg style="height: 50px; margin: 10px;" class="icon-xl text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
-            </svg>*@
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div style="cursor:pointer;" onclick="window.location.href='@Url.Action("Index","Product")'" class="card blue">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center justify-content-between justify-content-md-center justify-content-xl-between flex-wrap mb-4">
+                                <div>
+                                    <p class="mb-2 text-md-center text-lg-left">Profit</p>
+                                    <h3 class="mb-0">£@Model.Profit</h3>
+                                </div>-->
+                <!--@*<svg style="height: 50px; margin: 10px;" class="icon-xl text-secondary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z" fill="#6C7192" />
+                    </svg>*@-->
                 <!--</div>
-                </div>
-            </div>
-        </div>-->
-            </div>
+                        </div>
+                    </div>
+                </div>-->
+            <!--</div>
 
 
         </div>
     </div>
 
 
+</div>-->
+<h5>Hi Admin,</h5>
+<div class="row">
+    <div class="col-md-6">
+        <div class="container">
+            <div class="card expensecontainer">
+                <div class="warehouse-filter">
+
+
+                    <div class="card-header bg-gradient-primary sizer">
+                        <h2>Inventory In</h2>
+                    </div>
+                    <div class="col-md-3 shifter">
+                        <div class="form-group shifter mover">
+                            <select id="warehouseDropdown" name="selectedWarehouse">
+                                <option value="" selected>Select All Warehouse</option> <!-- Initial, unselectable option -->
+                                @foreach (var warehouse in Model.warehouses)
+                                {
+                                    <option value="@warehouse._LocationName">@warehouse._LocationName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Stock List</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <br />
+
+                <!--<section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>-->
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            <div class="card expensecontainer">
+                <div class="warehouse-filter">
+
+
+                    <div class="card-header bg-gradient-warning sizer">
+                        <h2>Inventory Out</h2>
+                    </div>
+                    <div class="col-md-3 shifter">
+                        <div class="form-group shifter mover">
+                            <select id="warehouseDropdownorder" name="selectedWarehouse">
+                                <option value="" selected>Select All Warehouse</option> <!-- Initial, unselectable option -->
+                                @foreach (var warehouse in Model.warehouses)
+                                {
+                                    <option value="@warehouse._LocationName">@warehouse._LocationName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Stock List</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Quantity</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-bodyorder">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <br />
+
+                <!--<section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>-->
+
+
+
+            </div>
+
+        </div>
+
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="container">
+            <div class="card expensecontainer">
+                <div class="warehouse-filter">
+
+
+                    <div class="card-header bg-gradient-success sizer">
+                        <h2>Current Stock</h2>
+                    </div>
+                    <div class="col-md-3 shifter">
+                        <div class="form-group shifter mover">
+                            <select id="warehouseDropdownstock" name="selectedWarehouse">
+                                <option value="" selected>Select All Warehouse</option> <!-- Initial, unselectable option -->
+                                @foreach (var warehouse in Model.warehouses)
+                                {
+                                    <option value="@warehouse._LocationName">@warehouse._LocationName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Stock List</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Quantity Left</th>
+                                <th>Unit Cost</th>
+                                <th>Retail Costs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-bodystock">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <br />
+
+                <!--<section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>-->
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="container">
+            <div class="card expensecontainer">
+                <div class="warehouse-filter">
+
+
+                    <div class="card-header bg-gradient-danger sizer">
+                        <h2>Low Stock</h2>
+                    </div>
+                    <div class="col-md-3 shifter">
+                        <div class="form-group shifter mover">
+                            <select id="warehouseDropdownlow" name="selectedWarehouse">
+                                <option value="" selected>Select All Warehouse</option> <!-- Initial, unselectable option -->
+                                @foreach (var warehouse in Model.warehouses)
+                                {
+                                    <option value="@warehouse._LocationName">@warehouse._LocationName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Stock List</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Quantity Left</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-bodylow">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+
+                <br />
+
+                <!--<section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"></h3>
+                                </div>-->
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
 <hr />
 <div class="row">
     <div class="container">
@@ -423,21 +690,21 @@
             <br />
 
             <!--<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
 
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"></h3>
-                    </div>-->
-         
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"></h3>
+                            </div>-->
+
 
 
         </div>
-       
+
     </div>
-    
+
 </div>
 <hr />
 <div class="row">
@@ -509,7 +776,7 @@
         </div>
         <!-- /.col -->
     </div>
-   
+
 
 
     <div class="col-md-6">
@@ -560,8 +827,8 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-</div>     
-   
+</div>
+
 <div class="col-md-12">
     <div class="container">
         <div class="card remindercontainer">
@@ -616,7 +883,7 @@
 
             </div>
 
-           
+
 
 
         </div>
@@ -673,10 +940,10 @@
                                 <td>@item._Status</td>
                                 @*<td>@item._Name</td>*@
                                 @*<td>
-                            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                                <i class="fa fa-download" aria-hidden="true"></i>
-                            </a>
-                        </td>*@
+                                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                        </a>
+                                    </td>*@
                             </tr>
                         }
                     </tbody>
@@ -685,7 +952,7 @@
 
             </div>
 
-          
+
 
 
         </div>
@@ -903,8 +1170,102 @@
 
 <script>
     $(document).ready(function () {
+        var selectedWarehouse = "";
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetInventories", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-body").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Title));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Qty));
+                    $("#table-body").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetOrders", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodyorder").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Title));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Qty));
+                    row.append($("<td>").text(item._Date));
+
+                    $("#table-bodyorder").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetStock", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodystock").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Name));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Quantity));
+                    row.append($("<td>").text("£" + item._Cost));
+                    row.append($("<td>").text("£" + item._RetailPrice));
+
+                    $("#table-bodystock").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetLow", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodylow").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Name));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Quantity));
+                    $("#table-bodylow").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
         $("#date-button").click(function () {
-           
+
             const startDate = $("#date-start").val();
             const endDate = $("#date-end").val();
 
@@ -923,10 +1284,10 @@
                 data: { startDate: startDate, endDate: endDate },
                 method: "GET",
                 success: function (data) {
-                    
+
                     // Iterate through the returned data and create table rows
                     $.each(data, function (index, item) {
-                       
+
                         var timestampValue = item._Date;
                         var timestampMatch = timestampValue.match(/\d+/);
                         if (timestampMatch) {
@@ -945,8 +1306,8 @@
                         row.append("<td>" + formattedDate + "</td>");
                         row.append("<td>" + item._Title + "</td>");
                         row.append("<td>£" + item._TotalExpenses + "</td></tr>");
-                       
-                        
+
+
 
                         // Append the created row to the table body
                         $("#table-body").append(row);
@@ -958,7 +1319,7 @@
                     console.error("Error:", error);
                 }
 
-                
+
             });
             $.ajax({
                 url: `/Admin/FetchTotalSaleExtra`, // Replace with the actual URL
@@ -1061,6 +1422,119 @@
 
 <script>
     $("#warehouseDropdown").change(function () {
+        var selectedWarehouse = $(this).val();
+
+            $.ajax({
+                type: "GET",
+                url: "/Admin/GetInventories", // Replace with the actual URL of your controller action
+                data: { selectedWarehouse: selectedWarehouse },
+                success: function (data) {
+                    // Clear the table body
+                    $("#table-body").empty();
+
+                    // Populate the table with the received data
+                    $.each(data, function (index, item) {
+                        var row = $("<tr>");
+                        row.append($("<td>").text(item._Title));
+                        row.append($("<td>").text(item._Size));
+                        row.append($("<td>").text(item._Color));
+                        row.append($("<td>").text(item._Qty));
+                        $("#table-body").append(row);
+                    });
+                },
+                error: function (error) {
+                    console.log("Error:", error);
+                }
+            });
+
+    });
+    $("#warehouseDropdownorder").change(function () {
+        var selectedWarehouse = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetOrders", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodyorder").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Title));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Qty));
+                    row.append($("<td>").text(item._Date));
+
+                    $("#table-bodyorder").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+
+    });
+    $("#warehouseDropdownstock").change(function () {
+        var selectedWarehouse = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetStock", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodystock").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Name));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Quantity));
+                    row.append($("<td>").text("£" + item._Cost));
+                    row.append($("<td>").text("£" + item._RetailPrice));
+
+                    $("#table-bodystock").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+
+    });
+    $("#warehouseDropdownlow").change(function () {
+        var selectedWarehouse = $(this).val();
+
+        $.ajax({
+            type: "GET",
+            url: "/Admin/GetLow", // Replace with the actual URL of your controller action
+            data: { selectedWarehouse: selectedWarehouse },
+            success: function (data) {
+                // Clear the table body
+                $("#table-bodylow").empty();
+
+                // Populate the table with the received data
+                $.each(data, function (index, item) {
+                    var row = $("<tr>");
+                    row.append($("<td>").text(item._Name));
+                    row.append($("<td>").text(item._Size));
+                    row.append($("<td>").text(item._Color));
+                    row.append($("<td>").text(item._Quantity));
+                    $("#table-bodylow").append(row);
+                });
+            },
+            error: function (error) {
+                console.log("Error:", error);
+            }
+        });
+
+    });
+    @*$("#warehouseDropdown").change(function () {
             // Get the selected warehouse name
             var selectedWarehouse = $(this).val();
 
@@ -1081,7 +1555,7 @@
                 //    console.error("Error:", error);
                 }
             });
-        });
+        });*@
 
     $(".data-btn").click(function () {
         $.ajax({

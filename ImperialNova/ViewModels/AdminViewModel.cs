@@ -13,7 +13,20 @@ namespace ImperialNova.ViewModels
         public double QuantityIn { get; set; }
         public double QuantityOut { get; set; }
     }
+    public class InventoriesModel
+    {
+        public List<InventoryInProduct> Inventories { get; set; }
+    }
+    public class OrdersModel
+    {
+        public List<OrderProduct> Orders { get; set; }
 
+    }
+    public class StockModel
+    {
+        public List<Product> Products { get; set; }
+
+    }
     public class AdminViewModel
     {
         public int InventoryIn { get; set; }
