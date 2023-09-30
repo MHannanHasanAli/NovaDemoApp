@@ -12,6 +12,7 @@ namespace ImperialNova.Controllers
     [Authorize]
     public class NotificationsController : Controller
     {
+
         public ActionResult Index()
         {
             

@@ -11,5 +11,7 @@ namespace ImperialNova.Entities
     {
         [Key] public int _Id { get; set; }
         public string _Description { get; set; }
+        public string _UserName { get; set; }
+
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ImperialNova.Entities
 {
-    public class Category: DeleteUpdate
+    public class Category: Backup
     {
         [Key]
         public int _Id { get; set; }

@@ -1,5 +1,7 @@
 ﻿using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,51 @@ namespace ImperialNova.Controllers
     [Authorize]
     public class DocumentsController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+        public DocumentsController()
+        {
+        }
+        public DocumentsController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         public ActionResult Index()
         {
             Session["ACTIVER"] = "Document Index";
@@ -59,7 +106,7 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult Action(DocumentsActionViewModel model)
         {
-
+            var user = UserManager.FindById(User.Identity.GetUserId());
             if (model._Id != 0)
             {
                 var Document = DocumentServices.Instance.GetDocumentById(model._Id);
@@ -79,6 +126,7 @@ namespace ImperialNova.Controllers
                 DocumentServices.Instance.CreateDocument(Document);
                 var notification = new Entities.Notification();
                 notification._Description = "New Document has been Added!";
+                notification._UserName = user.Name;
                 NotificationServices.Instance.CreateNotification(notification);
             }
 

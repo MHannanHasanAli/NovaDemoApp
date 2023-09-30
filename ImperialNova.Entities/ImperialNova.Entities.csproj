@@ -63,7 +63,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="CSV.cs" />
     <Compile Include="Customer.cs" />
-    <Compile Include="DeleteUpdate.cs" />
+    <Compile Include="Backup.cs" />
     <Compile Include="DeliveryForm.cs" />
     <Compile Include="Document.cs" />
     <Compile Include="Expenses.cs" />

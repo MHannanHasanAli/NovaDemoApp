@@ -31,7 +31,10 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.csvs.ToList();
+                var data = context.csvs
+                    .Where(csv => !csv.IsDeleted)
+                    .ToList();
+
                 data.Reverse();
                 return data;
             }
@@ -71,7 +74,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.csvs.Find(ID);
-                context.csvs.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "CSV";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

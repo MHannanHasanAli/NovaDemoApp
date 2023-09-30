@@ -1,5 +1,7 @@
 ﻿using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,51 @@ namespace ImperialNova.Controllers
     [Authorize]
     public class CustomerController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+        public CustomerController()
+        {
+        }
+        public CustomerController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         public ActionResult Index(string SearchTerm = "")
         {
             Session["ACTIVER"] = "Customer Index";
@@ -64,7 +111,7 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult Action(CustomerActionViewModel model)
         {
-
+            var user = UserManager.FindById(User.Identity.GetUserId());
             if (model._Id != 0)
             {
                 var Customer = CustomerServices.Instance.GetCustomerById(model._Id);
@@ -95,6 +142,7 @@ namespace ImperialNova.Controllers
                 CustomerServices.Instance.CreateCustomer(Customer);
                 var notification = new Entities.Notification();
                 notification._Description = "New Customer has been Added!";
+                notification._UserName = user.Name;
                 NotificationServices.Instance.CreateNotification(notification);
             }
 

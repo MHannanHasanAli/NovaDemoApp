@@ -51,6 +51,7 @@ namespace ImperialNova.Database
 
         public DbSet<StockMovement> stockmovements { get; set; }
         public DbSet<Expenses> expenses { get; set; }
+        public DbSet<Backup> backups { get; set; }
 
 
     }

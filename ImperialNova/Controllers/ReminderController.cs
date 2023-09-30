@@ -52,14 +52,12 @@ namespace ImperialNova.Controllers
         public ReminderController()
         {
         }
-
-
-
         public ReminderController(AMUserManager userManager, AMSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
         }
+
 
         public ActionResult Index()
         {
@@ -137,6 +135,7 @@ namespace ImperialNova.Controllers
 
                 var notification = new Entities.Notification();
                 notification._Description = "New Reminder has been Added!";
+                notification._UserName = user.Name;
                 NotificationServices.Instance.CreateNotification(notification);
             }
 

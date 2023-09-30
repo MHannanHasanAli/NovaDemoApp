@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class InventoryInProduct : DeleteUpdate
+    public class InventoryInProduct : Backup
     {
         [Key] public int _Id { get; set; }
         public int _InventoryInId { get; set; }

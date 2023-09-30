@@ -48,7 +48,9 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.reminders.ToList();
+                var data = context.reminders
+                    .Where(reminder => !reminder.IsDeleted)
+                    .ToList();
                 data.Reverse();
                 return data;
             }
@@ -100,7 +102,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.reminders.Find(ID);
-                context.reminders.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Reminder";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

@@ -64,7 +64,10 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.customers.ToList();
+                var data = context.customers
+                    .Where(customer => !customer.IsDeleted)
+                    .ToList();
+
                 data.Reverse();
                 return data;
             }
@@ -116,7 +119,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.customers.Find(ID);
-                context.customers.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Customer";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

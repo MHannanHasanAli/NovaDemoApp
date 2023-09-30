@@ -2,7 +2,7 @@
 
 namespace ImperialNova.Entities
 {
-    public class Locations : DeleteUpdate
+    public class Locations : Backup
     {
         [Key]
         public int _Id { get; set; }

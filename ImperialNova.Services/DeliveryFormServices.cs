@@ -26,17 +26,16 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                if (SearchTerm == "")
+                var query = context.deliveryform.Where(deliveryForm => !deliveryForm.IsDeleted);
+
+                if (!string.IsNullOrWhiteSpace(SearchTerm))
                 {
-                    return context.deliveryform.OrderBy(x => x._CustomerName).ToList();
-                }
-                else
-                {
-                    return context.deliveryform.Where(p => p._CustomerName != null && p._CustomerName.ToLower().Contains(SearchTerm.ToLower()))
-                                       .OrderBy(x => x._CustomerName)
-                                       .ToList();
+                    query = query.Where(deliveryForm => deliveryForm._CustomerName != null && deliveryForm._CustomerName.ToLower().Contains(SearchTerm.ToLower()));
                 }
 
+                var data = query.OrderBy(deliveryForm => deliveryForm._CustomerName).ToList();
+
+                return data;
             }
         }
         public void CreateDeliveryForm(DeliveryForm DeliveryForm)
@@ -64,7 +63,9 @@ namespace ImperialNova.Services
             using (var context = new DSContext())
             {
                 var Product = context.deliveryform.Find(id);
-                context.deliveryform.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Delivery Form";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

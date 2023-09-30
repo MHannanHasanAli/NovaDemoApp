@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ImperialNova.Entities
 {
-    public class DeliveryForm : DeleteUpdate
+    public class DeliveryForm : Backup
     {
         [Key]
         public int _id { get; set; }

@@ -64,21 +64,31 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.categories.ToList();
+                var data = context.categories
+                    .Where(category => !category.IsDeleted)
+                    .ToList();
+
                 data.Reverse();
                 return data;
             }
-        } 
+        }
+
         public List<Category> GetCategorys(string SearchTerm)
         {
             using (var context = new DSContext())
             {
-                return context.categories.Where(p => p._CName != null && p._CName.ToLower()
-                                            .Contains(SearchTerm.ToLower()))
-                                            .OrderBy(x => x._CName)
-                                            .ToList();
+                var query = context.categories.Where(category => !category.IsDeleted);
+
+                if (!string.IsNullOrWhiteSpace(SearchTerm))
+                {
+                    query = query.Where(category => category._CName != null && category._CName.ToLower().Contains(SearchTerm.ToLower()));
+                }
+
+                var data = query.OrderBy(category => category._CName).ToList();
+                return data;
             }
         }
+
 
 
 
@@ -116,8 +126,12 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.categories.Find(ID);
-                context.categories.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Category";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
+                //context.categories.Remove(Product);
+                //context.SaveChanges();
             }
         }
       

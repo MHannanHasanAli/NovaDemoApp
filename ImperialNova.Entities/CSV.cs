@@ -13,5 +13,6 @@ namespace ImperialNova.Entities
         public string _Description { get; set; }
         public string _File { get; set; }
         public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

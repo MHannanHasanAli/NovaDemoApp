@@ -49,9 +49,12 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
+                var data = context.payments
+                    .Where(payment => !payment.IsDeleted)
+                    .OrderBy(payment => payment._Individual)
+                    .ToList();
 
-                return context.payments.OrderBy(x => x._Individual).ToList();
-
+                return data;
             }
         }
 
@@ -87,7 +90,9 @@ namespace ImperialNova.Services
             {
 
                 var Payment = context.payments.Find(ID);
-                context.payments.Remove(Payment);
+                Payment.IsDeleted = true;
+                Payment.Type = "Payment";
+                context.Entry(Payment).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

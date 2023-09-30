@@ -9,118 +9,114 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Services
 {
-    public class SupplierServices
+    public class BackupServices
     {
         #region Singleton
-        public static SupplierServices Instance
+        public static BackupServices Instance
         {
             get
             {
-                if (instance == null) instance = new SupplierServices();
+                if (instance == null) instance = new BackupServices();
                 return instance;
             }
         }
-        private static SupplierServices instance { get; set; }
-        private SupplierServices()
+        private static BackupServices instance { get; set; }
+        private BackupServices()
         {
         }
         #endregion
-        public List<Supplier> GetSupplier(string SearchTerm = "")
+        public List<Backup> GetBackup(string SearchTerm = "")
         {
             using (var context = new DSContext())
             {
                 if (SearchTerm != "")
                 {
-                    return context.suppliers.Where(p => p._Name != null && p._Name.ToLower()
+                    return context.backups.Where(p => p.Type != null && p.Type.ToLower()
                                             .Contains(SearchTerm.ToLower()))
-                                            .OrderBy(x => x._Name)
+                                            .OrderBy(x => x.Type)
                                             .ToList();
                 }
                 else
                 {
-                    return context.suppliers.OrderBy(x => x._Name).ToList();
+                    return context.backups.OrderBy(x => x.Type).ToList();
                 }
             }
         }
-        public List<string> GetSupplierNames()
+        public List<string> GetBackupNames()
         {
             using (var context = new DSContext())
             {
-                var data = context.suppliers.Select(c => c._Name).ToList();
+                var data = context.backups.Select(c => c.Type).ToList();
                 data.Reverse();
                 return data;
             }
         }
-        public Supplier GetSupplierInSuppliers(int Sentid)
+        public Backup GetBackupInBackups(int Sentid)
         {
             using (var context = new DSContext())
             {
-                var category = context.suppliers.FirstOrDefault(c => c._Id == Sentid);
+                var category = context.backups.FirstOrDefault(c => c.Id == Sentid);
                 return category;
 
             }
         }
-        public List<Supplier> GetSuppliers()
+        public List<Backup> GetBackups()
         {
             using (var context = new DSContext())
             {
-                var data = context.suppliers
-                    .Where(supplier => !supplier.IsDeleted)
-                    .ToList();
+                var data = context.backups.ToList();
                 data.Reverse();
                 return data;
             }
         }
-        public List<Supplier> GetSuppliers(string SearchTerm)
+        public List<Backup> GetBackups(string SearchTerm)
         {
             using (var context = new DSContext())
             {
-                return context.suppliers.Where(p => p._Name != null && p._Name.ToLower()
+                return context.backups.Where(p => p.Type != null && p.Type.ToLower()
                                             .Contains(SearchTerm.ToLower()))
-                                            .OrderBy(x => x._Name)
+                                            .OrderBy(x => x.Type)
                                             .ToList();
             }
         }
 
 
 
-        public Entities.Supplier GetSupplierById(int id)
+        public Entities.Backup GetBackupById(int id)
         {
             using (var context = new DSContext())
             {
-                return context.suppliers.Find(id);
+                return context.backups.Find(id);
 
             }
         }
 
-        public void CreateSupplier(Supplier Supplier)
+        public void CreateBackup(Backup Backup)
         {
             using (var context = new DSContext())
             {
-                context.suppliers.Add(Supplier);
+                context.backups.Add(Backup);
                 context.SaveChanges();
             }
         }
 
-        public void UpdateSupplier(Entities.Supplier Supplier)
+        public void UpdateBackup(Entities.Backup Backup)
         {
             using (var context = new DSContext())
             {
-                context.Entry(Supplier).State = EntityState.Modified;
+                context.Entry(Backup).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
 
 
-        public void DeleteSupplier(int ID)
+        public void DeleteBackup(int ID)
         {
             using (var context = new DSContext())
             {
 
-                var Product = context.suppliers.Find(ID);
-                Product.IsDeleted = true;
-                Product.Type = "Supplier";
-                context.Entry(Product).State = EntityState.Modified;
+                var Product = context.backups.Find(ID);
+                context.backups.Remove(Product);
                 context.SaveChanges();
             }
         }

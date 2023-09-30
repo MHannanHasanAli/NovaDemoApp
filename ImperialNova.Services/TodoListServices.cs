@@ -32,9 +32,12 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
+                var data = context.todolists
+                    .Where(todoList => !todoList.IsDeleted)
+                    .OrderBy(todoList => todoList._Id)
+                    .ToList();
 
-                return context.todolists.OrderBy(x => x._Id).ToList();
-
+                return data;
             }
         }
         public List<TodoList> GetFilteredTodoLists()
@@ -79,7 +82,9 @@ namespace ImperialNova.Services
             {
 
                 var TodoList = context.todolists.Find(ID);
-                context.todolists.Remove(TodoList);
+                TodoList.IsDeleted = true;
+                TodoList.Type = "Todo List";
+                context.Entry(TodoList).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

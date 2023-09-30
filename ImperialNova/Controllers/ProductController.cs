@@ -6,6 +6,8 @@ using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Build.Framework.XamlTypes;
 using Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
@@ -23,6 +25,51 @@ namespace ImperialNova.Controllers
     [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+        public ProductController()
+        {
+        }
+        public ProductController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         public ActionResult Index(DateTime? startDate, DateTime? endDate)
         {
             Session["ACTIVER"] = "Product Index";
@@ -342,7 +389,7 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult Action(ProductActionViewModel model)
         {
-
+            var user = UserManager.FindById(User.Identity.GetUserId());
             if (model._Id != 0)
             {
                 var Product = ProductServices.Instance.GetProductById(model._Id);
@@ -399,6 +446,7 @@ namespace ImperialNova.Controllers
 
                 var notification = new Entities.Notification();
                 notification._Description = "New Product has been Added!";
+                notification._UserName = user.Name;
                 NotificationServices.Instance.CreateNotification(notification);
 
                 var Stores = LocationsServices.Instance.GetLocations();

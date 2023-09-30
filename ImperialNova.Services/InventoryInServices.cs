@@ -45,7 +45,10 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.inventoryins.ToList();
+                var data = context.inventoryins
+                    .Where(inventoryIn => !inventoryIn.IsDeleted)
+                    .ToList();
+
                 data.Reverse();
                 return data;
             }
@@ -102,7 +105,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.inventoryins.Find(ID);
-                context.inventoryins.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Inventory In";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

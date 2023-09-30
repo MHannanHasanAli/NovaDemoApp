@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Expenses : DeleteUpdate
+    public class Expenses : Backup
     {
         [Key]
         public int _Id { get; set; }

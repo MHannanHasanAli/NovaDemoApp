@@ -1,6 +1,8 @@
 ﻿using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,51 @@ namespace ImperialNova.Controllers
     [Authorize]
     public class OrderController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+        public OrderController()
+        {
+        }
+        public OrderController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         public ActionResult Index()
         {
             Session["ACTIVER"] = "Order Index";
@@ -140,7 +187,7 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult Action(OrderActionViewModel model)
         {
-
+            var user = UserManager.FindById(User.Identity.GetUserId());
             if (model._Id != 0)
             {
                 var Order = OrderServices.Instance.GetOrderById(model._Id);
@@ -192,6 +239,7 @@ namespace ImperialNova.Controllers
 
                 var notification = new Entities.Notification();
                 notification._Description = "New Order has been Added!";
+                notification._UserName = user.Name;
                 NotificationServices.Instance.CreateNotification(notification);
             }
 

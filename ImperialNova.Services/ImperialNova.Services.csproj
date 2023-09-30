@@ -82,6 +82,7 @@
     <Compile Include="AdjustmentServices.cs" />
     <Compile Include="CategoryServices.cs" />
     <Compile Include="CSVServices.cs" />
+    <Compile Include="BackupServices.cs" />
     <Compile Include="CustomerServices.cs" />
     <Compile Include="DeliveryFormServices.cs" />
     <Compile Include="DocumentServices.cs" />

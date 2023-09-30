@@ -15,12 +15,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace ImperialNova.Controllers
 {
     [Authorize]
     public class DeliveryFormController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+       
+        public DeliveryFormController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
         DeliveryFormServices DeliveryFormServices = new DeliveryFormServices();
         private readonly IEmailSender _emailSender;
         private readonly DSContext _context;
@@ -80,7 +126,7 @@ namespace ImperialNova.Controllers
         {
             var data = form;
             var productDataString = HttpUtility.UrlDecode(productData);
-
+            var user = UserManager.FindById(User.Identity.GetUserId());
             var deliveryForm = new DeliveryForm()
             {
 
@@ -109,6 +155,7 @@ namespace ImperialNova.Controllers
 
             var notification = new Entities.Notification();
             notification._Description = "New Delivery Form has been filled!";
+            notification._UserName = user.Name;
             NotificationServices.Instance.CreateNotification(notification);
 
             //SendEmail(deliveryForm,_Products);

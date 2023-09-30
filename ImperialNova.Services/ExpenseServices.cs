@@ -29,11 +29,12 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var dta = context.expenses.ToList();
-                dta.Reverse();
+                var data = context.expenses
+                    .Where(expense => !expense.IsDeleted)
+                    .ToList();
 
-                return dta;
-
+                data.Reverse();
+                return data;
             }
         }
         public void CreateExpense(Expenses Expense)
@@ -87,7 +88,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.expenses.Find(ID);
-                context.expenses.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Expense";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

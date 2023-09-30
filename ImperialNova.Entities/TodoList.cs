@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class TodoList : DeleteUpdate
+    public class TodoList : Backup
     {
         [Key] public int _Id { get; set; }
         public DateTime  _DueDate { get; set; }

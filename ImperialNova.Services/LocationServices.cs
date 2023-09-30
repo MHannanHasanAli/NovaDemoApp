@@ -29,19 +29,18 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                if (SearchTerm != "")
+                var query = context.locations.Where(location => !location.IsDeleted);
+
+                if (!string.IsNullOrWhiteSpace(SearchTerm))
                 {
-                    return context.locations.Where(p => p._LocationName != null && p._LocationName.ToLower()
-                                            .Contains(SearchTerm.ToLower()))
-                                            .OrderBy(x => x._LocationName)
-                                            .ToList();
+                    query = query.Where(location => location._LocationName != null && location._LocationName.ToLower().Contains(SearchTerm.ToLower()));
                 }
-                else
-                {
-                    return context.locations.OrderBy(x => x._LocationName).ToList();
-                }
+
+                var data = query.OrderBy(location => location._LocationName).ToList();
+                return data;
             }
         }
+
         public List<string> GetLocationsNames()
         {
             using (var context = new DSContext())
@@ -64,7 +63,10 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.locations.ToList();
+                var data = context.locations
+                    .Where(location => !location.IsDeleted)
+                    .ToList();
+
                 data.Reverse();
                 return data;
             }
@@ -103,7 +105,9 @@ namespace ImperialNova.Services
             using (var context = new DSContext())
             {
                 var Product = context.locations.Find(id);
-                context.locations.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Warehouse";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Reminder : DeleteUpdate
+    public class Reminder : Backup
     {
         [Key] public int _Id { get; set; }
         public DateTime _CreatedAt { get; set; }

@@ -31,7 +31,9 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.adjustments.ToList();
+                var data = context.adjustments
+                    .Where(adjustment => !adjustment.IsDeleted)
+                    .ToList();
                 data.Reverse();
                 return data;
             }
@@ -84,8 +86,12 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.adjustments.Find(ID);
-                context.adjustments.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Adjustment";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
+                //context.adjustments.Remove(Product);
+                //context.SaveChanges();
             }
         }
     }

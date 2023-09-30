@@ -31,8 +31,11 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.orders.ToList();
-                data.Reverse();
+                var data = context.orders
+                    .Where(order => !order.IsDeleted)
+                    .OrderByDescending(order => order._Date) // Optionally, you can sort by a date field (e.g., OrderDate) in descending order.
+                    .ToList();
+
                 return data;
             }
         }
@@ -108,7 +111,9 @@ namespace ImperialNova.Services
             {
 
                 var Product = context.orders.Find(ID);
-                context.orders.Remove(Product);
+                Product.IsDeleted = true;
+                Product.Type = "Order";
+                context.Entry(Product).State = EntityState.Modified;
                 context.SaveChanges();
             }
         }
