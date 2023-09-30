@@ -51,7 +51,15 @@ namespace ImperialNova.Controllers
             }
             return View("Action", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                CustomerServices.Instance.DeleteCustomer(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpPost]
         public ActionResult Action(CustomerActionViewModel model)

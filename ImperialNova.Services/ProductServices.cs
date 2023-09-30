@@ -40,7 +40,7 @@ namespace ImperialNova.Services
             {
                 if (SearchTerm != "")
                 {
-                    return context.products.Where(p => p._Name != null && p._Name.ToLower()
+                    return context.products.Where(p => p._Name != null && p.IsDeleted == false && p._Name.ToLower()
                                             .Contains(SearchTerm.ToLower()))
                                             .OrderBy(x => x._Name)
                                             .ToList();

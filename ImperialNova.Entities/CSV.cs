@@ -12,5 +12,6 @@ namespace ImperialNova.Entities
         public DateTime _Date { get; set; }
         public string _Description { get; set; }
         public string _File { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

@@ -23,7 +23,15 @@ namespace ImperialNova.Controllers
             model.Categories = CategoryServices.Instance.GetCategory(SearchTerm);
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                CategoryServices.Instance.DeleteCategory(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpGet]
         public ActionResult Action(int ID = 0)

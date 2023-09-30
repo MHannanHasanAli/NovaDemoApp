@@ -26,142 +26,122 @@
     .dataTables_filter {
         float: right;
     }
+    .collast {
+        padding-left: 38px;
+    }
 </style>
 <div class="container">
     <div class="card">
-        <div class="card-body  container-top">
+        <div class="card-body ">
             <div>
                 <h2>Product </h2>
             </div>
-            <div>
-                <form>
-
-                    @*<div class="input-group">
-
-                        @Html.ValidationSummary("", new { @class = "text-danger" })
-                        <a href="@Url.Action("Action", "Product")" class=" addbtn btn btn-outline-success"><i class="fas fa-plus mr-1"></i></a>
-
-                    </div>*@
-                </form>
-            </div>
-        </div>
-        @if (Model.Products != null)
-        {
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title"></h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Photo</th>
-                                                <th>SKU</th>
-                                                <th>Title</th>
-                                                <th>Category</th>
-                                                <th>Size</th>
-                                                <th>Purchase Price</th>
-                                                <th>Sell Price</th>
-                                                <th>Quantity</th>
-                                                <th>Stock Alert</th>
-                                                <th>Location</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var item in Model.Products)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <i class="fa fa-list" aria-hidden="true"></i>
-
-                                                            </button>
-                                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                <a class="dropdown-item" href="@Url.Action("Action", "Product", new { ID = item.Product._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> EDIT
-                                                                </a>
-                                                                @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
-
-                                                                <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
-                                                                    <i class="mdi mdi-delete"></i> DELETE
-                                                                </a>
-                                                                <a class="dropdown-item" href="@Url.Action("Preview", "Product", new { ID = item.Product._Id })">
-                                                                    <i class="mdi mdi-pencil"></i> PREVIEW
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-                                                    <td>
-                                                        @if (item.Product._Photo != null)
-                                                        {
-                                                            <img style="height:50px; width:50px;" src="@item.Product._Photo" />
-
-                                                        }
-                                                        else
-                                                        {
-                                                            <img style="height:50px; width:50px;" src="~/Images/download.png" />
-
-                                                        }
-                                                    </td>
-                                                    <td>@item.Product._SKU</td>
-                                                    <td>@item.Product._Name</td>
-                                                    @if (item.Category != null && item.Category._CName != null)
-                                                    {
-                                                        <td>@item.Category._CName</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td> No Category available</td>
-                                                    }
-                                                    <td>@item.Product._Size</td>
-                                                    <td>£@item.Product._Cost</td>
-                                                    <td>£@item.Product._RetailPrice</td>
-                                                    <td>@item.Product._Quantity</td>
-                                                    <td>@item.Product._LowStockAlert</td>
-                                                    @if (item.Warehouse != null && item.Warehouse._LocationName != null)
-                                                    {
-                                                        <td>@item.Warehouse._LocationName</td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td>No warehouse Available</td>
-                                                    }
-
-
-                                                </tr>
-                                            }
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                                <!-- /.card-body -->
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th style="padding-left: 38px;">
+                            &nbsp;     &nbsp;     &nbsp;     &nbsp;
+                            <input type="checkbox" id="selectAll" class="form-check-input">
+                        </th>
+                        <th></th>
+                        <th>Photo</th>
+                        <th>SKU</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Size</th>
+                        <th>Purchase Price</th>
+                        <th>Sell Price</th>
+                        <th>Quantity</th>
+                        <th>Stock Alert</th>
+                        <th>Location</th>
+                    </tr>
+                    <tr id="bulkUpdateRow" style="display: none;">
+                        <td colspan="13">
+                            <div class="form-inline">
+                                <!--<select id="statusDropdown" class="form-control mr-2">
+                    <option value="Delete">Delete</option>-->
+                                @*<option value="Out for Delivery">Out for Delivery</option>
+                        <option value="Delivery Complete">Delivery Complete</option>*@
+                                <!--</select>-->
+                                <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
                             </div>
-                            <!-- /.card -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </section>
-        }
-        else
-        {
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr data-sale-id="@item.Product._Id">
+                            <td class="collast" style="padding-left: 42px;">
+                             
+                                <input type="checkbox" class="form-check-input  data-checkbox">
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-list" aria-hidden="true"></i>
 
-            <div class="alert alert-warning col-md-12" role="alert">
-                Sorry! No records exist.
-            </div>
-        }
-    </div>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="@Url.Action("Action", "Product", new { ID = item.Product._Id })">
+                                            <i class="mdi mdi-pencil"></i> EDIT
+                                        </a>
+                                        @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
+
+                                        <a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
+                                            <i class="mdi mdi-delete"></i> DELETE
+                                        </a>
+                                        <a class="dropdown-item" href="@Url.Action("Preview", "Product", new { ID = item.Product._Id })">
+                                            <i class="mdi mdi-pencil"></i> PREVIEW
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                @if (item.Product._Photo != null)
+                                {
+                                    <img style="height:50px; width:50px;" src="@item.Product._Photo" />
+
+                                }
+                                else
+                                {
+                                    <img style="height:50px; width:50px;" src="~/Images/download.png" />
+
+                                }
+                            </td>
+                            <td>@item.Product._SKU</td>
+                            <td>@item.Product._Name</td>
+                            @if (item.Category != null && item.Category._CName != null)
+                            {
+                                <td>@item.Category._CName</td>
+                            }
+                            else
+                            {
+                                <td> No Category available</td>
+                            }
+                            <td>@item.Product._Size</td>
+                            <td>£@item.Product._Cost</td>
+                            <td>£@item.Product._RetailPrice</td>
+                            <td>@item.Product._Quantity</td>
+                            <td>@item.Product._LowStockAlert</td>
+                            @if (item.Warehouse != null && item.Warehouse._LocationName != null)
+                            {
+                                <td>@item.Warehouse._LocationName</td>
+                            }
+                            else
+                            {
+                                <td>No warehouse Available</td>
+                            }
+
+
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+     </div>
 </div>
 
 <div class="modal fade" id="actionModal" tabindex="-1" role="dialog">
@@ -187,4 +167,51 @@
                 $("#actionModal .modal-dialog").html(response);
             });
     });
+    $(document).ready(function () {
+        // When the "Select All" checkbox is clicked, select/deselect all checkboxes in the table
+        $("#selectAll").change(function () {
+            const isChecked = $(this).prop("checked");
+            $(".data-checkbox").prop("checked", isChecked);
+            $("#bulkUpdateRow").toggle($(".data-checkbox:checked").length > 0);
+        });
+
+        // When any checkbox is clicked, show/hide the bulk update row based on the selection
+        $(".data-checkbox").change(function () {
+            $("#selectAll").prop("checked", false);
+            $("#bulkUpdateRow").toggle($(".data-checkbox:checked").length > 0);
+        });
+
+        // When the "Save" button is clicked, get the selected IDs and the chosen status and send them to the server
+        $("#bulkUpdateButton").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
+            const selectedIds = [];
+            $(".data-checkbox:checked").each(function () {
+                selectedIds.push($(this).closest("tr").data("sale-id"));
+            });
+
+            const selectedStatus = $("#statusDropdown").val();
+
+            // Send the selected IDs and status to the server using Ajax (modify the URL and data as needed)
+            $.ajax({
+                url: "/Product/MassDelete",
+                type: "POST",
+                data: {
+                    ids: selectedIds,
+                    status: selectedStatus
+                },
+                success: function (response) {
+                    // Handle the server response if needed
+                    //alert("Status updated successful!");
+                    location.reload();
+
+                },
+                error: function (error) {
+                    // Handle errors if any
+                    console.error("Error occurred during bulk update:", error);
+                }
+            });
+        });
+    });
+
 </script>

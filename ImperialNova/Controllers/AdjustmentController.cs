@@ -157,7 +157,15 @@ namespace ImperialNova.Controllers
 
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                AdjustmentServices.Instance.DeleteAdjustment(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpGet]
         public ActionResult Delete(int ID)

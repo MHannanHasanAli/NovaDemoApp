@@ -51,7 +51,15 @@ namespace ImperialNova.Controllers
             //model.warehouses = LocationsServices.Instance.GetLocations();
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                ProductServices.Instance.DeleteProduct(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
         [HttpGet]
         public ActionResult GetFilteredData(DateTime? startDate, DateTime? endDate)
         {

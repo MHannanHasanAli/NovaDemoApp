@@ -64,6 +64,10 @@
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
+                                                <th style="padding-left: 38px;">
+                                                    &nbsp;     &nbsp;     &nbsp;     &nbsp;
+                                                    <input type="checkbox" id="selectAll" class="form-check-input">
+                                                </th>
                                                 <th>Actions</th>
                                                 <th>Supplier</th>
                                                 <th>Shipping Company</th>
@@ -72,11 +76,28 @@
                                                 <th>Amount</th>
                                                 <th>Status</th>
                                             </tr>
+                                            <tr id="bulkUpdateRow" style="display: none;">
+                                                <td colspan="13">
+                                                    <div class="form-inline">
+                                                        <!--<select id="statusDropdown" class="form-control mr-2">
+                    <option value="Delete">Delete</option>-->
+                                                        @*<option value="Out for Delivery">Out for Delivery</option>
+                    <option value="Delivery Complete">Delivery Complete</option>*@
+                                                        <!--</select>-->
+                                                        <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var item in Model.inventoryins)
                                             {
-                                                <tr>
+                                                <tr data-sale-id="@item._Id">
+                                                    <td class="collast" style="padding-left: 38px;">
+                                                        &nbsp;     &nbsp;     &nbsp;     &nbsp;
+
+                                                        <input type="checkbox" class="form-check-input  data-checkbox">
+                                                    </td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -86,6 +107,7 @@
                                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                                 <a class="dropdown-item" href="@Url.Action("Action", "InventoryIn", new { ID = item._Id })">
                                                                     <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                                                                    <a href="~/Views/InventoryIn/Index.cshtml">~/Views/InventoryIn/Index.cshtml</a>
                                                                 </a>
                                                                 @*<button data-href="@Url.Action("Delete", "InventoryIn", new { _Id = item._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
@@ -164,4 +186,51 @@
                 $("#actionModal .modal-dialog").html(response);
             });
     });
+    $(document).ready(function () {
+        // When the "Select All" checkbox is clicked, select/deselect all checkboxes in the table
+        $("#selectAll").change(function () {
+            const isChecked = $(this).prop("checked");
+            $(".data-checkbox").prop("checked", isChecked);
+            $("#bulkUpdateRow").toggle($(".data-checkbox:checked").length > 0);
+        });
+
+        // When any checkbox is clicked, show/hide the bulk update row based on the selection
+        $(".data-checkbox").change(function () {
+            $("#selectAll").prop("checked", false);
+            $("#bulkUpdateRow").toggle($(".data-checkbox:checked").length > 0);
+        });
+
+        // When the "Save" button is clicked, get the selected IDs and the chosen status and send them to the server
+        $("#bulkUpdateButton").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();
+            const selectedIds = [];
+            $(".data-checkbox:checked").each(function () {
+                selectedIds.push($(this).closest("tr").data("sale-id"));
+            });
+
+            const selectedStatus = $("#statusDropdown").val();
+
+            // Send the selected IDs and status to the server using Ajax (modify the URL and data as needed)
+            $.ajax({
+                url: "/InventoryIn/MassDelete",
+                type: "POST",
+                data: {
+                    ids: selectedIds,
+                    status: selectedStatus
+                },
+                success: function (response) {
+                    // Handle the server response if needed
+                    //alert("Status updated successful!");
+                    location.reload();
+
+                },
+                error: function (error) {
+                    // Handle errors if any
+                    console.error("Error occurred during bulk update:", error);
+                }
+            });
+        });
+    });
+
 </script>

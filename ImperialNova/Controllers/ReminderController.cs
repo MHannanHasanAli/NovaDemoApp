@@ -69,7 +69,15 @@ namespace ImperialNova.Controllers
             model.Reminders = ReminderServices.Instance.GetReminders();
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                ReminderServices.Instance.DeleteReminder(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpGet]
         public ActionResult Action(int ID = 0)

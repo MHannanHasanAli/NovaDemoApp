@@ -54,6 +54,15 @@ namespace ImperialNova.Controllers
             model.OrderNumber = OrderNumber;
             return View(model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                DeliveryFormServices.Instance.DeleteDeliveryForms(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult Listing(string SearchTerm = "")
         {
             Session["ACTIVER"] = "Delivery Index";
@@ -64,7 +73,7 @@ namespace ImperialNova.Controllers
         }
 
         
-        static DeliveryForm data2;
+        //static DeliveryForm data2;
         List<DeliveryFormProductsDB> _Products = new List<DeliveryFormProductsDB>();
         [HttpPost]
         public ActionResult SubmitDeliveryForm(DeliveryFormModel form, string signatureData, string productData)

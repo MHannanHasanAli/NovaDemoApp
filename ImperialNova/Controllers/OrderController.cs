@@ -21,6 +21,15 @@ namespace ImperialNova.Controllers
             model.orders = OrderServices.Instance.GetOrders();
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                OrderServices.Instance.DeleteOrder(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+
+        }
         public ActionResult ReadyToShipOrder()
         {
             Session["ACTIVER"] = "Order Ready";

@@ -79,7 +79,15 @@ namespace ImperialNova.Controllers
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach(var item in ids)
+            {
+                CSVServices.Instance.DeleteCSV(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpGet]
         public ActionResult Delete(int ID)

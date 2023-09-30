@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Adjustment
+    public class Adjustment:DeleteUpdate
     {
         [Key] public int _Id { get; set; }
         public DateTime _Date { get; set; }

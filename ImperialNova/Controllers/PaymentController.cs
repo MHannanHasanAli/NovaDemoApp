@@ -20,7 +20,15 @@ namespace ImperialNova.Controllers
             model.Payments = PaymentServices.Instance.GetPayment();
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                PaymentServices.Instance.DeletePayment(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
 
         [HttpGet]
         public ActionResult Action(int ID = 0)

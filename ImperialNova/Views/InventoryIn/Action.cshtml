@@ -107,11 +107,8 @@
                       <div class="col-md-3">
                           <div class="form-group">
                               <label for="_ShippingCompany">Shipping Company:</label>
-                              <select class="form-control" name="_ShippingCompany" id="_ShippingCompany">
-                                  <option value="Fedex" @(Model._ShippingCompany == "Fedex" ? "selected" : "")>Fedex</option>
-                                  <option value="UPS" @(Model._ShippingCompany == "UPS" ? "selected" : "")>UPS</option>
-                                  <option value="USPS" @(Model._ShippingCompany == "USPS" ? "selected" : "")>USPS</option>
-                              </select>
+                              <input class="form-control" name="_ShippingCompany" id="_ShippingCompany" />
+                                  
                           </div>
                       </div>
                       <div class="col-md-3">
@@ -124,25 +121,7 @@
                           <input value="@Model._Supplier" type="text" class="form-control" name="_Supplier" id="_Supplier" />
 
                       </div>
-                      @*<div class="col-md-3">
-                          <div class="form-group">
-                              <label for="_Supplier">Supplier:</label>
-                              <select class="form-control" name="_Supplier" id="_Supplier">
-                                  @foreach (var item in Model.suppliers)
-                                  {
-                                      if (item._Name == Model._Supplier)
-                                      {
-                                          <option selected value="@item._Name">@item._Name</option>
-                                      }
-                                      else
-                                      {
-                                          <option value="@item._Name">@item._Name</option>
-
-                                      }
-                                  }
-                              </select>
-                          </div>
-                      </div>*@
+                 
                   </div>
                   @if (Model._Id != 0)
                   {

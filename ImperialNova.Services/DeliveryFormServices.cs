@@ -8,6 +8,20 @@ namespace ImperialNova.Services
 {
     public class DeliveryFormServices
     {
+        #region Singleton
+        public static DeliveryFormServices Instance
+        {
+            get
+            {
+                if (instance == null) instance = new DeliveryFormServices();
+                return instance;
+            }
+        }
+        private static DeliveryFormServices instance { get; set; }
+        public DeliveryFormServices()
+        {
+        }
+        #endregion
         public List<DeliveryForm> GetDeliveryFormInfo(string SearchTerm = "")
         {
             using (var context = new DSContext())

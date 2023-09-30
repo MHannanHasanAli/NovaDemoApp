@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Document
+    public class Document : DeleteUpdate
     {
         [Key] public int _Id { get; set; }
         public string _Name { get; set; }

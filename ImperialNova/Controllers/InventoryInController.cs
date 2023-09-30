@@ -24,7 +24,15 @@ namespace ImperialNova.Controllers
            
             return View("Index", model);
         }
+        public ActionResult MassDelete(List<int> ids)
+        {
+            foreach (var item in ids)
+            {
+                InventoryInServices.Instance.DeleteInventoryIn(item);
+            }
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
 
+        }
         public ActionResult PendingOrder()
         {
             Session["ACTIVER"] = "Inventory Pending";
