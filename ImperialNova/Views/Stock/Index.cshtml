@@ -119,23 +119,23 @@
                                                 <tr>
 
                                                     <!--<td>
-    <div class="dropdown">
-        <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-list" aria-hidden="true"></i>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-list" aria-hidden="true"></i>
 
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
-                <i class="mdi mdi-pencil"></i> VIEW/EDIT
-            </a>-->
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
+                            <i class="mdi mdi-pencil"></i> VIEW/EDIT
+                        </a>-->
                                                     @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item.Product._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
                                                     <!--<a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
-                    <i class="mdi mdi-delete"></i> DELETE
-                </a>
-            </div>
-        </div>
-    </td>-->
+                                <i class="mdi mdi-delete"></i> DELETE
+                            </a>
+                        </div>
+                    </div>
+                </td>-->
                                                     <td>
 
                                                         @if (item.Product._Photo != null)
@@ -172,7 +172,21 @@
                                                 </tr>
                                             }
                                         </tbody>
+                                        <tr style="background: yellow;">
+                                            <td></td>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@Model.Quantity</td>
+                                            <td>£@Model.Purchase</td>
+                                            <td>£@Model.Sell</td>
 
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->
