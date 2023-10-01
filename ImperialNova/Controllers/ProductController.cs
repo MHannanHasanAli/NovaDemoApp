@@ -78,7 +78,7 @@ namespace ImperialNova.Controllers
             ProductListingViewModel model = new ProductListingViewModel();
             if(startDate ==  null && endDate == null)
             {
-                products = ProductServices.Instance.GetProduct();
+                products = ProductServices.Instance.GetProducts();
             }
             else
             {
@@ -92,8 +92,8 @@ namespace ImperialNova.Controllers
                 var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
                 var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
                 model.Quantity = model.Quantity + item._Quantity;
-                model.Purchase = model.Purchase + item._RetailPrice;
-                model.Sell = model.Sell + item._Cost;
+                model.Purchase = model.Purchase + item._Cost;
+                model.Sell = model.Sell + item._RetailPrice ;
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
 

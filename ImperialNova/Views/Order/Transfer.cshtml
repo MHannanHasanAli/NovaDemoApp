@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "Transfer";
+}
+
+<h2>Transfer</h2>
+<div class="col-md-3">
+    <div class="form-group">
+        <label for="_StoreId">Store:</label>
+        <select class="form-control" name="_StoreId" id="_StoreId">
+            @foreach (var item in Model.locations)
+            {
+                <option selected value="@item._Id">@item._LocationName</option>
+            }
+        </select>
+    </div>
+</div>
+<div class="setting">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="_ProductId">Products:</label>
+            <select class="form-control" name="_ProductId" id="_ProductId">
+            </select>
+        </div>
+    </div>
+    <button type="button" id="AdddToTableBtn" class="btn btn-sm btn-rounded btn-primary">ADD</button>
+</div>

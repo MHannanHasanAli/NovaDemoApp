@@ -21,6 +21,8 @@ using DocumentFormat.OpenXml.Bibliography;
 using Newtonsoft.Json;
 using DocumentFormat.OpenXml.EMMA;
 using System.Web.UI.WebControls;
+using Microsoft.Office.Interop.Excel;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ImperialNova.Controllers
 {
@@ -28,6 +30,49 @@ namespace ImperialNova.Controllers
     [Authorize]
     public class InventoryController : Controller
     {
+        private AMSignInManager _signInManager;
+        private AMUserManager _userManager;
+        public AMSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<AMSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public AMUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<AMUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+        private AMRolesManager _rolesManager;
+        public AMRolesManager RolesManager
+        {
+            get
+            {
+                return _rolesManager ?? HttpContext.GetOwinContext().GetUserManager<AMRolesManager>();
+            }
+            private set
+            {
+                _rolesManager = value;
+            }
+        }
+       
+        public InventoryController(AMUserManager userManager, AMSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
         private readonly IEmailSender _emailSender;
         private readonly DSContext _context;
 
@@ -213,7 +258,7 @@ namespace ImperialNova.Controllers
         {
             try
             {
-                DataTable dataTable = new DataTable("InventoryBackups");
+                System.Data.DataTable dataTable = new System.Data.DataTable("InventoryBackups");
                 dataTable.Columns.AddRange(new DataColumn[]
                 {
 
@@ -233,7 +278,7 @@ namespace ImperialNova.Controllers
 
                 foreach (var products in Inventory)
                 {
-                    dataTable.Rows.Add(products._Name, products._Size, products._Color, products._SKU, products._Weight, products._Thickness, products._Variations, products._QuantityIn, products._QuantityOut, products._Quantity, products._ExportDate,products._Store);
+                    dataTable.Rows.Add(products._Name, products._Size, products._Color, products._SKU, products._Weight, products._Thickness, products._Variations, products._QuantityIn, products._QuantityOut, products._Quantity, products._ExportDate, products._Store);
                 }
 
                 using (XLWorkbook wb = new XLWorkbook())
@@ -251,7 +296,7 @@ namespace ImperialNova.Controllers
 
                 throw;
             }
-           
+
         }
         public ActionResult Index(string SearchTerm = "")
         {
@@ -333,6 +378,8 @@ namespace ImperialNova.Controllers
         [HttpGet]
         public ActionResult Transfer()
         {
+            Session["ACTIVER"] = "Transfer Goods";
+
             InventoryActionViewModel model = new InventoryActionViewModel();
             model.Locations = LocationsServices.Instance.GetLocations();
             return View("Transfer",model);
@@ -378,8 +425,16 @@ namespace ImperialNova.Controllers
         public ActionResult GetProductInventoryJsonOut(string location)
         {
             var ProductWithStores = InventoryBackupsServices.Instance.GetInventoryBackupByStore(location);
-      
-            return Json(ProductWithStores, JsonRequestBehavior.AllowGet);
+            var products = ProductServices.Instance.GetProducts();
+            var dropdownproducts = new List<Product>();
+            foreach (var item in products)
+            {
+                if(item._Warehouse == location)
+                {
+                    dropdownproducts.Add(item);
+                }
+            }
+            return Json(dropdownproducts, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult GetProductInJson(int ID)
@@ -504,45 +559,99 @@ namespace ImperialNova.Controllers
         [HttpPost]
         public ActionResult ActionTransfer(string products, string Tostore)
         {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
             var ListOfInventory = JsonConvert.DeserializeObject<List<InventoryModel>>(products);
             foreach (var item in ListOfInventory)
             {
                 var product = ProductServices.Instance.GetProductById(int.Parse(item._ProductId));
-                var inventoryBackup = InventoryBackupsServices.Instance.GetInventoryBackupByStore(item._Store).Where(x => x._ProductId == int.Parse(item._ProductId)).FirstOrDefault();
+                if(item._QuantityIn != null)
+                {
+                    product._Quantity = product._Quantity - int.Parse(item._QuantityIn);
+                    ProductServices.Instance.UpdateProduct(product);
+                }
+
+                var flag = 0;
+                var allproducts = ProductServices.Instance.GetProducts();
+                foreach (var check in allproducts)
+                {
+                    if (product._Name == check._Name && check._Warehouse == Tostore && product._Size == check._Size && product._Color == check._Color)
+                    {
+                        if (item._QuantityIn != null)
+                        {
+                            check._Quantity = check._Quantity + int.Parse(item._QuantityIn);
+                            ProductServices.Instance.UpdateProduct(check);
+                            flag = 1;
+                        }
+
+                    }
+                }
+                if(flag != 1)
+                {
+                        if (item._QuantityIn != null)
+                        {
+                            var Product = new Product();
+                            Product._Name = product._Name;
+                            Product._Size = product._Size;
+                            Product._Color = product._Color;
+                            Product._Cost = product._Cost;
+                            Product._SKU = product._SKU;
+                            Product._Weight = product._Weight;
+                            Product._Thickness = product._Thickness;
+                            Product._Variations = product._Variations;
+                            Product._RetailPrice = product._RetailPrice;
+                            //Product._QuantityIn = check._QuantityIn;
+                            //Product._Quantity = check._OpeningStock;
+                            //Product._QuantityOut = check._QuantityOut;
+                            Product._Notes = product._Notes;
+                            Product._ExportDate = DateTime.Now;
+                            Product._CategoryId = product._CategoryId;
+                            //Product._WarehouseId = check._WarehouseId;
+                            Product._LowStockAlert = product._LowStockAlert;
+                            Product._Photo = product._Photo;
+                            Product._Quantity = int.Parse(item._QuantityIn);
+                            var data = LocationsServices.Instance.GetLocations();
+                            foreach (var location in data)
+                            {
+                                if(Tostore == location._LocationName)
+                                {
+                                    Product._WarehouseId = location._Id;
+                                    Product._Warehouse = Tostore;
+                                    break;
+                                }
+                            }
+                            
+                            ProductServices.Instance.CreateProduct(Product);
+                        }
+                    
+                }
                 
-                inventoryBackup._ProductId = int.Parse(item._ProductId);
-                inventoryBackup._QuantityIn = int.Parse(item._QuantityIn);
-                inventoryBackup._QuantityOut = int.Parse(item._QuantityOut) + product._QuantityOut;
-                inventoryBackup._Store = item._Store;
-                product._QuantityIn = inventoryBackup._QuantityIn;
-                inventoryBackup.JustAdded = false;
-                ProductServices.Instance.UpdateProduct(product);
-                InventoryBackupsServices.Instance.UpdateInventory(inventoryBackup);
+                //ProductServices.Instance.UpdateProduct(product);
 
-                var inventoryBackupIn = InventoryBackupsServices.Instance.GetInventoryBackupByStore(Tostore).Where(x => x._ProductId == int.Parse(item._ProductId)).FirstOrDefault();
-                if(inventoryBackupIn._QuantityIn == 0)
-                {
-                    inventoryBackupIn._ProductId = int.Parse(item._ProductId);
-                    inventoryBackupIn._QuantityIn = int.Parse(item._QuantityOut);
-                    //inventoryBackupIn._QuantityOut = int.Parse(item._QuantityOut);
-                    inventoryBackupIn._Store = Tostore;
-                    product._QuantityIn = inventoryBackupIn._QuantityIn;
-                    inventoryBackupIn.JustAdded = false;
-                    ProductServices.Instance.UpdateProduct(product);
-                    InventoryBackupsServices.Instance.UpdateInventory(inventoryBackupIn);
-                }
-                else
-                {
-                    inventoryBackupIn._ProductId = int.Parse(item._ProductId);
-                    inventoryBackupIn._QuantityIn = int.Parse(item._QuantityIn) + product._QuantityOut;
-                    inventoryBackupIn._QuantityOut = int.Parse(item._QuantityOut);
-                    inventoryBackupIn._Store = Tostore;
-                    product._QuantityIn = inventoryBackupIn._QuantityIn;
-                    inventoryBackupIn.JustAdded = false;
-                    ProductServices.Instance.UpdateProduct(product);
-                    InventoryBackupsServices.Instance.UpdateInventory(inventoryBackupIn);
+                //var inventoryBackupIn = InventoryBackupsServices.Instance.GetInventoryBackupByStore(Tostore).Where(x => x._ProductId == int.Parse(item._ProductId)).FirstOrDefault();
+                //if(inventoryBackupIn._QuantityIn == 0)
+                //{
+                //    inventoryBackupIn._ProductId = int.Parse(item._ProductId);
+                //    inventoryBackupIn._QuantityIn = int.Parse(item._QuantityOut);
+                //    //inventoryBackupIn._QuantityOut = int.Parse(item._QuantityOut);
+                //    inventoryBackupIn._Store = Tostore;
+                //    product._QuantityIn = inventoryBackupIn._QuantityIn;
+                //    inventoryBackupIn.JustAdded = false;
+                //    ProductServices.Instance.UpdateProduct(product);
+                //    InventoryBackupsServices.Instance.UpdateInventory(inventoryBackupIn);
+                //}
+                //else
+                //{
+                //    inventoryBackupIn._ProductId = int.Parse(item._ProductId);
+                //    inventoryBackupIn._QuantityIn = int.Parse(item._QuantityIn) + product._QuantityOut;
+                //    inventoryBackupIn._QuantityOut = int.Parse(item._QuantityOut);
+                //    inventoryBackupIn._Store = Tostore;
+                //    product._QuantityIn = inventoryBackupIn._QuantityIn;
+                //    inventoryBackupIn.JustAdded = false;
+                //    ProductServices.Instance.UpdateProduct(product);
+                //    InventoryBackupsServices.Instance.UpdateInventory(inventoryBackupIn);
 
-                }
+                //}
 
                 //var ListOfInventory = JsonConvert.DeserializeObject<List<InventoryModel>>(products);
                 //foreach (var item in ListOfInventory)
@@ -568,7 +677,11 @@ namespace ImperialNova.Controllers
                 //}
 
             }
-            ExportProductInExcelAndEmail();
+            var notification = new Entities.Notification();
+            notification._Description = "Warehouse transfer has been done!";
+            notification._UserName = user.Name;
+            NotificationServices.Instance.CreateNotification(notification);
+            //ExportProductInExcelAndEmail();
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
         //[HttpPost]

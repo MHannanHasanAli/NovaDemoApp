@@ -377,6 +377,12 @@
                                     <p>All Customers</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a id="transfer_tab" href="~/Inventory/Transfer" class="nav-link">
+                                    <i class="nav-icon fas fa-warehouse" aria-hidden="true"></i>                                    
+                                    <p>Warehouse Transfer</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item" id="inventory_tab">
@@ -965,6 +971,12 @@
             }
             if (data == 'Customer Action') {
                 var elem = document.getElementById("customeraction_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("order_tab");
+                elemm.className += ' menu-open';
+            }
+            if (data == 'Transfer Goods') {
+                var elem = document.getElementById("transfer_tab");
                 elem.className += ' active';
                 var elemm = document.getElementById("order_tab");
                 elemm.className += ' menu-open';

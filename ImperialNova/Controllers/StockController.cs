@@ -24,12 +24,15 @@ namespace ImperialNova.Controllers
 
             ProductListingViewModel model = new ProductListingViewModel();
          
-            var products= ProductServices.Instance.GetProduct();
+            var products= ProductServices.Instance.GetProducts();
             var ProductList = new List<ProductsModel>();
             foreach (var item in products)
             {
                 var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
                 var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
+                model.Purchase = model.Purchase + item._Cost;
+                model.Sell =model.Sell + item._RetailPrice;
+                model.Quantity = model.Quantity + item._Quantity;
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
             model.Products = ProductList;

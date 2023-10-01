@@ -33,4 +33,9 @@ namespace ImperialNova.ViewModels
         public string _Amount { get; set; }
         public string _IsPacked { get; set; }
     }
+
+    public class TransferModel
+    {
+        public List<Locations> warehouses { get; set; }
+    }
 }

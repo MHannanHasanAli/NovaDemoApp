@@ -11,7 +11,8 @@
         <h2 class="card-title">
             Transfer Stock
         </h2>
-
+        <br />
+        <br />
 
 
         <form id="actionForm">
@@ -75,23 +76,24 @@
                                 </th>
                                 @if (User.IsInRole("Admin"))
                                 {
+                                    @*<th>
+                Retail Price
+            </th>*@
                                     <th>
                                         Retail Price
                                     </th>
-                                    <th>
-                                        Cost Price
-                                    </th>
+
                                 }
                                 <th>
                                     Quantity
                                 </th>
 
                                 <th>Quantity Out</th>
-
-                                <th>Notes</th>
-                                <th>
-                                    Store
-                                </th>
+                                <th>Warehouse</th>
+                                @*<th<th>Quantity Out</th>>Notes</th>
+        <th>
+            Store
+        </th>*@
                                 <th hidden>
                                     Category
                                 </th>
@@ -119,7 +121,7 @@
     <div style="background-color:white;" class="card-footer">
 
         <button id="actionButton" type="button" class="btn btn-danger btn-sm btn-rounded"><i class="fas fa-save mr-1"></i> TAKE STOCK</button>
-        <a href="@Url.Action("Index","Inventory")" class="btn btn-secondary btn-sm btn-rounded" " data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
+        <a href="@Url.Action("Index","Inventory")" class="btn btn-secondary btn-sm btn-rounded"  data-dismiss="modal"><i class="fas fa-times mr-1"></i> Close</a>
     </div>
 
 
@@ -152,7 +154,7 @@
         // Add options to the dropdown based on the products data
         products.forEach(function (product) {
             var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Cost: £${product._Cost} | Retail: £${product._RetailPrice} | Available Units: ${product._Quantity}`;
-            productsDropdown.append($("<option>", { value: product._ProductId, text: optionText }));
+            productsDropdown.append($("<option>", { value: product._Id, text: optionText }));
         });
     }
     function appendProductToTable(product, quantityout, store, to) {
@@ -163,11 +165,9 @@
                     <td>${product._Name}</td>
                     <td>${product._Size}</td>
                     <td>${product._Color}</td>
-                    <td hidden>${product._Cost}</td>
-                    <td hidden>${product._RetailPrice}</td>
-                    <td>${product._QuantityIn}</td>
-                    <td>${quantityout}</td>
-                    <td>${product._Notes}</td>
+                    <td>£${product._RetailPrice}</td> 
+                    <td>${product._Quantity}</td>  
+                    <td>${quantityout}</td>                 
                     <td>${store}</td>
                     <td hidden>${product._CategoryId}</td>
                     <td></td>
@@ -184,7 +184,6 @@
         var QuantityOut = $("#_QuantityOut").val();
         var Store = $("#_Store").val();
         StoreTo = $('#_StoreTo').val();
-        
         $.ajax({
             url: '@Url.Action("GetProductJson", "Inventory")',  // Replace with the actual URL of your controller
             method: 'GET',
@@ -237,7 +236,7 @@
             .done(function (response) {
 			if(response.success)
 			{
-				window.location.href = "@Url.Action("Index", "Inventory")";
+				window.location.href = "@Url.Action("Index", "Stock")";
 			}
 			else {
 				$(".errorDiv").html(response.Message);

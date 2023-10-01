@@ -96,6 +96,13 @@ namespace ImperialNova.Controllers
             model.orders = OrderServices.Instance.GetShippedOrders();
             return View("Shipped", model);
         }
+        public ActionResult Transfer()
+        {
+            Session["ACTIVER"] = "Transfer Goods";
+            TransferModel model = new TransferModel();
+            model.warehouses = LocationsServices.Instance.GetLocations();
+            return View("Transfer", model);
+        }
         [HttpGet]
         public ActionResult GetProductsInJson()
         {
