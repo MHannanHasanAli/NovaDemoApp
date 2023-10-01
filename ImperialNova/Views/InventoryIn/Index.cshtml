@@ -82,7 +82,7 @@
                                                         <!--<select id="statusDropdown" class="form-control mr-2">
                     <option value="Delete">Delete</option>-->
                                                         @*<option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivery Complete">Delivery Complete</option>*@
+                        <option value="Delivery Complete">Delivery Complete</option>*@
                                                         <!--</select>-->
                                                         <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
                                                     </div>
@@ -132,14 +132,23 @@
                                                     <td>@item._Status</td>
                                                     @*<td>@item._Name</td>*@
                                                     @*<td>
-            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                <i class="fa fa-download" aria-hidden="true"></i>
-            </a>
-        </td>*@
+                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    </td>*@
                                                 </tr>
                                             }
                                         </tbody>
-
+                                        <tr style="background: yellow;">
+                                            <td></td>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@Model.Quantity</td>
+                                            <td>£@Model.Amount</td>
+                                            <td></td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

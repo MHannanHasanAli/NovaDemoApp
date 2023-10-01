@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Order : Backup
+    public class Order
     {
         [Key] public int _Id { get; set; }
         public DateTime _Date { get; set; }
@@ -20,5 +20,7 @@ namespace ImperialNova.Entities
         public int _Quantity { get; set; }
         public decimal _Amount { get; set; }
         public string _IsPacked { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

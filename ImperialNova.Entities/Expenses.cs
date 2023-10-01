@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Expenses : Backup
+    public class Expenses
     {
         [Key]
         public int _Id { get; set; }
@@ -28,6 +28,8 @@ namespace ImperialNova.Entities
         //public decimal _Bank { get; set; }
 
         public string _Title { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
         public DateTime _Date { get; set; }
     }
 }

@@ -10,8 +10,9 @@ namespace ImperialNova.Entities
     public class Backup
     {
         [Key]
-        public int Id { get; set; }
-        public bool IsDeleted { get; set; }
+        public int _Id { get; set; }
+        public int ComponenetId { get; set; }
+        public string Aspect { get; set; }
         public string Type { get; set; }
         public DateTime DeletionDate { get; set; }
     }

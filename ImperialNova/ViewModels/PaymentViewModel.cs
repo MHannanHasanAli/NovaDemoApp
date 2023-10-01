@@ -11,6 +11,7 @@ namespace ImperialNova.ViewModels
         public class PaymentListingViewModel
         {
             public List<Payment> Payments { get; set; }
+            public decimal Amount { get; set; }
             public string SearchTerm { get; set; }
         }
         public class PaymentActionViewModel

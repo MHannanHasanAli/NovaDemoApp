@@ -66,6 +66,10 @@ namespace ImperialNova.Controllers
             Session["ACTIVER"] = "Adjustment Index";
             AdjustmentListingViewModel model = new AdjustmentListingViewModel();
             model.Adjustments = AdjustmentServices.Instance.GetAdjustments();
+            foreach (var item in model.Adjustments)
+            {
+                model.Quantity = model.Quantity + item._Quantity;
+            }
             return View("Index", model);
         }
 

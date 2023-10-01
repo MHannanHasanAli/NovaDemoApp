@@ -65,6 +65,10 @@ namespace ImperialNova.Controllers
 
             PaymentListingViewModel model = new PaymentListingViewModel();
             model.Payments = PaymentServices.Instance.GetPayment();
+            foreach (var item in model.Payments)
+            {
+                model.Amount = model.Amount + item._Amount;
+            }
             return View("Index", model);
         }
         public ActionResult MassDelete(List<int> ids)

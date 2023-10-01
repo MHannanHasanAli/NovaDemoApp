@@ -70,6 +70,10 @@ namespace ImperialNova.Controllers
 
             ExpenseListingViewModel model = new ExpenseListingViewModel();
             model.expense = ExpenseServices.Instance.GetExpenses();
+            foreach (var item in model.expense)
+            {
+                model.ExpensesSum = model.ExpensesSum + item._TotalExpenses;
+            }
             return View("Index", model);
         }
         //public ActionResult FetchTotalSales(DateTime date)

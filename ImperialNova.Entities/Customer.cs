@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Customer : Backup
+    public class Customer
     {
         [Key] public int _Id { get; set; }
         public string _Name { get; set; }
@@ -17,6 +17,7 @@ namespace ImperialNova.Entities
         public string _Zip { get; set; }
         public string _City { get; set; }
         public string _Country { get; set; }
-
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

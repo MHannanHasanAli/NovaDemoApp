@@ -115,6 +115,12 @@ namespace ImperialNova.Controllers
 
             DeliveryFormViewModel model = new DeliveryFormViewModel();
             model.forms=DeliveryFormServices.GetDeliveryFormInfo(SearchTerm);
+            foreach (var item in model.forms)
+            {
+                model.Amount = model.Amount + item._TotalAmount;
+                model.Balance = model.Balance + item._AmountInBalance;
+                model.Paid = model.Paid + item._AmountPaid;
+            }
             return View(model);
         }
 

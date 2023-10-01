@@ -12,7 +12,7 @@ namespace ImperialNova.ViewModels
     public class ExpenseListingViewModel
     {
         public List<Entities.Expenses> expense { get; set; }
-
+        public decimal ExpensesSum { get; set; }
     }
 
     public class ExpenseActionViewModel

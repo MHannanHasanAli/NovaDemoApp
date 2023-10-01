@@ -80,9 +80,9 @@
                                                 <td colspan="13">
                                                     <div class="form-inline">
                                                         <!--<select id="statusDropdown" class="form-control mr-2">
-                <option value="Delete">Delete</option>-->
+                    <option value="Delete">Delete</option>-->
                                                         @*<option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivery Complete">Delivery Complete</option>*@
+                        <option value="Delivery Complete">Delivery Complete</option>*@
                                                         <!--</select>-->
                                                         <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
                                                     </div>
@@ -90,6 +90,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           
                                             @foreach (var item in Model.Adjustments)
                                             {
                                                 <tr data-sale-id="@item._Id">
@@ -119,15 +120,20 @@
                                                     <td>@item._Date.ToString("yyyy-MM-dd")</td>
                                                     <td>@item._Remarks</td>
                                                     <td>@item._Quantity</td>
-                                                    @*<td>
-            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                <i class="fa fa-download" aria-hidden="true"></i>
-            </a>
-        </td>*@
-                                                </tr>
-                                            }
-                                        </tbody>
 
+
+                                                </tr>                                            
+                                            }
+
+                                        </tbody>
+                                        <tr style="background: yellow;">
+                                            <td></td>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>@Model.Quantity</td>
+
+                                        </tr>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

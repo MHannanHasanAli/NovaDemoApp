@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Document : Backup
+    public class Document
     {
         [Key] public int _Id { get; set; }
         public string _Name { get; set; }
         public string _File { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace ImperialNova.Services
                 var data = context.adjustments
                     .Where(adjustment => !adjustment.IsDeleted)
                     .ToList();
-                data.Reverse();
+
                 return data;
             }
         }

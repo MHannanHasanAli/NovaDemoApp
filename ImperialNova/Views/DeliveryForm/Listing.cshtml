@@ -37,7 +37,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>
+                                <th style="padding-left: 38px;">
                                     &nbsp;     &nbsp;     &nbsp;     &nbsp;
                                     <input type="checkbox" id="selectAll" class="form-check-input">
                                 </th>
@@ -73,7 +73,7 @@
                                         <!--<select id="statusDropdown" class="form-control mr-2">
                     <option value="Delete">Delete</option>-->
                                         @*<option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivery Complete">Delivery Complete</option>*@
+                        <option value="Delivery Complete">Delivery Complete</option>*@
                                         <!--</select>-->
                                         <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
                                     </div>
@@ -93,9 +93,9 @@
                                     <td>@item._CustomerName</td>
                                     <td>@item._Address</td>
                                     <td>@item._Country</td>
-                                    <td>@item._TotalAmount</td>
-                                    <td>@item._AmountPaid</td>
-                                    <td>@item._AmountInBalance</td>
+                                    <td>£@item._TotalAmount</td>
+                                    <td>£@item._AmountPaid</td>
+                                    <td>£@item._AmountInBalance</td>
                                     <td>
                                         <a class="btn btn-success btn-sm btn-rounded" href="@Url.Action("Invoice", "DeliveryForm", new {id=item._id })">VIEW</a>
                                         <button data-href="@Url.Action("Delete", "DeliveryForm", new { ID = item._id })" type="button" class="data-btn btn btn-sm btn-rounded btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>
@@ -104,6 +104,17 @@
                                 </tr>
                             }
                         </tbody>
+                        <tr style="background: yellow;">
+                            <td></td>
+                            <td>Total</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>£@Model.Amount</td>
+                            <td>£@Model.Paid</td>
+                            <td>£@Model.Balance</td>
+                            <td></td>
+                        </tr>
                     </table>
                 </div>
             </div>

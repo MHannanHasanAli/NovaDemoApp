@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ImperialNova.Entities
 {
-    public class DeliveryForm : Backup
+    public class DeliveryForm
     {
         [Key]
         public int _id { get; set; }
@@ -32,7 +32,8 @@ namespace ImperialNova.Entities
         public string _OrderNumber { get; set; }
         public decimal _AmountPaid { get; set; }
         public decimal _AmountInBalance { get; set; }
-
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
     public class DeliveryFormProductsDB
     {

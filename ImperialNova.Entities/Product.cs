@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace ImperialNova.Entities
 {
 
-    public class Product : Backup
+    public class Product
     {
         [Key]
         public int _Id { get; set; }
@@ -31,6 +31,7 @@ namespace ImperialNova.Entities
         public string _Photo { get; set; }
         public string _Category { get; set; }
         public string _Warehouse { get; set; }
-
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

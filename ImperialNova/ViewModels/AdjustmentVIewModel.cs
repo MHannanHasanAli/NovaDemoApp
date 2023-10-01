@@ -14,6 +14,7 @@ namespace ImperialNova.ViewModels
     {
         public List<Adjustment> Adjustments { get; set; }
         public string SearchTerm { get; set; }
+        public int Quantity { get; set; }
     }
     public class AdjustmentActionViewModel
     {

@@ -13,5 +13,9 @@ namespace ImperialNova.ViewModels
         public string OrderNumber { get; set; }
         public string SearchTerm { get; set; }
         public List<DeliveryForm> forms{ get; set; }
+        public decimal Amount { get; set; }
+        public decimal Paid { get; set; }
+        public decimal Balance { get; set; }
+
     }
 }

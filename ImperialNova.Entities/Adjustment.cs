@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class Adjustment:Backup
+    public class Adjustment
     {
         [Key] public int _Id { get; set; }
         public DateTime _Date { get; set; }
@@ -15,5 +15,7 @@ namespace ImperialNova.Entities
         public string _Remarks { get; set; }
         public string _Product { get; set; }
         public int _Quantity { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

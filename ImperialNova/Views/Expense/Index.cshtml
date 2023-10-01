@@ -62,7 +62,7 @@
                                                 @*<th>Total Cost</th>*@
                                                 <th>Total Expense</th>
                                                 @*<th>Tax</th>
-            <th>Download Report</th>*@
+                <th>Download Report</th>*@
 
                                             </tr>
                                             <tr id="bulkUpdateRow" style="display: none;">
@@ -71,7 +71,7 @@
                                                         <!--<select id="statusDropdown" class="form-control mr-2">
                     <option value="Delete">Delete</option>-->
                                                         @*<option value="Out for Delivery">Out for Delivery</option>
-                    <option value="Delivery Complete">Delivery Complete</option>*@
+                        <option value="Delivery Complete">Delivery Complete</option>*@
                                                         <!--</select>-->
                                                         <button id="bulkUpdateButton" class="btn btn-danger">Delete</button>
                                                     </div>
@@ -82,11 +82,11 @@
                                             @foreach (var item in Model.expense)
                                             {
                                                 <tr data-sale-id="@item._Id">
-                                                   <td class="collast" style="padding-left: 38px;">
-                                                       &nbsp;     &nbsp;     &nbsp;     &nbsp;
+                                                    <td class="collast" style="padding-left: 38px;">
+                                                        &nbsp;     &nbsp;     &nbsp;     &nbsp;
 
-                                                       <input type="checkbox" class="form-check-input  data-checkbox">
-                                                   </td>
+                                                        <input type="checkbox" class="form-check-input  data-checkbox">
+                                                    </td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,19 +113,25 @@
                                                     @*<td>£@item._ProductCost</td>*@
                                                     <td>£@item._TotalExpenses</td>
                                                     @*<td>£@item._Tax</td>
-        <td>
-            <a href="@Url.Action("DownloadExcelFile","Expense", new { ID = item._Id })" class="back"> Download Report</a>
-        </td>*@
+                    <td>
+                        <a href="@Url.Action("DownloadExcelFile","Expense", new { ID = item._Id })" class="back"> Download Report</a>
+                    </td>*@
                                                     @*<td>@item._File</td>*@
                                                     @*<td>
-            <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
-                <i class="fa fa-download" aria-hidden="true"></i>
-            </a>
-        </td>*@
+                        <a class="btn" href="@Url.Action("DownloadFile", "Shared", new { path = item._File })">
+                            <i class="fa fa-download" aria-hidden="true"></i>
+                        </a>
+                    </td>*@
                                                 </tr>
                                             }
                                         </tbody>
-
+                                        <tr style="background: yellow;">
+                                            <td></td>
+                                            <td>Total</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>£@Model.ExpensesSum</td>
+                                        </tr>
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

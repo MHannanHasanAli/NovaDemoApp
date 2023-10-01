@@ -27,6 +27,10 @@ namespace ImperialNova.ViewModels
         public string SearchTerm { get; set; }
         public List<Locations> warehouses { get; set; }
         public List<Order> order { get; set; }
+        public int Quantity { get; set; }
+        public decimal Purchase { get; set; }
+        public decimal Sell { get; set; }
+
     }
     public class ProductPreviewModel
     {

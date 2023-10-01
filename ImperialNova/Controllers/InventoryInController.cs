@@ -68,7 +68,11 @@ namespace ImperialNova.Controllers
 
             InventoryInListingViewModel model = new InventoryInListingViewModel();
             model.inventoryins = InventoryInServices.Instance.GetInventoryIns();
-           
+            foreach (var item in model.inventoryins)
+            {
+                model.Amount = model.Amount + item._Amount;
+                model.Quantity = model.Quantity + item._Quantity;
+            }
             return View("Index", model);
         }
         public ActionResult MassDelete(List<int> ids)

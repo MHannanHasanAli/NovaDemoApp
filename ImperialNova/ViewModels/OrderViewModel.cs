@@ -12,6 +12,8 @@ namespace ImperialNova.ViewModels
     public class OrderListingViewModel
     {
         public List<Entities.Order> orders { get; set; }
+        public int Quantity { get; set; }
+        public decimal Amount { get; set; }
     }
 
     public class OrderActionViewModel

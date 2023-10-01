@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class AdjustmentProduct : Backup
+    public class AdjustmentProduct 
     {
         [Key] public int _Id { get; set; }
         public int _AdjustmentId { get; set; }

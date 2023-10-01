@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImperialNova.Entities
 {
-    public class InventoryIn : Backup
+    public class InventoryIn
     {
         [Key] public int _Id { get; set; }
         public DateTime _Date { get; set; }
@@ -17,6 +17,7 @@ namespace ImperialNova.Entities
         public string _Status { get; set; }     
         public int _Quantity { get; set; }
         public decimal _Amount { get; set; }
-
+        public bool IsDeleted { get; set; }
+        public string Type { get; set; }
     }
 }

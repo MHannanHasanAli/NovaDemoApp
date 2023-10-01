@@ -66,6 +66,11 @@ namespace ImperialNova.Controllers
 
             OrderListingViewModel model = new OrderListingViewModel();
             model.orders = OrderServices.Instance.GetOrders();
+            foreach (var item in model.orders)
+            {
+                model.Amount = model.Amount + item._Amount;
+                model.Quantity = model.Quantity + item._Quantity;
+            }
             return View("Index", model);
         }
         public ActionResult MassDelete(List<int> ids)

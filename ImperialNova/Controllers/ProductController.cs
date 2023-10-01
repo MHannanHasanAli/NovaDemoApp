@@ -91,6 +91,9 @@ namespace ImperialNova.Controllers
             {
                 var warehouse = LocationsServices.Instance.GetLocationsById(item._WarehouseId);
                 var category = CategoryServices.Instance.GetCategoryById(item._CategoryId);
+                model.Quantity = model.Quantity + item._Quantity;
+                model.Purchase = model.Purchase + item._RetailPrice;
+                model.Sell = model.Sell + item._Cost;
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
 
