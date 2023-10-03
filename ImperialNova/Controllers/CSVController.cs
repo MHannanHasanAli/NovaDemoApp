@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -153,6 +154,12 @@ namespace ImperialNova.Controllers
             if (model.ID != 0)
             {
                 var CSV = CSVServices.Instance.GetCSVById(model.ID);
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = CSV.ID;
+                backup.Aspect = CSV._File;
+                backup.Type = "CSV";
+                BackupServices.Instance.CreateBackup(backup);
 
                 CSVServices.Instance.DeleteCSV(CSV.ID);
             }

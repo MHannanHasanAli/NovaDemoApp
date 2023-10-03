@@ -385,7 +385,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var InventoryIn = InventoryInServices.Instance.GetInventoryInById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = InventoryIn._Id;
+                backup.Aspect = InventoryIn._Amount.ToString();
+                backup.Type = "Inventory In";
+                BackupServices.Instance.CreateBackup(backup);
                 InventoryInServices.Instance.DeleteInventoryIn(InventoryIn._Id);
             }
 

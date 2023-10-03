@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -167,7 +168,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Payment = PaymentServices.Instance.GetPaymentById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Payment._Id;
+                backup.Aspect = Payment._Amount.ToString();
+                backup.Type = "Payment";
+                BackupServices.Instance.CreateBackup(backup);
                 PaymentServices.Instance.DeletePayment(Payment._Id);
             }
 

@@ -1,4 +1,5 @@
-﻿using ImperialNova.Entities;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using ImperialNova.Entities;
 using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -276,7 +277,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Order = OrderServices.Instance.GetOrderById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Order._Id;
+                backup.Aspect = Order._Amount.ToString();
+                backup.Type = "Order";
+                BackupServices.Instance.CreateBackup(backup);
                 OrderServices.Instance.DeleteOrder(Order._Id);
             }
 

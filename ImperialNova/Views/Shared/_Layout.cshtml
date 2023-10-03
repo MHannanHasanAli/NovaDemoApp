@@ -266,7 +266,7 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
+    with font-awesome or any other icon font library -->
                     <li class="nav-item">
                         <a href="index3.html">
                             <img src="~/Content/adminTemplate/dist/img/logo.png" alt="AdminLTE Logo" class="logo">
@@ -379,7 +379,7 @@
                             </li>
                             <li class="nav-item">
                                 <a id="transfer_tab" href="~/Inventory/Transfer" class="nav-link">
-                                    <i class="nav-icon fas fa-warehouse" aria-hidden="true"></i>                                    
+                                    <i class="nav-icon fas fa-warehouse" aria-hidden="true"></i>
                                     <p>Warehouse Transfer</p>
                                 </a>
                             </li>
@@ -490,14 +490,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a id="adjustmentindex_tab"  href="~/Adjustment/Index" class="nav-link">
+                                <a id="adjustmentindex_tab" href="~/Adjustment/Index" class="nav-link">
                                     <i class="fa fa-list" aria-hidden="true"></i>
                                     <p>All Records</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item"  id="payment_tab">
+                    <li class="nav-item" id="payment_tab">
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
                             <p>
@@ -520,29 +520,59 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item"  id="reminder_tab">
+                    <li class="nav-item" id="feature_tab">
                         <a href="#" class="nav-link">
-                            <i class="fa fa-bell" aria-hidden="true"></i>
+                            <i class="fa fa-star" aria-hidden="true"></i>
                             <p>
-                                Reminders
+                                Features
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+
                             <li class="nav-item">
-                                <a id="reminderaction_tab" href="~/Reminder/Action" class="nav-link">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-                                    <p>Add Reminder</p>
+
+                                <a id="featuretodo_tab" href="~/TodoList/Index" class="nav-link">
+                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
+                                    <p>
+                                        To Do
+                                    </p>
                                 </a>
+
                             </li>
                             <li class="nav-item">
-                                <a id="reminderindex_tab" href="~/Reminder/Index" class="nav-link">
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                    <p>All Reminders</p>
+
+                                <a id="featurenotification_tab" href="~/Notifications/Index" class="nav-link">
+                                    <i class="fa fa-bell" aria-hidden="true"></i>
+                                    <p>
+                                        Notifications
+                                    </p>
                                 </a>
+
+                            </li>
+                            <li class="nav-item">
+
+                                <a id="featuredocument_tab" href="~/Documents/Index" class="nav-link">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                    <p>
+                                        Documents
+                                    </p>
+                                </a>
+
+                            </li>
+                            <li class="nav-item">
+
+                                <a id="backup_tab" href="~/Backup/Index" class="nav-link">
+                                    <i class="fa fa-folder" aria-hidden="true"></i>
+                                    <p>
+                                        Backup
+                                    </p>
+                                </a>
+
                             </li>
                         </ul>
                     </li>
+
                     <li class="nav-item" id="product_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -587,7 +617,7 @@
 
 
 
-                    <li class="nav-item"  id="user_tab">
+                    <li class="nav-item" id="user_tab">
                         <a href="#" class="nav-link">
                             <i class="fa fa-users" aria-hidden="true"></i>
                             <p>
@@ -622,180 +652,162 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item"  id="feature_tab">
+                    <li class="nav-item" id="reminder_tab">
                         <a href="#" class="nav-link">
-                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <i class="fa fa-bell" aria-hidden="true"></i>
                             <p>
-                                Features
+                                Reminders
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-
                             <li class="nav-item">
-
-                                <a id="featuretodo_tab" href="~/TodoList/Index" class="nav-link">
-                                    <i class="fa fa-clipboard" aria-hidden="true"></i>
-                                    <p>
-                                        To Do
-                                    </p>
+                                <a id="reminderaction_tab" href="~/Reminder/Action" class="nav-link">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    <p>Add Reminder</p>
                                 </a>
-
                             </li>
                             <li class="nav-item">
-
-                                <a id="featurenotification_tab" href="~/Notifications/Index" class="nav-link">
-                                    <i class="fa fa-bell" aria-hidden="true"></i>
-                                    <p>
-                                        Notifications
-                                    </p>
+                                <a id="reminderindex_tab" href="~/Reminder/Index" class="nav-link">
+                                    <i class="fa fa-list" aria-hidden="true"></i>
+                                    <p>All Reminders</p>
                                 </a>
-
-                            </li>
-                            <li class="nav-item">
-
-                                <a id="featuredocument_tab" href="~/Documents/Index" class="nav-link">
-                                    <i class="fa fa-folder" aria-hidden="true"></i>
-                                    <p>
-                                        Documents
-                                    </p>
-                                </a>
-
                             </li>
                         </ul>
                     </li>
+
                     @*<li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fa fa-cog" aria-hidden="true"></i>
-                                <p>
-                                    Settings
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="~/User/Register" class="nav-link">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                        <p>Add User</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/User/Index" class="nav-link">
-                                        <i class="fa fa-list" aria-hidden="true"></i>
-                                        <p>Users</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/Role/Action" class="nav-link">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                        <p> Add Roles</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="~/Role/Index" class="nav-link">
-                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                        <p>Roles</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>*@
+            <a href="#" class="nav-link">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <p>
+                    Settings
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="~/User/Register" class="nav-link">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <p>Add User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/User/Index" class="nav-link">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Role/Action" class="nav-link">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        <p> Add Roles</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Role/Index" class="nav-link">
+                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        <p>Roles</p>
+                    </a>
+                </li>
+            </ul>
+        </li>*@
                     @*<li class="nav-header">MISCELLANEOUS</li>
-                        <li class="nav-item">
-                            <a href="iframe.html" class="nav-link">
-                                <i class="nav-icon fas fa-ellipsis-h"></i>
-                                <p>Tabbed IFrame Plugin</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>Documentation</p>
-                            </a>
-                        </li>
-                        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p>Level 1</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-circle"></i>
-                                <p>
-                                    Level 1
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Level 2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>
-                                            Level 2
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    <ul class="nav nav-treeview">
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link">
-                                                <i class="far fa-dot-circle nav-icon"></i>
-                                                <p>Level 3</p>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Level 2</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+        <li class="nav-item">
+            <a href="iframe.html" class="nav-link">
+                <i class="nav-icon fas fa-ellipsis-h"></i>
+                <p>Tabbed IFrame Plugin</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
+                <i class="nav-icon fas fa-file"></i>
+                <p>Documentation</p>
+            </a>
+        </li>
+        <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-circle nav-icon"></i>
+                <p>Level 1</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                    Level 1
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Level 2</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>
+                            Level 2
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="fas fa-circle nav-icon"></i>
-                                <p>Level 1</p>
-                            </a>
-                        </li>
-                        <li class="nav-header">LABELS</li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-danger"></i>
-                                <p class="text">Important</p>
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>Level 3</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-warning"></i>
-                                <p>Warning</p>
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>Level 3</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-                                <p>Informational</p>
+                                <i class="far fa-dot-circle nav-icon"></i>
+                                <p>Level 3</p>
                             </a>
-                        </li>*@
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Level 2</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-circle nav-icon"></i>
+                <p>Level 1</p>
+            </a>
+        </li>
+        <li class="nav-header">LABELS</li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-circle text-danger"></i>
+                <p class="text">Important</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-circle text-warning"></i>
+                <p>Warning</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon far fa-circle text-info"></i>
+                <p>Informational</p>
+            </a>
+        </li>*@
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -1221,7 +1233,12 @@
                 var elemm = document.getElementById("feature_tab");
                 elemm.className += ' menu-open';
             }
-
+            if (data == 'Backup Index') {
+                var elem = document.getElementById("backup_tab");
+                elem.className += ' active';
+                var elemm = document.getElementById("feature_tab");
+                elemm.className += ' menu-open';
+            }
 
             if (data == 'User Index') {
                 var elem = document.getElementById("userindex_tab");

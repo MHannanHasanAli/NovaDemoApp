@@ -7,6 +7,7 @@ namespace ImperialNova.Models
     {
         public int _id { get; set; }
         public string productData { get; set; }
+        public string _PostCode { get; set; }
         public string _SlaesPerson { get; set; }
         public DateTime _Date { get; set; }
         public string _CustomerName { get; set; }

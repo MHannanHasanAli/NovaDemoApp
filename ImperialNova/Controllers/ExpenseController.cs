@@ -255,7 +255,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Expense = ExpenseServices.Instance.GetExpenseById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Expense._Id;
+                backup.Aspect = Expense._TotalExpenses.ToString();
+                backup.Type = "Expense";
+                BackupServices.Instance.CreateBackup(backup);
                 ExpenseServices.Instance.DeleteExpense(Expense._Id);
             }
 

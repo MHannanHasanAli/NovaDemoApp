@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -167,7 +168,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Customer = CustomerServices.Instance.GetCustomerById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Customer._Id;
+                backup.Aspect = Customer._Name;
+                backup.Type = "Customer";
+                BackupServices.Instance.CreateBackup(backup);
                 CustomerServices.Instance.DeleteCustomer(Customer._Id);
             }
 

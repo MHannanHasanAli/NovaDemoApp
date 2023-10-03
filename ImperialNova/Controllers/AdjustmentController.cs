@@ -235,7 +235,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Adjustment = AdjustmentServices.Instance.GetAdjustmentById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Adjustment._Id;
+                backup.Aspect = Adjustment._Quantity.ToString();
+                backup.Type = "Adjustment";
+                BackupServices.Instance.CreateBackup(backup);
                 AdjustmentServices.Instance.DeleteAdjustment(Adjustment._Id);
             }
 

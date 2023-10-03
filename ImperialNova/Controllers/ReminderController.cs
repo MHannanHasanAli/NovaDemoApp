@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -160,7 +161,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Reminder = ReminderServices.Instance.GetReminderById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Reminder._Id;
+                backup.Aspect = Reminder._Title;
+                backup.Type = "Reminder";
+                BackupServices.Instance.CreateBackup(backup);
                 ReminderServices.Instance.DeleteReminder(Reminder._Id);
             }
 

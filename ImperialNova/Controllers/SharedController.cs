@@ -19,12 +19,21 @@ namespace ImperialNova.Controllers
             try
             {
                 var file = Request.Files[0];
+                var fileNameWithDate = DateTime.Now.ToString("dd-MM-yyyy") + file.FileName;
+                var fileName = Path.GetFileNameWithoutExtension(file.FileName); // Get the file name without extension
+                var fileExtension = Path.GetExtension(file.FileName);
+                var fileSize = file.ContentLength / 1024; // File size in kilobytes
 
-                var fileName = DateTime.Now.ToString("dd-MM-yyyy") + file.FileName;
+                var directoryPath = Server.MapPath("~/Photos/");
+                var path = Path.Combine(directoryPath, fileNameWithDate);
 
-                var path = Path.Combine(Server.MapPath("~/Photos/"), fileName);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath); // Create the directory if it doesn't exist
+                }
                 file.SaveAs(path);
-                result.Data = new { Success = true, DocURL = string.Format("/Photos/{0}", fileName) };
+
+                result.Data = new { Success = true, FileName = fileName, FileSizeKB = fileSize, DocURL = string.Format("/Images/{0}", fileNameWithDate) };
             }
             catch (Exception ex)
             {

@@ -155,7 +155,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Location = LocationsServices.Instance.GetLocationsById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Location._Id;
+                backup.Aspect = Location._LocationName;
+                backup.Type = "Warehouse";
+                BackupServices.Instance.CreateBackup(backup);
                 LocationsServices.Instance.DeleteLocations(Location._Id);
             }
 

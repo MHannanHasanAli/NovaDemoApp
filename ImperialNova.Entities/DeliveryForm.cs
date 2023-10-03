@@ -25,7 +25,7 @@ namespace ImperialNova.Entities
         public string _SignatureData { get; set; }
         //public List<DeliveryFormProductsDB> _Products { get; set; }
         public string _RequestedDate { get; set; }
-
+        public string _PostCode { get; set; }
         public string ProductsData { get; set; }
         public decimal _TotalAmount { get; set; }
         public string _PayMethod { get; set; }

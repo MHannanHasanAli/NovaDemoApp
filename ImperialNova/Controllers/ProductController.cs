@@ -506,6 +506,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Product = ProductServices.Instance.GetProductById(model._Id);
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Product._Id;
+                backup.Aspect = Product._Name;
+                backup.Type = "Product";
+                BackupServices.Instance.CreateBackup(backup);
                 ProductServices.Instance.DeleteProduct(Product._Id);
             }
 

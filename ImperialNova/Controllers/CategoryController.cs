@@ -159,7 +159,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Category = CategoryServices.Instance.GetCategoryById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Category._Id;
+                backup.Aspect = Category._CName;
+                backup.Type = "Category";
+                BackupServices.Instance.CreateBackup(backup);
                 CategoryServices.Instance.DeleteCategory(Category._Id);
             }
 

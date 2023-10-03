@@ -282,6 +282,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdjustmentController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BackupController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CSVController.cs" />
     <Compile Include="Controllers\DeliveryFormController.cs" />
@@ -317,6 +318,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AdjustmentVIewModel.cs" />
     <Compile Include="ViewModels\AdminViewModel.cs" />
+    <Compile Include="ViewModels\BackupViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\CSVViewModel.cs" />
     <Compile Include="ViewModels\DeliveryFormViewModel.cs" />
@@ -3927,6 +3929,8 @@
     <Content Include="Views\Expense\_Delete.cshtml" />
     <Content Include="Views\Expense\Index.cshtml" />
     <Content Include="Views\Order\Transfer.cshtml" />
+    <Content Include="Views\Backup\Index.cshtml" />
+    <Content Include="Views\DeliveryForm\_TermsConditions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

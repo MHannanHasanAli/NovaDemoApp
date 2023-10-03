@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -168,7 +169,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Supplier = SupplierServices.Instance.GetSupplierById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Supplier._Id;
+                backup.Aspect = Supplier._Name;
+                backup.Type = "Supplier";
+                BackupServices.Instance.CreateBackup(backup);
                 SupplierServices.Instance.DeleteSupplier(Supplier._Id);
             }
 

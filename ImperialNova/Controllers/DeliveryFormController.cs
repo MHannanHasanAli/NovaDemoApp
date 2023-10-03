@@ -17,6 +17,9 @@ using System.Web.Mvc;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using System.Text.RegularExpressions;
+using System.IO;
+using System.Drawing;
 
 namespace ImperialNova.Controllers
 {
@@ -154,6 +157,7 @@ namespace ImperialNova.Controllers
                 _FinanceCompany = form._FinanceCompany,
                 _AmountPaid = form._AmountPaid,
                 _AmountInBalance = form._AmountInBalance,
+                _PostCode = form._PostCode,
                 ProductsData = productDataString
 
             };
@@ -170,22 +174,37 @@ namespace ImperialNova.Controllers
 
         }
 
-        [HttpPost]
         public byte[] Base64ToImage(string source)
         {
-            string base64 = source.Substring(source.IndexOf(',') + 1);
-            int mod4 = base64.Length % 4;
-            if (mod4 > 0)
+            source = source.Replace("data:image/png;base64","");
+            byte[] imagebytes = Convert.FromBase64String(source);
+
+            using(MemoryStream ms = new MemoryStream(imagebytes))
             {
-                // Add padding characters to make it a valid length
-                base64 += new string('=', 4 - mod4);
-                byte[] chartData = Convert.FromBase64String(base64);
-                return chartData;
-
+                Image image = Image.FromStream(ms);
             }
-            return null;
 
+            return imagebytes;
+            // Remove the data URI prefix, if present
+            //if (source.StartsWith("data:image"))
+            //{
+            //    source = source.Substring(source.IndexOf(',') + 1);
+            //}
+
+            //// Remove any non-base64 characters or whitespaces
+            //source = Regex.Replace(source, @"[^A-Za-z0-9+/=]", "");
+
+            //int mod4 = source.Length % 4;
+            //if (mod4 > 0)
+            //{
+            //    // Add padding characters to make it a valid Base64 string
+            //    source += new string('=', 4 - mod4);
+            //}
+
+            //byte[] imageData = Convert.FromBase64String(source);
+            //return imageData;
         }
+
         private bool SendEmail(DeliveryForm formdata, List<DeliveryFormProductsDB> products)
         {
             
@@ -309,6 +328,7 @@ namespace ImperialNova.Controllers
                 model._FinancePaid = data._FinancePaid;
                 model._FinanceCompany = data._FinanceCompany;
                 model._AmountPaid = data._AmountPaid;
+            model._PostCode = data._PostCode;
             model._AmountInBalance = data._AmountInBalance;
 
             if(data.ProductsData != "[{}]")
@@ -343,14 +363,23 @@ namespace ImperialNova.Controllers
             model.ID = DeliveryForm._id;
             return PartialView("_Delete", model);
         }
-
+        [HttpGet]
+        public ActionResult TermsAndConditions()
+        {          
+            return PartialView("_TermsConditions");
+        }
         [HttpPost]
         public ActionResult Delete(DeliveryFormViewModel model)
         {
             if (model.ID != 0)
             {
                 var DeliveryForm = DeliveryFormServices.GetDeliveryFormInfo().Where(x=>x._id == model.ID).FirstOrDefault();
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = DeliveryForm._id;               
+                backup.Aspect = DeliveryForm._TotalAmount.ToString();
+                backup.Type = "Delivery Form";
+                BackupServices.Instance.CreateBackup(backup);
                 DeliveryFormServices.DeleteDeliveryForms(DeliveryForm._id);
             }
 

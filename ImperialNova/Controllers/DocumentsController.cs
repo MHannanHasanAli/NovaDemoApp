@@ -1,4 +1,5 @@
-﻿using ImperialNova.Services;
+﻿using ImperialNova.Entities;
+using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -151,7 +152,12 @@ namespace ImperialNova.Controllers
             if (model._Id != 0)
             {
                 var Document = DocumentServices.Instance.GetDocumentById(model._Id);
-
+                var backup = new Backup();
+                backup.DeletionDate = DateTime.Now;
+                backup.ComponenetId = Document._Id;
+                backup.Aspect = Document._Name;
+                backup.Type = "Document";
+                BackupServices.Instance.CreateBackup(backup);
                 DocumentServices.Instance.DeleteDocument(Document._Id);
             }
 
