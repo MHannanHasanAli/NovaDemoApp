@@ -127,7 +127,42 @@ namespace ImperialNova.Controllers
             return View(model);
         }
 
-        
+        public class SignatureConverter
+        {
+            public static Image ConvertSignatureToImage(byte[] signatureData)
+            {
+                using (MemoryStream memoryStream = new MemoryStream(signatureData))
+                {
+                    Image image = Image.FromStream(memoryStream);
+                    return image;
+                }
+            }
+        }
+        [HttpPost]
+        public JsonResult SaveSignature(string signatureData)
+        {
+            try
+            {
+                var lastentry = DeliveryFormServices.Instance.GetLastEntryId();
+
+                Signature signature = new Signature();
+
+                
+                    signature.DeliveryFormID = lastentry;
+                    signature.SignatureValue = signatureData;
+                
+               
+
+                SignatureServices.Instance.CreateSignature(signature);
+                // Return a success response
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions and return an error response
+                return Json(new { success = false, error = ex.Message });
+            }
+        }
         //static DeliveryForm data2;
         List<DeliveryFormProductsDB> _Products = new List<DeliveryFormProductsDB>();
         [HttpPost]
@@ -136,6 +171,7 @@ namespace ImperialNova.Controllers
             var data = form;
             var productDataString = HttpUtility.UrlDecode(productData);
             var user = UserManager.FindById(User.Identity.GetUserId());
+     
             var deliveryForm = new DeliveryForm()
             {
 
@@ -174,36 +210,7 @@ namespace ImperialNova.Controllers
 
         }
 
-        public byte[] Base64ToImage(string source)
-        {
-            source = source.Replace("data:image/png;base64","");
-            byte[] imagebytes = Convert.FromBase64String(source);
-
-            using(MemoryStream ms = new MemoryStream(imagebytes))
-            {
-                Image image = Image.FromStream(ms);
-            }
-
-            return imagebytes;
-            // Remove the data URI prefix, if present
-            //if (source.StartsWith("data:image"))
-            //{
-            //    source = source.Substring(source.IndexOf(',') + 1);
-            //}
-
-            //// Remove any non-base64 characters or whitespaces
-            //source = Regex.Replace(source, @"[^A-Za-z0-9+/=]", "");
-
-            //int mod4 = source.Length % 4;
-            //if (mod4 > 0)
-            //{
-            //    // Add padding characters to make it a valid Base64 string
-            //    source += new string('=', 4 - mod4);
-            //}
-
-            //byte[] imageData = Convert.FromBase64String(source);
-            //return imageData;
-        }
+       
 
         private bool SendEmail(DeliveryForm formdata, List<DeliveryFormProductsDB> products)
         {
@@ -300,16 +307,18 @@ namespace ImperialNova.Controllers
 
             var data = DeliveryFormServices.GetFormById(id);
             var model = new DeliveryFormModel();
-            if (data._SignatureData != null)
-            {
-                var newImage = Base64ToImage(data._SignatureData);
-                if (newImage != null)
-                {
-                    string base64Image = Convert.ToBase64String(newImage);
-                    model._SignatureData = base64Image;
-                }
+            //if (data._SignatureData != null)
+            //{
+            //    var newImage = Base64ToImage();
+            //    if (newImage != null)
+            //    {object signatureData = data._SignatureData;
+            //        string base64Image = Convert.ToBase64String(newImage);
+            var signaturedata = SignatureServices.Instance.GetSignatureByDeliveryFormId(id);
 
-            }
+           
+                //}
+
+            //}
 
 
             model._id = id;
@@ -347,12 +356,16 @@ namespace ImperialNova.Controllers
             //    });
             //}
             //// Ya
-
+            ///
+            if(signaturedata.SignatureValue != null)
+            {
+                ViewBag.SignatureData = signaturedata.SignatureValue;
+            }
             return View(model);
          
         }
 
-
+       
 
 
         [HttpGet]

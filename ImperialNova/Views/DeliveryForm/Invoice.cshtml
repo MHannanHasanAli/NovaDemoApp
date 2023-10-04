@@ -96,6 +96,9 @@
         .lastbox {
             display: flex;
             justify-content: space-between;
+            margin-inline: auto;
+            width: 1098px;
+            flex-wrap: wrap;
         }
 
         .top-heading {
@@ -363,142 +366,152 @@
 <br />
 <br />
 <br />
-<div class="container lastbox">
-    <div>
-        <p>
-            <strong class="font16">Thank you for your business,</strong><br /><br />
-            <strong class="font20">IMPERIAL BAMBOO/IMPERIAL TEAM LTD</strong>
-        </p>
+<div class="container">
+    <div class="lastbox">
+        <div>
+            <p>
+                <strong class="font16">Thank you for your business,</strong><br /><br />
+                <strong class="font20">IMPERIAL BAMBOO/IMPERIAL TEAM LTD</strong>
+            </p>
+        </div>
+        <div>
+            <canvas id="outputCanvas" width: 200%; height: 170px;></canvas>
+        </div>
     </div>
-    <div>
-        @if (Model._SignatureData != null)
-        {
-            <img src="data:image/jpeg;base64,@Model._SignatureData" alt="Image">
-        }
     </div>
-</div>
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="invoice-title">
+                    <h2>Invoice</h2><h3 class="pull-right">@Model._id </h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            <strong>Sales Person:</strong>@Model._SlaesPerson
+                            <strong>Date:</strong>@Model._Date
+                            <strong>Order Number:</strong>@Model._id
+                            <strong>Customer Full Name:</strong>@Model._CustomerName
+                            <strong>Country:</strong>@Model._Country
+                            <strong>Address:</strong>@Model._Address
+                            @Model._CustomerName<br>
+                            @Model._Address<br>
+                            @Model._Country<br />
 
-<!--<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="invoice-title">
-                <h2>Invoice</h2><h3 class="pull-right">@Model._id </h3>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-xs-6">
-                    <address>
-                        <strong>Sales Person:</strong>@Model._SlaesPerson
-                        <strong>Date:</strong>@Model._Date
-                        <strong>Order Number:</strong>@Model._id
-                        <strong>Customer Full Name:</strong>@Model._CustomerName
-                        <strong>Country:</strong>@Model._Country
-                        <strong>Address:</strong>@Model._Address
-                        @Model._CustomerName<br>
-                        @Model._Address<br>
-                        @Model._Country<br />
+                        </address>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <address>
+                            <strong>Form Filled By:</strong><br>
+                            @Model._SlaesPerson<br>
 
+                        </address>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <address>
+                            <strong>Payment Method:</strong><br>-->
+    @*@Model._PayMethod<br>*@
+    <!--@Model._Email
                     </address>
                 </div>
                 <div class="col-xs-6 text-right">
                     <address>
-                        <strong>Form Filled By:</strong><br>
-                        @Model._SlaesPerson<br>
-
+                        <strong>Requested Date:</strong><br>
+                        @Model._RequestedDate<br><br>
                     </address>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xs-6">
-                    <address>
-                        <strong>Payment Method:</strong><br>-->
-@*@Model._PayMethod<br>*@
-<!--@Model._Email
-                </address>
-            </div>
-            <div class="col-xs-6 text-right">
-                <address>
-                    <strong>Requested Date:</strong><br>
-                    @Model._RequestedDate<br><br>
-                </address>
-            </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><strong>Order summary</strong></h3>
-            </div>
-            <div class="panel-body">
-                <div class="table-responsive">
-                    <table style="overflow:hidden" class="table table-condensed">
-                        <thead>
-                            <tr>
-                                <td class="text-center"><strong>Product Name</strong></td>
-                                <td class="text-center"><strong>Quantity</strong></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model.Products == null)
-                            {
-
-                            }
-                            else
-                            {
-                                foreach (var product in Model.Products)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Order summary</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table style="overflow:hidden" class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <td class="text-center"><strong>Product Name</strong></td>
+                                    <td class="text-center"><strong>Quantity</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Products == null)
                                 {
-                                    <tr>
-                                        <td class="text-center">@product._ProductName</td>
-                                        <td class="text-center">@product._ProductQuantity</td>
 
-                                    </tr>
+                                }
+                                else
+                                {
+                                    foreach (var product in Model.Products)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@product._ProductName</td>
+                                            <td class="text-center">@product._ProductQuantity</td>
+
+                                        </tr>
+                                    }
+
                                 }
 
-                            }
 
 
-
-                        </tbody>
-                    </table>
-                    <table class="table table-condensed">
-                        <tr>-->
-@*<td class="thick-line"></td>
-    <td class="thick-line"></td>*@
-<!--<td class="thick-line text-center"><strong>Subtotal</strong></td>
-    <td class="thick-line text-right">£@Model._TotalAmount</td>
-</tr>
-<tr>-->
-@*<td class="no-line"></td>
-    <td class="no-line"></td>*@
-<!--<td class="no-line text-center"><strong>Amount Paid</strong></td>
-    <td class="no-line text-right">£@Model._AmountPaid</td>
-</tr>
-<tr>-->
-@*<td class="no-line"></td>
-    <td class="no-line"></td>*@
-<!--<td class="no-line text-center"><strong>Amount In Balance</strong></td>
-                                <td class="no-line text-right">£@Model._AmountInBalance</td>
-                            </tr>
+                            </tbody>
                         </table>
+                        <table class="table table-condensed">
+                            <tr>-->
+    @*<td class="thick-line"></td>
+        <td class="thick-line"></td>*@
+    <!--<td class="thick-line text-center"><strong>Subtotal</strong></td>
+        <td class="thick-line text-right">£@Model._TotalAmount</td>
+    </tr>
+    <tr>-->
+    @*<td class="no-line"></td>
+        <td class="no-line"></td>*@
+    <!--<td class="no-line text-center"><strong>Amount Paid</strong></td>
+        <td class="no-line text-right">£@Model._AmountPaid</td>
+    </tr>
+    <tr>-->
+    @*<td class="no-line"></td>
+        <td class="no-line"></td>*@
+    <!--<td class="no-line text-center"><strong>Amount In Balance</strong></td>
+                                    <td class="no-line text-right">£@Model._AmountInBalance</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
+                <div style="float:right;" class="row">
+                    @if (Model._SignatureData != null)
+                    {
+                        <p>Customer Signature:</p>
+                        <img src="data:image/jpeg;base64,@Model._SignatureData" alt="Image">
+                    }
+                </div>
+
+
+
             </div>
-            <div style="float:right;" class="row">
-                @if (Model._SignatureData != null)
-                {
-                    <p>Customer Signature:</p>
-                    <img src="data:image/jpeg;base64,@Model._SignatureData" alt="Image">
-                }
-            </div>
-
-
-
         </div>
-    </div>
-</div>-->
-@*<script>
+    </div>-->
+    <script>
+    var outputCanvas = document.getElementById('outputCanvas');
+        var outputCtx = outputCanvas.getContext('2d');
+    debugger
+        var signatureData = '@ViewBag.SignatureData'; // Get the saved signature data
 
-    </script>*@
+        if (signatureData) {
+            var img = new Image();
+            img.src = signatureData;
+            img.onload = function () {
+                outputCtx.drawImage(img, 0, 0);
+            };
+        //    outputCtx.drawImage(img, 0, 0);
+        }
+    </script>

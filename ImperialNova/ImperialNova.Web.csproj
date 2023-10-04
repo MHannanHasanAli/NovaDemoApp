@@ -3935,6 +3935,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\adminTemplate\plugins\jsgrid\demos\" />
+    <Folder Include="Content\Signatures\" />
     <Folder Include="Photos\" />
     <Folder Include="Views\Manager\" />
   </ItemGroup>

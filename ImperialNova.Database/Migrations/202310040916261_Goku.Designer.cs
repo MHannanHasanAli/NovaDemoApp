@@ -13,7 +13,7 @@ namespace ImperialNova.Database.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202310010744373_Goku"; }
+            get { return "202310040916261_Goku"; }
         }
         
         string IMigrationMetadata.Source

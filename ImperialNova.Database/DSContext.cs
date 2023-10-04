@@ -53,6 +53,6 @@ namespace ImperialNova.Database
         public DbSet<Expenses> expenses { get; set; }
         public DbSet<Backup> backups { get; set; }
 
-
+        public DbSet<Signature> signatures { get; set; }
     }
 }

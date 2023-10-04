@@ -1,18 +1,20 @@
 ﻿@model ImperialNova.ViewModels.DeliveryFormViewModel
-
+@{
+    Layout = null;
+}
 <head>
     <link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
     <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
     <link rel="stylesheet" href="~/Content/template/vendors/mdi/css/materialdesignicons.min.css" />
 
-     @*endinject 
-     plugin css for this page 
-     End plugin css for this page 
-     inject:css*@ 
+    @*endinject
+        plugin css for this page
+        End plugin css for this page
+        inject:css*@
     <link rel="stylesheet" href="~/Content/template/css/vertical-layout-light/style.css">
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-     @*endinject*@ 
+    @*endinject*@
     <link rel="shortcut icon" href="~/Content/template/images/g-icon-15.jpg" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
@@ -20,6 +22,12 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 </head>
 <style>
+    .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
+        padding: 0px;
+        width: 100%;
+        margin-right: 200px;
+        margin-left: auto;
+    }
     #signature-pad {
         display: flex;
         align-items: center;
@@ -60,6 +68,7 @@
             transform: translate(-50%, -50%) rotate(360deg);
         }
     }
+
     #clear-button {
         width: 50%;
         transform: rotate(-90deg);
@@ -78,22 +87,26 @@
         height: 35px;
         border: 1px solid lightgray;
         font-weight: 400;
-        border-radius:3px;  
+        border-radius: 3px;
         font-size: 0.75rem;
     }
+
     body {
         background-color: #F8F9FA;
         margin-left: -238px;
     }
+
     .vertical-line {
         width: 5px;
         height: 40px;
         background-color: #ccc;
     }
-    .terms-modal{
+
+    .terms-modal {
         text-decoration: none;
         color: lawngreen;
     }
+
     a.terms-modal:visited {
         text-decoration: none;
         color: lawngreen;
@@ -111,18 +124,19 @@
         text-decoration: none;
         color: lawngreen;
     }
-    .data-btn{
+
+    .data-btn {
         background: none;
         color: lawngreen;
         border: none;
     }
 </style>
-
+<div id="loadingSpinner" class="loading-spinner-overlay">
+    <div class="spinner"></div>
+</div>
+<br />
 <div class="container">
-    <div id="loadingSpinner" class="loading-spinner-overlay">
-        <div class="spinner"></div>
-    </div>
-    <br />
+
     <div class="row">
         <div class="col-md-6">
             <div class="vertical-line"></div>
@@ -619,10 +633,19 @@
             <div class="col-md-6">
                 <label class="text-center">Customer Signature</label>
                 <div id="signature-pad">
-                    <canvas style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
+                    <canvas id="inputCanvas" style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
                     <button type="button" class="btn btn-success btn-sm btn-block" id="clear-button">Clear</button>
                 </div>
+                @*<div id="signature-pad">
+                        <canvas style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
+
+                    </div>*@
             </div>
+            @*<div style="width: 500px; height: 500px;">
+                    <div id="signature-pad" class="signature-pad">
+                        <canvas style="border: solid 0.3px lightgreen; background-color: white; width: 200%; touch-action: none; height: 170px;"></canvas>
+                    </div>
+                </div>*@
 
         </div>
 
@@ -654,7 +677,7 @@
                 url: $(this).attr("data-href"),
             })
                 .done(function (response) {
-                    
+
                     $("#actionModal .modal-dialog").html(response);
                 });
         });
@@ -679,7 +702,7 @@
 
             $("#productsContainer").append(newProductRow);
         });
-        
+
         $(document).on("click", ".remove-product", function () {
             $(this).closest(".product-row").remove();
         });
@@ -687,7 +710,7 @@
         $("#SubmitForm").click(function () {
             $("#SubmitForm").attr("disabled", "disabled");
             showLoadingSpinner();
-            var signatureData = signaturePad.toDataURL();
+            var signatureData = inputCanvas.toDataURL('image/png');
             var productDataArray = [];
 
             var ProductNameFirst = $("#ProductNameFirst").val();
@@ -717,7 +740,7 @@
             // Serialize the product data array as JSON
             var productDataString = JSON.stringify(productDataArray);
             // Iterate through all product rows
-            var signatureData = signaturePad.toDataURL();
+           /* var signatureData = signaturePad.toDataURL();*/
 
             // Serialize the product data array as JSON
             var productDataString = JSON.stringify(productDataArray);
@@ -731,9 +754,21 @@
                 success: function (response) {
                     if (response.success) {
                         hideLoadingSpinner();
-                        var orderId = response._id; // Assuming you receive the order ID in the JSON response
+                        var signatureData = inputCanvas.toDataURL('image/png'); // Convert to data URL
+
+                        // Send the signature data to the backend
+                        $.post("/DeliveryForm/SaveSignature", { signatureData: signatureData }, function (result) {
+                            // Handle the response (success or failure) as needed
+                            if (result.success) {
+                                //alert("Signature saved successfully!");
+                                 var orderId = response._id; // Assuming you receive the order ID in the JSON response
                         window.open('@Url.Action("Invoice", "DeliveryForm")' + '?id=' + orderId, '_blank');
                         window.location.href = '@Url.Action("Listing", "DeliveryForm")';
+                            } else {
+                                alert("Error saving signature.");
+                            }
+                        });
+
                     } else {
                         hideLoadingSpinner();
                     }
@@ -742,6 +777,8 @@
                     hideLoadingSpinner();
                 }
             });
+
+
         });
 
         const $totalAmount = $("#_TotalAmount");
@@ -774,7 +811,7 @@
             }
             updateAmountPaid();
         }
-    
+
         $cashCheckbox.on("change", function () {
             if ($(this).is(':checked')) {
                 // Checkbox is checked
@@ -798,7 +835,7 @@
         $financePaid.on("input", updateAmountPaid);
 
         function updateAmountPaid() {
-            
+
             const totalAmount = parseFloat($totalAmount.val()) || 0;
             const cashPaid = $cashCheckbox.is(":checked") ? parseFloat($cashPaid.val()) || 0 : 0;
             const cardPaid = $cardCheckbox.is(":checked") ? parseFloat($cardPaid.val()) || 0 : 0;

@@ -7,13 +7,13 @@ namespace ImperialNova.Database.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Bulma : IMigrationMetadata
+    public sealed partial class Vegeta : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Bulma));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Vegeta));
         
         string IMigrationMetadata.Id
         {
-            get { return "202310031125237_Bulma"; }
+            get { return "202310041011452_Vegeta"; }
         }
         
         string IMigrationMetadata.Source

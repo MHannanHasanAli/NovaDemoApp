@@ -103,6 +103,7 @@
     <Compile Include="AMSignInManager.cs" />
     <Compile Include="AMUserManager.cs" />
     <Compile Include="ReminderServices.cs" />
+    <Compile Include="SignatureServices.cs" />
     <Compile Include="StockMovementServices.cs" />
     <Compile Include="SupplierServices.cs" />
     <Compile Include="TodoListServices.cs" />

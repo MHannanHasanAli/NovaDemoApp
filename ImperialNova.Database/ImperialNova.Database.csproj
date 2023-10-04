@@ -56,21 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202310010744373_Goku.cs" />
-    <Compile Include="Migrations\202310010744373_Goku.designer.cs">
-      <DependentUpon>202310010744373_Goku.cs</DependentUpon>
+    <Compile Include="Migrations\202310040916261_Goku.cs" />
+    <Compile Include="Migrations\202310040916261_Goku.designer.cs">
+      <DependentUpon>202310040916261_Goku.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310010751197_Vegeta.cs" />
-    <Compile Include="Migrations\202310010751197_Vegeta.designer.cs">
-      <DependentUpon>202310010751197_Vegeta.cs</DependentUpon>
+    <Compile Include="Migrations\202310041011452_Vegeta.cs" />
+    <Compile Include="Migrations\202310041011452_Vegeta.designer.cs">
+      <DependentUpon>202310041011452_Vegeta.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310011352446_Gohan.cs" />
-    <Compile Include="Migrations\202310011352446_Gohan.designer.cs">
-      <DependentUpon>202310011352446_Gohan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310031125237_Bulma.cs" />
-    <Compile Include="Migrations\202310031125237_Bulma.designer.cs">
-      <DependentUpon>202310031125237_Bulma.cs</DependentUpon>
+    <Compile Include="Migrations\202310041054463_Tein.cs" />
+    <Compile Include="Migrations\202310041054463_Tein.designer.cs">
+      <DependentUpon>202310041054463_Tein.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,17 +83,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202310010744373_Goku.resx">
-      <DependentUpon>202310010744373_Goku.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310040916261_Goku.resx">
+      <DependentUpon>202310040916261_Goku.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310010751197_Vegeta.resx">
-      <DependentUpon>202310010751197_Vegeta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310041011452_Vegeta.resx">
+      <DependentUpon>202310041011452_Vegeta.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310011352446_Gohan.resx">
-      <DependentUpon>202310011352446_Gohan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310031125237_Bulma.resx">
-      <DependentUpon>202310031125237_Bulma.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310041054463_Tein.resx">
+      <DependentUpon>202310041054463_Tein.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

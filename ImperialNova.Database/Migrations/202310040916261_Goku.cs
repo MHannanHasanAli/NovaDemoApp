@@ -30,6 +30,20 @@
                         _Remarks = c.String(),
                         _Product = c.String(),
                         _Quantity = c.Int(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
+                    })
+                .PrimaryKey(t => t._Id);
+            
+            CreateTable(
+                "dbo.Backups",
+                c => new
+                    {
+                        _Id = c.Int(nullable: false, identity: true),
+                        ComponenetId = c.Int(nullable: false),
+                        Aspect = c.String(),
+                        Type = c.String(),
+                        DeletionDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -40,6 +54,8 @@
                         _Id = c.Int(nullable: false, identity: true),
                         _CName = c.String(),
                         _Description = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -68,6 +84,8 @@
                         _Zip = c.String(),
                         _City = c.String(),
                         _Country = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -88,14 +106,17 @@
                         _CardPaid = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _FinancePaid = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _FinanceCompany = c.String(),
-                        _SignatureData = c.String(),
+                        _SignatureData = c.Byte(nullable: false),
                         _RequestedDate = c.String(),
+                        _PostCode = c.String(),
                         ProductsData = c.String(),
                         _TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _PayMethod = c.String(),
                         _OrderNumber = c.String(),
                         _AmountPaid = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _AmountInBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._id);
             
@@ -106,6 +127,8 @@
                         _Id = c.Int(nullable: false, identity: true),
                         _Name = c.String(),
                         _File = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -117,6 +140,8 @@
                         _TotalSales = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _TotalExpenses = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _Title = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                         _Date = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t._Id);
@@ -196,6 +221,8 @@
                         _Status = c.String(),
                         _Quantity = c.Int(nullable: false),
                         _Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -233,6 +260,8 @@
                     {
                         _Id = c.Int(nullable: false, identity: true),
                         _LocationName = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -282,6 +311,8 @@
                         _Quantity = c.Int(nullable: false),
                         _Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _IsPacked = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -295,6 +326,8 @@
                         _Individual = c.String(),
                         _Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         _Remarks = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -324,6 +357,8 @@
                         _Photo = c.String(),
                         _Category = c.String(),
                         _Warehouse = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -336,6 +371,8 @@
                         _CreatedBy = c.String(),
                         _Title = c.String(),
                         _Description = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -388,6 +425,8 @@
                         _Zip = c.String(),
                         _City = c.String(),
                         _Country = c.String(),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -400,6 +439,8 @@
                         _Description = c.String(),
                         _File = c.String(),
                         _Ticked = c.Boolean(nullable: false),
+                        IsDeleted = c.Boolean(nullable: false),
+                        Type = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -491,6 +532,7 @@
             DropTable("dbo.Customers");
             DropTable("dbo.CSVs");
             DropTable("dbo.Categories");
+            DropTable("dbo.Backups");
             DropTable("dbo.Adjustments");
             DropTable("dbo.AdjustmentProducts");
         }

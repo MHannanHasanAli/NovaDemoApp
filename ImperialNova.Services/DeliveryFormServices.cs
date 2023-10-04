@@ -46,7 +46,19 @@ namespace ImperialNova.Services
                 context.SaveChanges();
             }
         }
+        public int GetLastEntryId()
+        {
+            using (var context = new DSContext())
+            {
+                var lastAdjustment = context.deliveryform.OrderByDescending(a => a._id).FirstOrDefault();
+                if (lastAdjustment != null)
+                {
+                    return lastAdjustment._id;
+                }
 
+                return -1;
+            }
+        }
         public void UpdateDeliveryForm(DeliveryForm DeliveryForm)
         {
             using (var context = new DSContext())

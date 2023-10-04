@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Bulma : DbMigration
+    public partial class Vegeta : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.DeliveryForms", "_PostCode", c => c.String());
+            AlterColumn("dbo.DeliveryForms", "_SignatureData", c => c.String());
         }
         
         public override void Down()
         {
-            DropColumn("dbo.DeliveryForms", "_PostCode");
+            AlterColumn("dbo.DeliveryForms", "_SignatureData", c => c.Byte(nullable: false));
         }
     }
 }

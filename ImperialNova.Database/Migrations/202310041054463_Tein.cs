@@ -3,19 +3,17 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Gohan : DbMigration
+    public partial class Tein : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Backups",
+                "dbo.Signatures",
                 c => new
                     {
                         _Id = c.Int(nullable: false, identity: true),
-                        ComponenetId = c.Int(nullable: false),
-                        Aspect = c.String(),
-                        Type = c.String(),
-                        DeletionDate = c.DateTime(nullable: false),
+                        DeliveryFormID = c.Int(nullable: false),
+                        SignatureValue = c.String(),
                     })
                 .PrimaryKey(t => t._Id);
             
@@ -23,7 +21,7 @@
         
         public override void Down()
         {
-            DropTable("dbo.Backups");
+            DropTable("dbo.Signatures");
         }
     }
 }
