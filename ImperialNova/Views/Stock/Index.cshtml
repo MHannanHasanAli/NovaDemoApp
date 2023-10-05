@@ -180,9 +180,9 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td>@Model.Quantity</td>
-                                            <td>£@Model.Purchase</td>
-                                            <td>£@Model.Sell</td>
+                                            <td id="totalquantity">@Model.Quantity</td>
+                                            <td id="Costprice">£@Model.Purchase</td>
+                                            <td id="priceforcustomer">£@Model.Sell</td>
 
                                             <td></td>
                                             <td></td>
@@ -219,9 +219,13 @@
     $(document).ready(function () {
         $("#warehouseDropdown").on("change", function () {
             const selectedLocation = $(this).val();
-
             // Show all table rows initially
             $("#table-body tr").show();
+
+            // Initialize variables to store the total quantity, total purchase price, and total sell price
+            var totalQuantity = 0;
+            var totalPurchasePrice = 0;
+            var totalSellPrice = 0;
 
             // If a location is selected, hide rows with different locations
             if (selectedLocation !== "") {
@@ -230,9 +234,29 @@
 
                     if (rowLocation !== selectedLocation) {
                         $(this).hide();
+                    } else {
+                        // Extract and accumulate the quantity, purchase price, and sell price from the row
+                        const rowQuantity = parseInt($(this).find("td:eq(6)").text().trim()); // Assuming quantity is in the 7th column (index 6)
+                        const rowPurchasePrice = parseFloat($(this).find("td:eq(8)").text().trim().replace("£", ""));
+                        const rowSellPrice = parseFloat($(this).find("td:eq(9)").text().trim().replace("£", ""));
+
+                        if (!isNaN(rowQuantity)) {
+                            totalQuantity += rowQuantity;
+                        }
+                        if (!isNaN(rowPurchasePrice)) {
+                            totalPurchasePrice += rowPurchasePrice;
+                        }
+                        if (!isNaN(rowSellPrice)) {
+                            totalSellPrice += rowSellPrice;
+                        }
                     }
                 });
             }
+
+            // Update the displayed total quantity, total purchase price, and total sell price on the screen
+            $("#totalquantity").text(totalQuantity);
+            $("#Costprice").text("£" + totalPurchasePrice.toFixed(2));
+            $("#priceforcustomer").text("£" + totalSellPrice.toFixed(2));
         });
 
         $("#example1").DataTable({
