@@ -65,7 +65,7 @@ namespace ImperialNova.Controllers
             Session["ACTIVER"] = "Payment Index";
 
             PaymentListingViewModel model = new PaymentListingViewModel();
-            model.Payments = PaymentServices.Instance.GetPayment();
+            model.Payments = PaymentServices.Instance.GetPayments();
             foreach (var item in model.Payments)
             {
                 model.Amount = model.Amount + item._Amount;

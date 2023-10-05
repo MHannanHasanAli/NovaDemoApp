@@ -153,7 +153,7 @@
 
         // Add options to the dropdown based on the products data
         products.forEach(function (product) {
-            var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Cost: £${product._Cost} | Retail: £${product._RetailPrice} | Available Units: ${product._Quantity}`;
+            var optionText = `${product._Name} | ${product._Size} | ${product._Color} | Available Units: ${product._Quantity}`;
             productsDropdown.append($("<option>", { value: product._Id, text: optionText }));
         });
     }
@@ -201,7 +201,9 @@
 
     });
 
-    $("#actionButton").click(function () {
+        $("#actionButton").click(function () {
+            $("#actionButton").attr("disabled", "disabled");
+            showLoadingSpinner();  
         var products = [];
 
         $('#ProductsTable tbody tr').each(function () {

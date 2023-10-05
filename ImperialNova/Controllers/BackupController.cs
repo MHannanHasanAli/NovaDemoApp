@@ -21,6 +21,17 @@ namespace ImperialNova.Controllers
             model.Backups = BackupServices.Instance.GetBackups();
             return View(model);
         }
+        [HttpGet]
+        public ActionResult FetchTotalBackups()
+        {
+
+            var Backups = new List<Backup>();
+            var BackupData = BackupServices.Instance.GetBackup();
+
+           
+
+            return Json(BackupData, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Restore(int ID, string type, int backupid)
         {
             if(type == "Adjustment")

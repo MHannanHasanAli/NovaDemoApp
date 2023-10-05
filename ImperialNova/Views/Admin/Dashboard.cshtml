@@ -1525,7 +1525,7 @@
                 var totalQuantity = 0;
                 // Populate the table with the received data
                 $.each(data, function (index, item) {
-                    var row = $("<tr>");
+                    var row = $('<tr style="background: yellow;">');
                     row.append($("<td>").text(item._Name));
                     row.append($("<td>").text(item._Size));
                     row.append($("<td>").text(item._Color));
@@ -1540,7 +1540,7 @@
                 });
 
                 // Add a row for total price and cost
-                var totalRow = $("<tr  style="back">");
+                var totalRow = $('<tr style="background: yellow;">');
                 totalRow.append($("<td>").text("Total"));
                 totalRow.append($("<td>").text(""));
                 totalRow.append($("<td>").text(""));

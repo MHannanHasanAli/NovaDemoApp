@@ -55,16 +55,16 @@ namespace ImperialNova.Services
                 return data;
             }
         }
-        public List<Reminder> GetReminders(string SearchTerm)
-        {
-            using (var context = new DSContext())
-            {
-                return context.reminders.Where(p => p._Title != null && p._Title.ToLower()
-                                            .Contains(SearchTerm.ToLower()))
-                                            .OrderBy(x => x._Title)
-                                            .ToList();
-            }
-        }
+        //public List<Reminder> GetReminders(string SearchTerm)
+        //{
+        //    using (var context = new DSContext())
+        //    {
+        //        return context.reminders.Where(p => p._Title != null && p._Title.ToLower()
+        //                                    .Contains(SearchTerm.ToLower()))
+        //                                    .OrderBy(x => x._Title)
+        //                                    .ToList();
+        //    }
+        //}
 
 
 

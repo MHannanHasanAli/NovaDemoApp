@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+
 <head>
     <link rel="stylesheet" href="~/Content/template/vendors/typicons/typicons.css">
     <link rel="stylesheet" href="~/Content/template/vendors/css/vendor.bundle.base.css">
@@ -858,5 +859,11 @@
     document.getElementById('clear-button').addEventListener('click', function () {
         signaturePad.clear();
     });
+    function showLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
 
+    function hideLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+    }
 </script>
