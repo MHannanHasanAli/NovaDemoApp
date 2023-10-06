@@ -3931,6 +3931,7 @@
     <Content Include="Views\Order\Transfer.cshtml" />
     <Content Include="Views\Backup\Index.cshtml" />
     <Content Include="Views\DeliveryForm\_TermsConditions.cshtml" />
+    <Content Include="Views\Backup\_Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

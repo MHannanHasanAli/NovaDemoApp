@@ -123,6 +123,28 @@ namespace ImperialNova.Controllers
             BackupServices.Instance.DeleteBackup(backupid);
             return RedirectToAction("Index");
         }
-       
+
+        [HttpGet]
+        public ActionResult Delete(int ID)
+        {
+            BackupActionViewModel model = new BackupActionViewModel();
+            var Backup = BackupServices.Instance.GetBackupById(ID);
+            model._Id = Backup._Id;
+            return PartialView("_Delete", model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(BackupActionViewModel model)
+        {
+            if (model._Id != 0)
+            {
+                var Backup = BackupServices.Instance.GetBackupById(model._Id);
+
+                BackupServices.Instance.DeleteBackup(Backup._Id);
+            }
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

@@ -13,4 +13,12 @@ namespace ImperialNova.ViewModels
     {
         public List<Backup> Backups { get; set; }
     }
+    public class BackupActionViewModel
+    {
+        public int _Id { get; set; }
+        public int ComponenetId { get; set; }
+        public string Aspect { get; set; }
+        public string Type { get; set; }
+        public DateTime DeletionDate { get; set; }
+    }
 }

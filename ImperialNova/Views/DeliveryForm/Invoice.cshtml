@@ -8,7 +8,6 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <!------ Include the above in your HEAD tag ---------->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .invoice-title h2, .invoice-title h3 {
             display: inline-block;
@@ -383,10 +382,21 @@
         </div>
     </div>
 </div>
-    <script>
+
+
+<script>
+    document.getElementById('downloadPDF').addEventListener('click', function () {
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        var source = document.getElementById('pdfContent');
+        pdf.html(source, {
+            callback: function (pdf) {
+                pdf.save('invoice.pdf');
+            }
+        });
+    });
     var outputCanvas = document.getElementById('outputCanvas');
         var outputCtx = outputCanvas.getContext('2d');
-    debugger
+
         var signatureData = '@ViewBag.SignatureData'; // Get the saved signature data
 
         if (signatureData) {
@@ -397,4 +407,4 @@
             };
         //    outputCtx.drawImage(img, 0, 0);
         }
-    </script>
+</script>
