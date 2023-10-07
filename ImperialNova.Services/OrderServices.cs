@@ -58,7 +58,7 @@ namespace ImperialNova.Services
             using (var context = new DSContext())
             {
                 var data = context.orders
-                    .Where(order => order._Status == "Ready To Ship")
+                    .Where(order => order._Status == "Ready To Ship" && !order.IsDeleted)
                     .ToList();
 
                 data.Reverse();
@@ -70,7 +70,7 @@ namespace ImperialNova.Services
             using (var context = new DSContext())
             {
                 var data = context.orders
-                    .Where(order => order._Status == "Shipped")
+                    .Where(order => order._Status == "Shipped" && !order.IsDeleted)
                     .ToList();
 
                 data.Reverse();

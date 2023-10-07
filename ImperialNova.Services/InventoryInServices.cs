@@ -57,7 +57,7 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.inventoryins.Where(i => i._Status == "Pending Order").ToList();
+                var data = context.inventoryins.Where(i => i._Status == "Pending Order" && !i.IsDeleted).ToList();
                 data.Reverse();
                 return data;
             }
@@ -66,7 +66,7 @@ namespace ImperialNova.Services
         {
             using (var context = new DSContext())
             {
-                var data = context.inventoryins.Where(i => i._Status == "Completed").ToList();
+                var data = context.inventoryins.Where(i => i._Status == "Completed" && !i.IsDeleted).ToList();
                 data.Reverse();
                 return data;
             }

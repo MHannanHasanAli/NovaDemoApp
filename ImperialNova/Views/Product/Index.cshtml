@@ -47,13 +47,13 @@
                         <th>Photo</th>
                         <th>SKU</th>
                         <th>Title</th>
-                        <th>Category</th>
                         <th>Size</th>
                         <th>Purchase Price</th>
                         <th>Sell Price</th>
                         <th>Quantity</th>
                         <th>Stock Alert</th>
                         <th>Location</th>
+                        <th style="background: yellow;">Total Cost</th>
                     </tr>
                     <tr id="bulkUpdateRow" style="display: none;">
                         <td colspan="13">
@@ -112,14 +112,7 @@
                             </td>
                             <td>@item.Product._SKU</td>
                             <td>@item.Product._Name</td>
-                            @if (item.Category != null && item.Category._CName != null)
-                            {
-                                <td>@item.Category._CName</td>
-                            }
-                            else
-                            {
-                                <td> No Category available</td>
-                            }
+
                             <td>@item.Product._Size</td>
                             <td>£@item.Product._Cost</td>
                             <td>£@item.Product._RetailPrice</td>
@@ -134,7 +127,7 @@
                                 <td>No warehouse Available</td>
                             }
 
-
+                            <td style="background: yellow;">£@item.Product.ModifiedCost.ToString("0.00")</td>
                         </tr>
                     }
                 </tbody>
@@ -146,11 +139,13 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>£@Model.Purchase</td>
-                    <td>£@Model.Sell</td>
+                    <td></td>
+                    <td></td>
+                    @*<td>£@Model.Purchase</td>
+        <td>£@Model.Sell</td>*@
                     <td>@Model.Quantity</td>
                     <td></td>
-                    <td></td>
+                    <td>@Model.TotalModified.ToString("0.00")</td>
                 </tr>
             </table>
         </div>

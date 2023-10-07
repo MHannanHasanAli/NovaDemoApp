@@ -20,6 +20,8 @@ using Microsoft.AspNet.Identity;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Drawing;
+using Rotativa;
+using Rotativa.MVC;
 
 namespace ImperialNova.Controllers
 {
@@ -365,7 +367,68 @@ namespace ImperialNova.Controllers
          
         }
 
-       
+        public ActionResult InvoiceAsPDF(int id)
+        {
+
+            var data = DeliveryFormServices.GetFormById(id);
+            var model = new DeliveryFormModel();
+            //if (data._SignatureData != null)
+            //{
+            //    var newImage = Base64ToImage();
+            //    if (newImage != null)
+            //    {object signatureData = data._SignatureData;
+            //        string base64Image = Convert.ToBase64String(newImage);
+            var signaturedata = SignatureServices.Instance.GetSignatureByDeliveryFormId(id);
+
+
+            //}
+
+            //}
+
+
+            model._id = id;
+            model._SlaesPerson = data._SlaesPerson;
+            model._Date = data._Date;
+            model._CustomerName = data._CustomerName;
+            model._Address = data._Address;
+            model._Country = data._Country;
+            model._ContactNo = data._ContactNo;
+            model._Email = data._Email;
+            model._Note = data._Note;
+            model._RequestedDate = data._RequestedDate;
+            model._TotalAmount = data._TotalAmount;
+            model._CashPaid = data._CashPaid;
+            model._CardPaid = data._CardPaid;
+            model._FinancePaid = data._FinancePaid;
+            model._FinanceCompany = data._FinanceCompany;
+            model._AmountPaid = data._AmountPaid;
+            model._PostCode = data._PostCode;
+            model._AmountInBalance = data._AmountInBalance;
+
+            if (data.ProductsData != "[{}]")
+            {
+                model.Products = JsonConvert.DeserializeObject<List<ProductData>>(data.ProductsData).Where(x => x._ProductName != null).ToList();
+
+            }
+
+            if (signaturedata.SignatureValue != null)
+            {
+                ViewBag.SignatureData = signaturedata.SignatureValue;
+            }
+            //string CustomSwitches = string.Format("--no-outline --disable-smart-shrinking");
+
+            //Render the view as a string
+            return new ViewAsPdf("InvoiceAsPDF", model)
+            {
+                FileName = "DeliveryFormInvoice.pdf",
+                //RotativaOptions = new Rotativa.Core.DriverOptions()
+                //{
+                //    CustomSwitches = CustomSwitches
+                //}
+            };
+            //return View(model);
+
+        }
 
 
         [HttpGet]

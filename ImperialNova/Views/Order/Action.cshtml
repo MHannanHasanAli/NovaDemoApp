@@ -443,9 +443,11 @@
   <td>${product._Id}</td>
   <td>${product._SKU}</td>
   <td>${product._Name}</td>
-  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
+<td class="qtyinput">
+  <input class="QtyInput" type="number" id="_Quantity" value="0" min="0" onchange="if(this.value === '') this.value = '0';" />
+</td>
   <td class="price">£${product._Cost}</td>
-  <td class="amount"></td>
+ <td class="amount">£0.00</td>
 </tr>
             `;
 

@@ -1,0 +1,401 @@
+﻿@model ImperialNova.Models.DeliveryFormModel
+@{
+    Layout = null;
+}
+<head>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        .invoice-title h2, .invoice-title h3 {
+            display: inline-block;
+        }
+
+        .table > tbody > tr > .no-line {
+            border-top: none;
+        }
+
+        .table > thead > tr > .no-line {
+            border-bottom: none;
+        }
+
+        .table > tbody > tr > .thick-line {
+            border-top: 2px solid;
+        }
+
+        .borderless-table {
+            border: none; /* Remove table border */
+        }
+
+            .borderless-table th,
+            .borderless-table td {
+                border: none; /* Remove border on table cells (th and td) */
+            }
+
+        .table-borderless tr {
+            border-top: none;
+            border-bottom: none;
+        }
+
+        td {
+            border: none !important;
+        }
+
+        th {
+            border: none !important;
+        }
+
+        * {
+            border: none;
+        }
+
+        .table {
+            width: 500px;
+        }
+
+        .product-heading,
+        .products {
+            font-size: 18px;
+        }
+
+        .checkmark-list {
+            list-style-type: none; /* Remove default list-style */
+            padding-left: 0;
+            margin-left: 20px; /* Remove left padding for the list */
+        }
+
+            .checkmark-list li::before {
+                content: "\2713"; /* Unicode checkmark character */
+                display: inline-block;
+                width: 1em; /* Adjust the width as needed */
+                margin-left: -1em; /* Move the checkmark to the left of the list item */
+            }
+
+            .checkmark-list li {
+                font-size: 14px;
+            }
+
+        ul {
+            margin-left: 153px;
+        }
+
+        .font12 {
+            font-size: 14px;
+        }
+
+        .font16 {
+            font-size: 16px;
+        }
+
+        .font20 {
+            font-size: 20px;
+        }
+
+        .lastbox {
+
+            margin-inline: auto;
+            width: 1098px;
+        }
+
+        .top-heading {
+            font-size: 30px;
+        }
+
+        .topbox {
+
+            margin-inline: auto;
+            width: 1098px;
+
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
+</head>
+@*<button id="generatePDF">Download PDF</button>*@
+<div id="htmlContent">
+
+    <br />
+    <br />
+    <div class="container">
+        <div class="topbox">
+            <div class="invoice-title"  style="float:left;">
+                <h1 class="top-heading">DELIVERY INFORMATION</h1>
+                <h4>(General Form)</h4>
+            </div>
+            <div style="float:right;">
+                <img style="width: 300px; " src="~/Content/adminTemplate/dist/img/logo.png" />
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <h3 hidden class="pull-right">@Model._id </h3>
+    <div class="container">
+        <table class="table table-borderless" style="width: 500px">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Sales Person:</strong></td>
+                    <td>@Model._SlaesPerson</td>
+                </tr>
+                <tr>
+                    <td><strong>Date:</strong></td>
+                    <td>@Model._Date.ToString("yyyy-MM-dd")</td>
+                </tr>
+                <tr>
+                    <td><strong>Order Number:</strong></td>
+                    <td>@Model._id</td>
+                </tr>
+                <tr>
+                    <td><strong>Customer Full Name:</strong></td>
+                    <td>@Model._CustomerName</td>
+                </tr>
+                <tr>
+                    <td><strong>Country:</strong></td>
+                    <td>@Model._Country</td>
+                </tr>
+                <tr>
+                    <td><strong>Address:</strong></td>
+                    <td>@Model._Address</td>
+                </tr>
+                <tr>
+                    <td><strong>Post Code/Zip Code:</strong></td>
+                    <td>@Model._PostCode</td>
+                </tr>
+                <tr>
+                    <td><strong>Telephone Number:</strong></td>
+                    <td>@Model._ContactNo</td>
+                </tr>
+                <tr>
+                    <td><strong>Email:</strong></td>
+                    <td>@Model._Email</td>
+                </tr>
+                <tr>
+                    <td><strong>Special Note:</strong></td>
+                    <td>@Model._Note</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br />
+    <br />
+    <div class="container">
+        <strong class="product-heading">Product List:</strong>
+        <ol type="a">
+            @if (Model.Products == null)
+            {
+
+            }
+            else
+            {
+                foreach (var product in Model.Products)
+                {
+                    <li class="products">@product._ProductQuantity x @product._ProductName</li>
+                }
+
+            }
+        </ol>
+    </div>
+    <br />
+    <br />
+    <div class="container">
+        <table class="table table-borderless" style="width: 400px">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Requested Delivery Date:</strong></td>
+                    <td>@Model._RequestedDate</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Amount:</strong></td>
+                    <td>£@Model._TotalAmount</td>
+                </tr>
+                <tr>
+                    <td><strong>Paid Through:</strong></td>
+                    @if (Model._CardPaid > 0 && Model._CashPaid == 0 && Model._FinancePaid == 0)
+                    {
+                        <td>Card</td>
+                    }
+                    else if (Model._CardPaid == 0 && Model._CashPaid > 0 && Model._FinancePaid == 0)
+                    {
+                        <td>Cash</td>
+
+                    }
+                    else if (Model._CardPaid == 0 && Model._CashPaid == 0 && Model._FinancePaid > 0)
+                    {
+                        <td>Finance</td>
+                    }
+                    else if (Model._CardPaid > 0 && Model._CashPaid > 0 && Model._FinancePaid == 0)
+                    {
+                        <td>Card & Cash</td>
+                    }
+                    else if (Model._CardPaid == 0 && Model._CashPaid > 0 && Model._FinancePaid > 0)
+                    {
+                        <td>Cash & Finance</td>
+                    }
+                    else if (Model._CardPaid > 0 && Model._CashPaid == 0 && Model._FinancePaid > 0)
+                    {
+                        <td>Card & Finance</td>
+                    }
+                    else
+                    {
+                        <td>Card, Cash & Finance</td>
+                    }
+                </tr>
+                <tr>
+                    <td><strong>Paid Amount:</strong></td>
+                    <td>£@Model._AmountPaid</td>
+                </tr>
+                <tr>
+                    <td><strong>Balance Amount:</strong></td>
+                    <td>£@Model._AmountInBalance</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <ul class="checkmark-list">
+            <li> &nbsp; I agree to terms and conditions.</li>
+            <li> &nbsp;I confirm acceptance and completion of the contract and satisfactory installation of the goods.</li>
+            <li> &nbsp;I am happy to confirm the above and hereby authorise you to pay IMPERIAL TEAM LIMITED/IMPERIAL BAMBOO.</li>
+            <li> &nbsp;I can confirm that the goods have been received and are to my satisfaction.</li>
+            <li>
+                &nbsp;
+                I can confirm that the details entered upon my Finance Application are true and correct and I am not aware of any change in circumstances that
+                would affect my ability to repay this loan.
+            </li>
+            <li>
+                &nbsp;
+                I understand that I will be bound by the terms and conditions of my credit agreement, a copy of which I have received, and I must pay a minimum
+                monthly repayment by direct debit as stated in my credit agreement.
+            </li>
+        </ul>
+
+    </div>
+    <br />
+    <br />
+    <div class="container">
+        <h2>Terms & Conditions</h2>
+        <p class="font12">
+            For returns and exchanges related to the quality of our product, we provide you with a year's assurance against any manufacturing company's
+            defect. For return and exchange related to our customer satisfaction, we provide you with 100 night's free trial. (No refund will be issue only an
+            exchange because of Hygienic reasons) The customer is responsible to have the product for 100 nights before making an exchange request. The
+            timeframe for return process is based on the delivery date of the order. We only allow one return per household/delivery address/customer and assure
+            you with a complete refund. Simply let us know through a phone call or an email within the 30 days' time period of the purchase date. Depending
+            on the situation and reason for the return, we also provide you with replacement without charging any additional cost. However, we don't consider
+            the return requests submitted after passing of the defined refund period. You are requested to return the product in its original packaging and unused
+            for reselling again.
+        </p>
+        <br />
+        <br />
+        <h3>Mattress Return condition :</h3>
+        <br />
+        <p class="font12">
+            Only orders with complete and full payment will be entertained for return requests before delivery have been booked.
+            <br /><br />(No refund will be issue from hygienic reasons)<br /><br />
+            oMattresses will only be refunded if the full price has been paid from our website only and has a receipt copy before delivery been booked or if the
+            matters new in his original box.
+        </p>
+        <p class="font12">
+            o &nbsp;<strong>Products bought from our shops by a promotional offers and sale reduce price will not be refunded!!!!.</strong>
+            <br /><br />o &nbsp;Since we use a delivering service of third-party Company for delivery, the customer will have to pay a delivery cost service of 250 GBP +
+            Administration fee.(Also in cancelation if delivery been booked already as the product already left our factory).
+            <br /><br />o &nbsp;If your return request has been accepted, the customer will have to pay the cost of delivery to the factory which amounts to 250GBP+
+            Administration fee
+            <br />
+            <br />
+            <strong>
+                Pillow and accessory return terms : If the order has been opened and the original packaging has been removed no exchange would be
+                offered. Only unopened products with the original packaging intact will be granted an exchange offer. The operations team of Imperial
+                Bamboo will assure and confirm the product prior to issuing any exchange offer.
+            </strong>
+            <br /><br />o &nbsp;You can contact us on our official email address or give us a call on our toll-free numbers.
+            <br /><br />o &nbsp;Accessories and pillows will only be exchanged or refunded within the 14 days period if unused.(our guarantee is only for the memory foam filling
+            that is not going to loose foam, if the pillow is damage by human like ripping or a hole in the pillow the guarantee will not cover).
+            <br /><br />o &nbsp;Unopened and unused products are exchangeable.
+            <br /><br />o &nbsp;If pillows, toppers, sheets, mattress protectors and encasements are opened and the original packaging is missing, the product will be considered
+            non-exchangeable and non-refundable.
+            <br /><br />o &nbsp;Products and accessories that are paid in full and have a copy of the original receipt will be considered for exchange
+            <br /><br />(No refund will be issue only an exchange)
+            <br /><br />o &nbsp;Products bought on sale price from a promotion or discount campaign will not be refunded or exchanged.
+            <br /><br />o &nbsp;We don't offer a refund and exchange for all of our offered products because of hygiene and safety reasons.(All our product is new and ready
+            to to use).
+            <br /><br />However, an order placed outside the UK won't be entitled to return label. We stand by our 30-days period return policy for orders placed by
+            customers outside the UK region. The amount reimbursed for such orders will be the actual cost of the product and not the delivery and shipping
+            charges. Once the returned product is received by the factory, a replacement product will be delivered within a defined timeframe. Or if the refund was
+            approved, the amount of the returned merchandise will be issued to your credit card within a well-defined time period.
+            <br /><br /><strong>*18/04/2023Updates</strong>
+            <br /><br /><strong>
+                BE AWARE- Because of hygienic reasons we will not doing any refunds for any products purchase after it left our Factory/Shop . (in the
+                shops or in the website).
+            </strong>
+            <br /><br /><strong>We apologise before all our customers.</strong>
+            <br /><br /><strong>(The updates will affect till the company change it)</strong>
+            <br /><br /><br /><br /><strong class="font16">Note</strong>
+            <br /><strong class="font16">
+                ***The customer going to receive the mattress as order in this delivery document, the company will be not
+                responsible for any wrong size if it's written different in this document.
+                Please check all details again.
+            </strong>
+        </p>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="container">
+        <div class="lastbox">
+            <div style="float: left;">
+                <p>
+                    <strong class="font16">Thank you for your business,</strong><br /><br />
+                    <strong class="font20">IMPERIAL BAMBOO/IMPERIAL TEAM LTD</strong>
+                </p>
+            </div>
+            <div style="float: right;">
+                <canvas id="outputCanvas" width: 200%; height: 170px;></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+   window.onload = function () {
+    debugger;
+    var outputCanvas = document.getElementById('outputCanvas');
+    var outputCtx = outputCanvas.getContext('2d');
+
+    var signatureData = '@ViewBag.SignatureData'; // Get the saved signature data
+
+    if (signatureData) {
+        var img = new Image();
+        img.src = signatureData;
+        img.onload = function () {
+            outputCtx.drawImage(img, 0, 0);
+        };
+    }
+};
+
+
+
+</script>

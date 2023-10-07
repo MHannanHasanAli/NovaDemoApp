@@ -112,13 +112,56 @@
             width: 1098px;
             flex-wrap: wrap;
         }
+
+        #generatePDF {
+            margin-top: 10px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        .loading-spinner-overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            z-index: 9999; /* Ensure it appears above all other content */
+            background-color: rgba(0,0,0,0.5); /* Transparent black */
+        }
+
+
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
 </head>
-<button id="downloadPDF">Download PDF</button>
-<div id="pdfContent">
+<div id="loadingSpinner" class="loading-spinner-overlay">
+    <div class="spinner"></div>
+</div>
+<button class="btn btn-success" id="generatePDF" onclick="downloadPDF()">Download PDF</button>
+<div id="htmlContent">
     <br />
     <br />
     <br />
@@ -385,15 +428,28 @@
 
 
 <script>
-    document.getElementById('downloadPDF').addEventListener('click', function () {
-        var pdf = new jsPDF('p', 'pt', 'letter');
-        var source = document.getElementById('pdfContent');
-        pdf.html(source, {
-            callback: function (pdf) {
-                pdf.save('invoice.pdf');
-            }
-        });
+    $(document).ready(function () {
+
+
     });
+    function showLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'block';
+    }
+
+    function hideLoadingSpinner() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+    }
+    function downloadPDF() {
+        showLoadingSpinner();
+        var idElement = $(".pull-right");
+        var button = $("#generatePDF");
+
+        var id = idElement.text();
+
+        var url = "/DeliveryForm/InvoiceAsPDF?id=" + id;
+        window.location.href = url;
+        hideLoadingSpinner();
+    }
     var outputCanvas = document.getElementById('outputCanvas');
         var outputCtx = outputCanvas.getContext('2d');
 

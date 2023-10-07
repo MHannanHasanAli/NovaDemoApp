@@ -33,6 +33,8 @@ namespace ImperialNova.Controllers
                 model.Purchase = model.Purchase + item._Cost;
                 model.Sell =model.Sell + item._RetailPrice;
                 model.Quantity = model.Quantity + item._Quantity;
+                item.ModifiedCost = item._RetailPrice * item._Cost;
+                model.TotalModified = model.TotalModified + item.ModifiedCost;
                 ProductList.Add(new ProductsModel { Product = item, Category = category, Warehouse = warehouse });
             }
             model.Products = ProductList;

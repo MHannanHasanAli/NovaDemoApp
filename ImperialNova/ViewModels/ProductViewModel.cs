@@ -16,6 +16,7 @@ namespace ImperialNova.ViewModels
         public string _Price { get; set; }
         public string _Amount { get; set; }
         public string _ExpiryDate { get; set; }
+
     }
     public class ProductListingViewModel
     {
@@ -30,7 +31,7 @@ namespace ImperialNova.ViewModels
         public int Quantity { get; set; }
         public decimal Purchase { get; set; }
         public decimal Sell { get; set; }
-
+        public decimal TotalModified { get; set; }
     }
     public class ProductPreviewModel
     {
@@ -40,10 +41,12 @@ namespace ImperialNova.ViewModels
         public Locations Warehouse { get; set; }
         public List<Order> order { get; set; }
         public List<OrderProduct> orderProducts { get; set; }
+
     }
     public class ProductsModel
     {
         public Product Product { get; set; }
+
         public Category Category { get; set; }
 
         public Locations Warehouse { get; set; }

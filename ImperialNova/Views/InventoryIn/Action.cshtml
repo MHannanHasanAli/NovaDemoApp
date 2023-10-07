@@ -347,9 +347,12 @@ $(document).ready(function () {
   <td>${product._Id}</td>
   <td>${product._SKU}</td>
   <td>${product._Name}</td>
-<td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate" value="${today}" /></td>  <td class="qtyinput"><input class="QtyInput" type="number" id="_Quantity"/></td>
-  <td class="price">£${product._Cost}</td>
-  <td class="amount"  id="_Amount"></td>
+<td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate" value="${today}" /></td>  
+<td class="qtyinput">
+  <input class="QtyInput" type="number" id="_Quantity" value="0" min="0" onchange="if(this.value === '') this.value = '0';" />
+</td>
+<td class="price">£${product._Cost}</td>
+  <td class="amount"  id="_Amount">£0.00</td>
 </tr>
             `;
 

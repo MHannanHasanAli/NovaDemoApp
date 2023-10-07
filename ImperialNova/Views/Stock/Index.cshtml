@@ -101,15 +101,15 @@
                                                 <th>SKU</th>
                                                 <th>Title</th>
                                                 <th>Location</th>
-                                                <th>Notes</th>
+                                                @*<th>Notes</th>*@
                                                 <th>In</th>
                                                 <th>Out</th>
                                                 <th>Quantity</th>
-                                                <th>Cost</th>
-                                                <th>Retail</th>
+                                                <th>Purchase price</th>
+                                                <th>Sell Price</th>
                                                 <th>Date</th>
                                                 <th>Alert</th>
-
+                                                <th style="background: yellow;">Total Cost</th>
 
                                             </tr>
                                         </thead>
@@ -119,23 +119,23 @@
                                                 <tr>
 
                                                     <!--<td>
-                <div class="dropdown">
-                    <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-list" aria-hidden="true"></i>
+    <div class="dropdown">
+        <button class="btn btn-sm btn-rounded btn-secondary btn-icon-text dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-list" aria-hidden="true"></i>
 
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
-                            <i class="mdi mdi-pencil"></i> VIEW/EDIT
-                        </a>-->
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="@Url.Action("Action", "StockMovement", new { ID = item.Product._Id })">
+                <i class="mdi mdi-pencil"></i> VIEW/EDIT
+            </a>-->
                                                     @*<button data-href="@Url.Action("Delete", "Product", new { _Id = item.Product._Id })" class="dropdown-item data-btn btn btn-danger btn-icon-text" data-toggle="modal" data-target="#actionModal"><i class="mdi mdi-delete"></i>DELETE</button>*@
 
                                                     <!--<a class="data-btn dropdown-item" data-href="@Url.Action("Delete", "Product", new { ID = item.Product._Id })" data-toggle="modal" data-target="#actionModal">
-                                <i class="mdi mdi-delete"></i> DELETE
-                            </a>
-                        </div>
-                    </div>
-                </td>-->
+                    <i class="mdi mdi-delete"></i> DELETE
+                </a>
+            </div>
+        </div>
+    </td>-->
                                                     <td>
 
                                                         @if (item.Product._Photo != null)
@@ -159,7 +159,7 @@
                                                     {
                                                         <td>No warehouse Available</td>
                                                     }
-                                                    <td>@item.Product._Notes</td>
+                                                    @*<td>@item.Product._Notes</td>*@
                                                     <td>@item.Product._QuantityIn</td>
                                                     <td>@item.Product._QuantityOut</td>
                                                     <td>@item.Product._Quantity</td>
@@ -167,25 +167,26 @@
                                                     <td>£@item.Product._RetailPrice</td>
                                                     <td>@item.Product._ExportDate.ToString("yyyy-MM-dd")</td>
                                                     <td>@item.Product._LowStockAlert</td>
-
+                                                    <td style="background: yellow;">£@item.Product.ModifiedCost.ToString("0.00")</td>
 
                                                 </tr>
                                             }
                                         </tbody>
                                         <tr style="background: yellow;">
-                                            <td></td>
                                             <td>Total</td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>
                                             <td id="totalquantity">@Model.Quantity</td>
-                                            <td id="Costprice">£@Model.Purchase</td>
-                                            <td id="priceforcustomer">£@Model.Sell</td>
-
+                                            @*<td id="Costprice">£@Model.Purchase</td>
+        <td id="priceforcustomer">£@Model.Sell</td>*@
                                             <td></td>
                                             <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td id="totalcost">£@Model.TotalModified.ToString("0.00")</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -226,7 +227,7 @@
             var totalQuantity = 0;
             var totalPurchasePrice = 0;
             var totalSellPrice = 0;
-
+            var totalcost = 0;
             // If a location is selected, hide rows with different locations
             if (selectedLocation !== "") {
                 $("#table-body tr").each(function () {
@@ -235,10 +236,12 @@
                     if (rowLocation !== selectedLocation) {
                         $(this).hide();
                     } else {
+
                         // Extract and accumulate the quantity, purchase price, and sell price from the row
                         const rowQuantity = parseInt($(this).find("td:eq(6)").text().trim()); // Assuming quantity is in the 7th column (index 6)
                         const rowPurchasePrice = parseFloat($(this).find("td:eq(8)").text().trim().replace("£", ""));
                         const rowSellPrice = parseFloat($(this).find("td:eq(9)").text().trim().replace("£", ""));
+                        const rowTotalCost = parseFloat($(this).find("td:eq(11)").text().trim().replace("£", ""));
 
                         if (!isNaN(rowQuantity)) {
                             totalQuantity += rowQuantity;
@@ -249,6 +252,9 @@
                         if (!isNaN(rowSellPrice)) {
                             totalSellPrice += rowSellPrice;
                         }
+                        if (!isNaN(rowTotalCost)) {
+                            totalcost += rowTotalCost;
+                        }
                     }
                 });
             }
@@ -257,6 +263,7 @@
             $("#totalquantity").text(totalQuantity);
             $("#Costprice").text("£" + totalPurchasePrice.toFixed(2));
             $("#priceforcustomer").text("£" + totalSellPrice.toFixed(2));
+            $("#totalcost").text("£" + totalcost.toFixed(2));
         });
 
         $("#example1").DataTable({

@@ -276,6 +276,11 @@ namespace ImperialNova.Controllers
         {
             if (model._Id != 0)
             {
+                var products = OrderProductServices.Instance.GetOrderProducts().Where(x=>x._OrderId == model._Id);
+                foreach (var item in products)
+                {
+                    OrderProductServices.Instance.DeleteOrderProducts(item._Id);
+                }
                 var Order = OrderServices.Instance.GetOrderById(model._Id);
                 var backup = new Backup();
                 backup.DeletionDate = DateTime.Now;

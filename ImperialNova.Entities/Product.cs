@@ -24,7 +24,7 @@ namespace ImperialNova.Entities
         public int _QuantityOut { get; set; } = 0;
         public string _Notes { get; set; }
         public DateTime _ExportDate { get; set; } = DateTime.Now;
-
+        public decimal ModifiedCost { get; set; }
         public int _CategoryId { get; set; }
         public int _WarehouseId { get; set; }
         public int _LowStockAlert { get; set; }

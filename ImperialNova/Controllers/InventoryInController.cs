@@ -384,6 +384,11 @@ namespace ImperialNova.Controllers
         {
             if (model._Id != 0)
             {
+                var products = InventoryInProductServices.Instance.GetInventoryInProducts().Where(x => x._InventoryInId == model._Id);
+                foreach (var item in products)
+                {
+                    InventoryInProductServices.Instance.DeleteInventoryInProducts(item._Id);
+                }
                 var InventoryIn = InventoryInServices.Instance.GetInventoryInById(model._Id);
                 var backup = new Backup();
                 backup.DeletionDate = DateTime.Now;

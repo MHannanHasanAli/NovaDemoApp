@@ -68,6 +68,10 @@
     <Compile Include="Migrations\202310041054463_Tein.designer.cs">
       <DependentUpon>202310041054463_Tein.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202310071114429_Tien.cs" />
+    <Compile Include="Migrations\202310071114429_Tien.designer.cs">
+      <DependentUpon>202310071114429_Tien.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DSContext.cs" />
@@ -91,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202310041054463_Tein.resx">
       <DependentUpon>202310041054463_Tein.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202310071114429_Tien.resx">
+      <DependentUpon>202310071114429_Tien.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
