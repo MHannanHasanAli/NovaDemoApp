@@ -4,6 +4,7 @@ using ImperialNova.Services;
 using ImperialNova.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using System;
@@ -269,21 +270,96 @@ namespace ImperialNova.Controllers
                         for (int row = 2; row <= rowCount; row++) // Assuming the first row is header
                         {
                             var inventory = new InventoryInProduct();
-                            string name = worksheet.Cells[row, 1].Value.ToString();
-                            inventory._Title = worksheet.Cells[row, 1].Value.ToString(); //ProductName
-                            var CategoryName = worksheet.Cells[row, 2].Value.ToString();//Category Name
-                            var Category = CategoryServices.Instance.GetCategorys(CategoryName).FirstOrDefault();
-                            var location = worksheet.Cells[row, 3].Value.ToString();
-                            var Warehouse = LocationsServices.Instance.GetLocations(location).FirstOrDefault();
+                           
+                            if(worksheet.Cells[row, 1].Value == null)
+                            {
+                                continue;
+                            }
 
-                            inventory._CategoryId = Category._Id;
-                            inventory._WarehouseId = Warehouse._Id;
+                           if(worksheet.Cells[row, 1].Value != null)
+                            {
+                                string name = worksheet.Cells[row, 1].Value.ToString();
+                                inventory._Title = worksheet.Cells[row, 1].Value.ToString();
+                            }
+                            else
+                            {
+                                inventory._Title = "Not Specified";
+                            }
+                            if(worksheet.Cells[row, 2].Value != null)
+                            {
+                                var CategoryName = worksheet.Cells[row, 2].Value.ToString();//Category Name
+                                var CategoryFilter = CategoryServices.Instance.GetCategorys(CategoryName).FirstOrDefault();
+                                if (CategoryFilter != null)
+                                {
+                                    inventory._CategoryId = CategoryFilter._Id;
+                                }
+                                else
+                                {
+                                    var category = new Entities.Category();
+                                    category._CName = CategoryName;
 
-                            inventory._SKU = worksheet.Cells[row, 4].Value.ToString(); //Size
-                            inventory._Qty = int.Parse(worksheet.Cells[row, 5].Value.ToString()); //Color
-                            inventory._Price = decimal.Parse(worksheet.Cells[row, 6].Value.ToString()); //Cost
-                            inventory._Amount = decimal.Parse(worksheet.Cells[row, 7].Value.ToString());
+                                    CategoryServices.Instance.CreateCategory(category);
+                                }
+                            }
+                            
+                            if(worksheet.Cells[row, 3].Value != null)
+                            {
+                                var location = worksheet.Cells[row, 3].Value.ToString();
+                                var Warehouse = LocationsServices.Instance.GetLocations(location).FirstOrDefault();
+                                if(Warehouse != null)
+                                {
+                                    inventory._WarehouseId = Warehouse._Id;
+                                }
+                                else
+                                {
+                                    var loc = new Locations();
+                                    loc._LocationName = location;
+
+                                    LocationsServices.Instance.CreateLocations(loc);
+                                }
+                            }
+                           
+                            if (worksheet.Cells[row, 4].Value != null)
+                            {
+                                inventory._SKU = worksheet.Cells[row, 4].Value.ToString(); //Size
+
+                            }
+                            else
+                            {
+                                inventory._SKU = "000000";
+                            }
+                            if (worksheet.Cells[row, 5].Value != null)
+                            {
+                                inventory._Qty = int.Parse(worksheet.Cells[row, 5].Value.ToString()); //Color
+
+                            }
+                            else
+                            {
+                                inventory._Qty = 0;
+                            }
+                            if (worksheet.Cells[row, 6].Value != null)
+                            {
+                                inventory._Price = decimal.Parse(worksheet.Cells[row, 6].Value.ToString()); //Cost
+
+                            }
+                            else
+                            {
+                                inventory._Price = 0.000m;
+                            }
+
+                            if (worksheet.Cells[row, 7].Value != null)
+                            {
+                                inventory._Amount = decimal.Parse(worksheet.Cells[row, 7].Value.ToString());
+
+                            }
+                            else
+                            {
+                                inventory._Amount = 0.0000m;
+                            }
                             inventory._ExpiryDate = DateTime.Now;
+
+                            InventoryInProductServices.Instance.CreateInventoryInProducts(inventory);
+
                             var List = ProductServices.Instance.GetProduct();
 
 

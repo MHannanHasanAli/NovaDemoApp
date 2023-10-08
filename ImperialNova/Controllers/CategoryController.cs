@@ -68,7 +68,7 @@ namespace ImperialNova.Controllers
             Session["ACTIVER"] = "Category Index";
             CategoryListingViewModel model = new CategoryListingViewModel();
             model.SearchTerm = SearchTerm;
-            model.Categories = CategoryServices.Instance.GetCategory(SearchTerm);
+            model.Categories = CategoryServices.Instance.GetCategorys();
             return View("Index", model);
         }
         public ActionResult MassDelete(List<int> ids)

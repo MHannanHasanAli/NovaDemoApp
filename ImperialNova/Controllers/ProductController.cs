@@ -243,23 +243,146 @@ namespace ImperialNova.Controllers
                         for (int row = 2; row <= rowCount; row++) // Assuming the first row is header
                         {
                             var product = new Product();
-                            string name = worksheet.Cells[row, 1].Value.ToString();
-                            product._Name = worksheet.Cells[row, 1].Value.ToString(); //ProductName
-                            var CategoryName = worksheet.Cells[row, 2].Value.ToString();//Category Name
-                            var Category = CategoryServices.Instance.GetCategorys(CategoryName).FirstOrDefault();
-                            product._CategoryId = Category._Id;
-                            product._Size = worksheet.Cells[row, 3].Value.ToString(); //Size
-                            product._Color = worksheet.Cells[row, 4].Value.ToString(); //Color
-                            product._Cost = decimal.Parse(worksheet.Cells[row, 5].Value.ToString()); //Cost
-                            product._SKU = worksheet.Cells[row, 6].Value.ToString(); //SKU
-                            product._Weight = worksheet.Cells[row, 7].Value.ToString(); //Weight
-                            product._Thickness = worksheet.Cells[row, 8].Value.ToString(); //Thickness
-                            product._Variations = int.Parse(worksheet.Cells[row, 9].Value.ToString()); //Variations
-                            product._RetailPrice = decimal.Parse(worksheet.Cells[row, 10].Value.ToString()); // Retail Price
-                            product._QuantityIn = int.Parse(worksheet.Cells[row, 11].Value.ToString()); // Quantity In
-                            product._QuantityOut = int.Parse(worksheet.Cells[row, 12].Value.ToString()); // Quantity Out
-                            product._Notes = worksheet.Cells[row, 13].Value.ToString(); //Notes
+                            if(worksheet.Cells[row, 1].Value == null && worksheet.Cells[row, 2].Value == null && worksheet.Cells[row, 6].Value == null)
+                            {
+                                continue;
+                            }
+
+                            if(worksheet.Cells[row, 1].Value != null)
+                            {
+                                string name = worksheet.Cells[row, 1].Value.ToString();
+                                product._Name = worksheet.Cells[row, 1].Value.ToString();
+                            }
+                            else
+                            {
+                                product._Name = "No Name Specified";
+                            }
+                
+                            if(worksheet.Cells[row, 2].Value != null)
+                            {
+                                var CategoryName = worksheet.Cells[row, 2].Value.ToString();
+                                var CategoryFilter = CategoryServices.Instance.GetCategorys(CategoryName).FirstOrDefault();
+                                if (CategoryFilter == null)
+                                {
+                                    var category = new Entities.Category();
+                                    category._CName = CategoryName;
+                                    category.IsDeleted = false;
+                                    CategoryServices.Instance.CreateCategory(category);
+
+                                }
+                                else
+                                {
+                                    product._CategoryId = CategoryFilter._Id;
+
+                                }
+                            }
+                            //ProductName
+                           if(worksheet.Cells[row, 3].Value != null)
+                            {
+                                product._Size = worksheet.Cells[row, 3].Value.ToString();
+                            }
+                            else
+                            {
+                                product._Size = "Not Specified";
+                            }
+
+                           if(worksheet.Cells[row, 4].Value != null)
+                            {
+                                product._Color = worksheet.Cells[row, 4].Value.ToString();
+                            }
+                            else
+                            {
+                                product._Color = "Not Specified";
+                            }
+                            
+                           if(worksheet.Cells[row, 5].Value != null)
+                            {
+                                product._Cost = decimal.Parse(worksheet.Cells[row, 5].Value.ToString()); //Cost
+
+                            }
+                            else
+                            {
+                                product._Cost = 0.0000m;
+                            }
+
+                           if(worksheet.Cells[row, 6].Value != null)
+                            {
+                                product._SKU = worksheet.Cells[row, 6].Value.ToString(); //SKU
+
+                            }
+                            else
+                            {
+                                product._SKU = "Not Specified";
+                            }
+                           if(worksheet.Cells[row, 7].Value != null)
+                            {
+                                product._Weight = worksheet.Cells[row, 7].Value.ToString();
+                            }
+                            else
+                            {
+                                product._Weight = "Not Specified";
+                            }
+
+                           if(worksheet.Cells[row, 8].Value != null)
+                            {
+                                product._Thickness = worksheet.Cells[row, 8].Value.ToString();
+                            }
+                            else
+                            {
+                                product._Thickness = "Not Specified";
+                            }
+
+                           if(worksheet.Cells[row, 9].Value != null)
+                            {
+                                product._Variations = int.Parse(worksheet.Cells[row, 9].Value.ToString()); //Variations
+                            }
+                            else
+                            {
+                                product._Variations = 0;
+                            }
+
+                           if(worksheet.Cells[row, 10].Value != null)
+                            {
+                                product._RetailPrice = decimal.Parse(worksheet.Cells[row, 10].Value.ToString()); // Retail Price
+
+                            }
+                            else
+                            {
+                                product._RetailPrice = 0.0000m;
+                            }
+
+                            if (worksheet.Cells[row, 11].Value != null)
+                            {
+                                product._QuantityIn = int.Parse(worksheet.Cells[row, 11].Value.ToString()); // Quantity In
+
+                            }
+                            else
+                            {
+                                product._QuantityIn = 0;
+                            }
+                            if (worksheet.Cells[row, 12].Value != null)
+                            {
+                                product._QuantityOut = int.Parse(worksheet.Cells[row, 12].Value.ToString()); // Quantity Out
+
+                            }
+                            else
+                            {
+                                product._QuantityOut = 0;
+                            }
+
+                            if (worksheet.Cells[row, 13].Value != null)
+                            {
+                                product._Notes = worksheet.Cells[row, 13].Value.ToString(); //Notes
+                            }
+                            else
+                            {
+                                product._Notes = "Not Specified";
+                            }
+
+
                             product._ExportDate = DateTime.Now;
+                            product.IsDeleted = false;
+                            ProductServices.Instance.CreateProduct(product);
                             var List = ProductServices.Instance.GetProduct();
 
 
