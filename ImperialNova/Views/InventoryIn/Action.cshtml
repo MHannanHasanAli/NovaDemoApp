@@ -316,7 +316,7 @@ $(document).ready(function () {
                     });
                 });
             });
-
+ 
 
         $("#AdddToTableBtn").click(function () {
             var ProductID = $("#_ProductId").val();
@@ -329,7 +329,7 @@ $(document).ready(function () {
             success: function (data) {
                 //, QuantityIn, Store, Notes
                 appendProductToTable(data);
-
+                clearDropdownSelections();
 
             },
             error: function () {
@@ -339,6 +339,11 @@ $(document).ready(function () {
 
 
         });
+
+    function clearDropdownSelections() {
+        $("#_StoreId").val("");  // Clear selection for Store dropdown
+        $("#_ProductId").val(""); // Clear selection for Products dropdown
+    }
     //, quantityin, store, Notes
     function appendProductToTable(product) {
         var today = new Date().toISOString().split('T')[0];
@@ -347,12 +352,13 @@ $(document).ready(function () {
   <td>${product._Id}</td>
   <td>${product._SKU}</td>
   <td>${product._Name}</td>
-<td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate" value="${today}" /></td>  
+<td class="expdate"><input class="ExpiryDate" type="date" id="_ExpiryDate" value="${today}" /></td>
 <td class="qtyinput">
   <input class="QtyInput" type="number" id="_Quantity" value="0" min="0" onchange="if(this.value === '') this.value = '0';" />
 </td>
 <td class="price">£${product._Cost}</td>
   <td class="amount"  id="_Amount">£0.00</td>
+  <td><button class="remove-btn  btn btn-danger" onclick="removeRow(this)">Remove</button></td>
 </tr>
             `;
 
@@ -375,10 +381,10 @@ $(document).ready(function () {
     $("#actionButton").click(function () {
 
 
-      
-       
+
+
         //var expiryDateInput = $("#_ExpiryDate");
-       
+
         //expiryDateInput.on("input", function () {
         //    // Check if the value is empty
         //    if ($(this).val() === "") {
@@ -397,10 +403,10 @@ $(document).ready(function () {
                 _Price: $(this).find('td:eq(5)').text().replace('£', ''),
                 _Amount: $(this).find('td:eq(6)').text().replace('£', ''),
             };
-          
+
             products.push(product);
         });
- 
+
         $("#actionButton").attr("disabled", "disabled");
         showLoadingSpinner();
         var productsJson = JSON.stringify(products);

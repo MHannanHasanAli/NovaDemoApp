@@ -75,6 +75,10 @@ namespace ImperialNova.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+            if(User.Identity.IsAuthenticated)
+            {
+                RedirectToAction("Dashboard", "Admin");
+            }
             return View();
         }
 

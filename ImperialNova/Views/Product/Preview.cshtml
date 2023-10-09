@@ -131,37 +131,86 @@
                     <h6>@Model.Product.Product._SKU</h6>
                 </div>
             }
-            else        
+            else
             {
-            <div class="product-img">
-                <img style="height:120px; width:120px;" src="~/Images/download.png" />
+        <div class="product-img">
+            <img style="height:120px; width:120px;" src="~/Images/download.png" />
+            @if (Model.Product.Product._Name != null)
+            {
                 <h2>@Model.Product.Product._Name</h2>
+
+            }
+            else
+            {
+                <h2>Not Specified</h2>
+            }
+
+            @if (Model.Product.Product._SKU != null)
+            {
                 <h6>@Model.Product.Product._SKU</h6>
-            </div>
+
+}
+else
+                {
+                    <h6>Not Specified</h6>
+                }
+        </div>
             }
 
             <hr />
             <div class="stockin">
                 <h4>In</h4>
-                <h4>@Model.Product.Product._QuantityIn</h4>
+                @if (Model.Product.Product._QuantityIn != null)
+                {
+                    <h4>@Model.Product.Product._QuantityIn</h4>
+                }
+                else
+                {
+                    <h4>Quantity In Not Available</h4>
+                }
             </div>
+
             <hr />
+
             <div class="stockout">
                 <h4>Out</h4>
-                <h4>@Model.Product.Product._QuantityOut</h4>
+                @if (Model.Product.Product._QuantityOut != null)
+                {
+                    <h4>@Model.Product.Product._QuantityOut</h4>
+                }
+                else
+                {
+                    <h4>Quantity Out Not Available</h4>
+                }
             </div>
+
             <hr />
             <div class="stock">
                 <h4>Stock</h4>
-                <h4>@Model.Product.Product._Quantity</h4>
+                @if (Model.Product.Product._Quantity != null)
+                {
+                    <h4>@Model.Product.Product._Quantity</h4>
+                }
+                else
+                {
+                    <h4>Quantity Not Available</h4>
+                }
             </div>
         </div>
         <div class="warehouse-card">
             <div class="container warehouse-inner-container">
                 <h2 class="details-heading">Detail</h2>
-
                 <h4>Location</h4>
-                <h4 class="dynamic-location">@Model.Product.Warehouse._LocationName</h4>
+
+                @if (@Model.Product.Warehouse == null)
+                {
+                    <h4 class="dynamic-location">Not Specified</h4>
+                }
+                else
+                {
+                    <h4 class="dynamic-location">@Model.Product.Warehouse._LocationName</h4>
+
+                }
             </div>
 
 

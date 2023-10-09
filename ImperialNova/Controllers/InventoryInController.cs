@@ -267,11 +267,22 @@ namespace ImperialNova.Controllers
                         var worksheet = package.Workbook.Worksheets[0];
                         var rowCount = worksheet.Dimension.Rows;
 
+                        var inventorymain = new InventoryIn();
+                        inventorymain._Date = DateTime.Now;
+                        inventorymain._ShippingCompany = "";
+                        inventorymain._Tracking = "Not Specified";
+                        inventorymain._Supplier = "Not Specified";
+                        inventorymain._Status = "Pending Order";
+                        inventorymain._Quantity = 0;
+                        inventorymain._Amount = 0;
+
+                        InventoryInServices.Instance.CreateInventoryIn(inventorymain);
                         for (int row = 2; row <= rowCount; row++) // Assuming the first row is header
                         {
                             var inventory = new InventoryInProduct();
-                           
-                            if(worksheet.Cells[row, 1].Value == null)
+                            var lastid = InventoryInServices.Instance.GetLastEntryId();
+
+                            if (worksheet.Cells[row, 1].Value == null)
                             {
                                 continue;
                             }
@@ -357,6 +368,7 @@ namespace ImperialNova.Controllers
                                 inventory._Amount = 0.0000m;
                             }
                             inventory._ExpiryDate = DateTime.Now;
+                            inventory._InventoryInId = lastid;
 
                             InventoryInProductServices.Instance.CreateInventoryInProducts(inventory);
 
