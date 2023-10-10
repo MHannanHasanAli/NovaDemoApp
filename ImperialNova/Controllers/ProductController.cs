@@ -343,26 +343,34 @@ namespace ImperialNova.Controllers
 
                            if(worksheet.Cells[row, 10].Value != null)
                             {
-                                product._RetailPrice = decimal.Parse(worksheet.Cells[row, 10].Value.ToString()); // Retail Price
+                                product._Cost = decimal.Parse(worksheet.Cells[row, 10].Value.ToString()); // Retail Price
+
+                            }
+                            else
+                            {
+                                product._Cost = 0.0000m;
+                            }
+                            if (worksheet.Cells[row, 11].Value != null)
+                            {
+                                product._RetailPrice = decimal.Parse(worksheet.Cells[row, 11].Value.ToString()); // Retail Price
 
                             }
                             else
                             {
                                 product._RetailPrice = 0.0000m;
                             }
-
-                            if (worksheet.Cells[row, 11].Value != null)
+                            if (worksheet.Cells[row, 12].Value != null)
                             {
-                                product._QuantityIn = int.Parse(worksheet.Cells[row, 11].Value.ToString()); // Quantity In
-
+                                product._QuantityIn = int.Parse(worksheet.Cells[row, 12].Value.ToString()); // Quantity In
+                                product._Quantity = product._QuantityIn;
                             }
                             else
                             {
                                 product._QuantityIn = 0;
                             }
-                            if (worksheet.Cells[row, 12].Value != null)
+                            if (worksheet.Cells[row, 13].Value != null)
                             {
-                                product._QuantityOut = int.Parse(worksheet.Cells[row, 12].Value.ToString()); // Quantity Out
+                                product._QuantityOut = int.Parse(worksheet.Cells[row, 13].Value.ToString()); // Quantity Out
 
                             }
                             else
@@ -370,18 +378,26 @@ namespace ImperialNova.Controllers
                                 product._QuantityOut = 0;
                             }
 
-                            if (worksheet.Cells[row, 13].Value != null)
+                            if (worksheet.Cells[row, 14].Value != null)
                             {
-                                product._Notes = worksheet.Cells[row, 13].Value.ToString(); //Notes
+                                product._Notes = worksheet.Cells[row, 14].Value.ToString(); //Notes
                             }
                             else
                             {
                                 product._Notes = "Not Specified";
                             }
-
+                            if (worksheet.Cells[row, 15].Value != null)
+                            {
+                                product._LowStockAlert = int.Parse(worksheet.Cells[row, 15].Value.ToString()); //Notes
+                            }
+                            else
+                            {
+                                product._LowStockAlert = 0;
+                            }
 
                             product._ExportDate = DateTime.Now;
                             product.IsDeleted = false;
+                            ProductAddedList.Add(product);
                             ProductServices.Instance.CreateProduct(product);
                             var List = ProductServices.Instance.GetProduct();
 

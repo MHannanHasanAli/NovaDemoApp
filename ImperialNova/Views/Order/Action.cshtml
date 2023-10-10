@@ -415,27 +415,35 @@
             });
         });
     });
-   $("#AdddToTableBtn").click(function () {
-            var ProductID = $("#_ProductId").val();
+  $("#AdddToTableBtn").click(function () {
+    var ProductID = $("#_ProductId").val();
 
+    $.ajax({
+        url: '@Url.Action("GetProductJson", "Order")',
+        method: 'GET',
+        data: { ID: ProductID },
+        success: function (data) {
+            // Check if the product with the same ID already exists in the table
+            var exists = false;
+            $("tbody tr").each(function () {
+                var rowID = $(this).find("td:first").text(); // Assuming the ID is in the first <td> of each row
+                if (rowID === data._Id.toString()) {
+                    alert("Product already exists in the table.");
+                    exists = true;
+                    return false; // Exit the loop early
+                }
+            });
 
-        $.ajax({
-            url: '@Url.Action("GetProductJson", "Order")',  // Replace with the actual URL of your controller
-            method: 'GET',
-            data: { ID: ProductID },
-            success: function (data) {
-                //, QuantityIn, Store, Notes
+            if (!exists) {
                 appendProductToTable(data);
                 clearDropdownSelections();
-
-            },
-            error: function () {
-                $('#productDetails').html('<p>Failed to fetch product details.</p>');
             }
-        });
-
-
-   });
+        },
+        error: function () {
+            $('#productDetails').html('<p>Failed to fetch product details.</p>');
+        }
+    });
+});
 
     function clearDropdownSelections() {
         $("#_StoreId").val("");  // Clear selection for Store dropdown

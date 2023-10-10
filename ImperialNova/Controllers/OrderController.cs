@@ -78,6 +78,11 @@ namespace ImperialNova.Controllers
         {
             foreach (var item in ids)
             {
+                var products = OrderProductServices.Instance.GetOrderProducts().Where(x => x._OrderId == item);
+                foreach (var product in products)
+                {
+                    OrderProductServices.Instance.DeleteOrderProducts(product._Id);
+                }
                 OrderServices.Instance.DeleteOrder(item);
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);

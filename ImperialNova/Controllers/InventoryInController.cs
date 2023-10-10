@@ -80,6 +80,11 @@ namespace ImperialNova.Controllers
         {
             foreach (var item in ids)
             {
+                var products = InventoryInProductServices.Instance.GetInventoryInProducts().Where(x => x._InventoryInId == item);
+                foreach (var product in products)
+                {
+                    InventoryInProductServices.Instance.DeleteInventoryInProducts(product._Id);
+                }
                 InventoryInServices.Instance.DeleteInventoryIn(item);
             }
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
