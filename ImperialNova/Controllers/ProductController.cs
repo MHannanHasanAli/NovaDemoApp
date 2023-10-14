@@ -362,7 +362,7 @@ namespace ImperialNova.Controllers
                             if (worksheet.Cells[row, 12].Value != null)
                             {
                                 product._QuantityIn = int.Parse(worksheet.Cells[row, 12].Value.ToString()); // Quantity In
-                                product._Quantity = product._QuantityIn;
+                               
                             }
                             else
                             {
@@ -371,7 +371,7 @@ namespace ImperialNova.Controllers
                             if (worksheet.Cells[row, 13].Value != null)
                             {
                                 product._QuantityOut = int.Parse(worksheet.Cells[row, 13].Value.ToString()); // Quantity Out
-
+                                product._Quantity = product._QuantityIn - product._QuantityOut;
                             }
                             else
                             {
